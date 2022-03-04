@@ -16,26 +16,24 @@
 > The social media app is a web application for connecting and communicating with friends. When users register for the app, users will specify their interests and hobbies. The app will be recommended to users based on their interests where they can connect with others of similar interests.
 
 # Tables
-- User: For storing user information(username, password, etc..).
-- Profile: For storing user profile information(name, address?, profile picture, etc..).
-- ProfilePicReact: For storing the profile reaction.
-- ProfilePicComment: For storing the profile comment.
-- ProfilePicCommentReact: For storing the profile comment reaction.
-- Hobbie: For storing the interests/hobbies.
-- Userhobbie: For storing user interests/hobbies.
+- Users: For storing user information(username, password, etc..).
+- Profile: For storing user profile information(name, address, profile picture, etc..). 
+- Hobby: For storing the interests/hobbies.
+- Userhobbies: For storing user interests/hobbies.
 - Friend: For storing the relationship between user (friend, family, etc...).
 - Post: For storing the user posts(text, image, text + image, etc…).
+- Reaction: For storing the emojis.
 - PostReact: For storing the user post reaction.
-- PostShare: For storing the user post shared.
-- Comment: For storing comments of user posts.
-- CommentReact: For storing post comment reactions.
-- Group: For storing group information.
-- GroupUser: For storing group users information(joined date, isBanned, isApproved, isManager, etc..)
+- PostComment: For storing comments of user posts.
+- PostCommentReact: For storing post comment reactions.
+- Groups: For storing group information.
+- GroupUser: For storing group users information(joined date, isBanned, isApproved, etc..)
 - GroupPost: For storing group posts.
-- GroupPostShare: For storing group post shared.
 - GroupPostReact: For storing group post reactions.
 - GroupPostComment: For storing group posts comments.
 - GroupPostCommentReact: For storing group post comment reactions.
+
+![Screenshot](./ERD.png)
 
 # User Stories
 - As a user, I should be able to create an account
@@ -56,7 +54,6 @@
 - As a user, I should be able to reply to my friend comment
 - As a user, I should be able to react to my friend comment reply
 - As a user, I should be able to create/join a group
-- As a user, I should be able to share my post in a group.
 - As a group manager, I should be able to approve joining request
 - As a group manager, I should be able to manage the group posts.
 - As a group manager, I should be able to manage group users.
@@ -64,7 +61,6 @@
 - As a group user, I should be able to react to a group post.
 - As a group user, I should be able to comment to group post.
 - As a group user, I should be able to react to group post comment.
-- As a group user, I should be able to share the group post to my timeline.
 
 
 # Scope Goals
@@ -87,6 +83,7 @@
 - [Swagger](https://swagger.io)
 ## Frontend
 - [Angular](https://angular.io)
+- [Nodejs](https://nodejs.org/en/)
 - [Typescript](https://www.typescriptlang.org)
 - [Javascript](https://www.javascript.com)
 - [HTML](https://www.w3schools.com/html/)
