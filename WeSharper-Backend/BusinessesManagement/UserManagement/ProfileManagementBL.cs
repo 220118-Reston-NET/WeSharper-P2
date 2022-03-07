@@ -17,5 +17,20 @@ namespace WeSharper.BusinessesManagement.Implements
         {
             return _repo.AddNewProfile(p_profile);
         }
+        public List<Profile> GetAllProfiles()
+        {
+            return _repo.GetAllProfiles();
+        }
+        public Profile GetAProfile(string userId)
+        {
+            return _repo.GetAProfile(userId);
+        }
+
+        public Profile UpdateProfile(Profile p_profile)
+        {
+            return _repo.UpdateProfile(p_profile);
+        }
     }
 }
+
+
