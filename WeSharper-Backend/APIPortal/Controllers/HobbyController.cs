@@ -27,49 +27,40 @@ namespace WeSharper.APIPortal.Controllers
 
         // POST: api/Hobby
         [HttpPost(RouteConfigs.Hobby)]
-        public IActionResult AddNewHobby([FromBody] string hobbyName)
+        public IActionResult AddNewHobby([FromQuery] string hobbyName)
         {
             try
             {
-                if (Regex.IsMatch(hobbyName, @"^[a-zA-Z]*$"))
+                _hobbyBL.ValidHobbyName(hobbyName);
+                Hobby _newHobby = new Hobby()
                 {
-                    Hobby _newHobby = new Hobby()
-                    {
-                        HobbyId = Guid.NewGuid().ToString(),
-                        HobbyName = hobbyName
-                    };
-                    _hobbyBL.AddNewHobby(_newHobby);
-                    Log.Information("Hobby Successfully created");
-                    return Created("Has created", _newHobby);
-                }
-                Log.Warning("Route: " + RouteConfigs.Hobby);
-                return BadRequest(new { Result = "Hobby is in the incorrect format!" });
+                    HobbyId = Guid.NewGuid().ToString(),
+                    HobbyName = hobbyName
+                };
+                _hobbyBL.AddNewHobby(_newHobby);
+                Log.Information("Hobby Successfully created");
+                return Created("Has created ", _newHobby);
             }
             catch (System.Exception exe)
             {
                 Log.Warning("Route:" + RouteConfigs.Hobby + ": " + exe.Message);
-                return Conflict(exe.Message);
+                return BadRequest(exe.Message);
             }
         }
 
         // PUT: api/Hobby
         [HttpPut(RouteConfigs.Hobby)]
-        public IActionResult UpdateHobby([FromBody] Hobby p_hobby)
+        public IActionResult UpdateHobby([FromBody] Hobby h_hobby)
         {
             try
             {
-                Hobby _hobby = new Hobby()
-                {
-                    HobbyId = p_hobby.HobbyId,
-                    HobbyName = p_hobby.HobbyName
-                };
-                _hobbyBL.UpdateHobby(_hobby);
+                _hobbyBL.UpdateHobby(h_hobby);
                 Log.Information("Hobby Successfully updated");
                 return Ok("Hobby Updated");
             }
             catch (System.Exception exe)
             {
-                return Conflict(exe.Message);
+                return BadRequest(exe.Message);
             }
         }
 

@@ -8,5 +8,7 @@ namespace WeSharper.BusinessesManagement.Interfaces
         List<Hobby> GetAllHobbies();
         Hobby UpdateHobby(Hobby h_hobby);
         Hobby DeleteHobby(Hobby h_hobby);
+        bool ValidHobbyName(string h_hobby);
+        bool CheckDuplicateHobby(string hobbyName);
     }
 }
