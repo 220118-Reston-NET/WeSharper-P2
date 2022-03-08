@@ -25,19 +25,6 @@ namespace WeSharper.DatabaseManagement.Implements
         {
             return _context.Profiles.ToList();
         }
-        public Profile GetAProfile(string userId)
-        {
-            Profile profToUpdate = _context.Profiles.FirstOrDefault(p => p.UserId == userId);
-            if(profToUpdate != null)
-            {
-                return profToUpdate;
-            }
-            else
-            {
-                throw new Exception("Profile not found");
-            }
-            
-        }
         public Profile UpdateProfile(Profile p_profile)
         {
             Profile profToUpdate = _context.Profiles.FirstOrDefault(p => p.UserId == p_profile.UserId);

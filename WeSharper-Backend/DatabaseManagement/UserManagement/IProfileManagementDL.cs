@@ -16,11 +16,6 @@ namespace WeSharper.DatabaseManagement.Interfaces
         /// <returns></returns>
         List<Profile> GetAllProfiles();
         /// <summary>
-        /// Retrieves a single profile
-        /// </summary>
-        /// <returns></returns>
-        Profile GetAProfile(string userId);
-        /// <summary>
         /// Updates a profile
         /// </summary>
         /// <param name="p_profile"></param>

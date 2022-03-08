@@ -113,7 +113,7 @@ public class ProfileManagementBLTest
         Assert.Equal(bio,_actualListOfProfiles[0].Bio);
         Assert.Equal(createdAt,_actualListOfProfiles[0].CreatedAt);
     }
-/*
+
     [Fact]
     public void Should_Get_A_Profile(){
         //Arrange
@@ -169,12 +169,12 @@ public class ProfileManagementBLTest
 
         //Assert
         //Assert.Same(_expectedListOfProfiles[0], _actualProfile);
-        Assert.Equal(p.ProfileId, _actualProfile.ProfileId);
-        // Assert.Equal(userId, _actualProfile.UserId);
-        // Assert.Equal(firstName, _actualProfile.FirstName);
-        // Assert.Equal(lastName, _actualProfile.LastName);
-        // Assert.Equal(profilePictureUrl, _actualProfile.ProfilePictureUrl);
-        // Assert.Equal(bio, _actualProfile.Bio);
-        // Assert.Equal(createdAt, _actualProfile.CreatedAt);
-    } */
+        Assert.Equal(profileId, _actualProfile.ProfileId);
+        Assert.Equal(userId, _actualProfile.UserId);
+        Assert.Equal(firstName, _actualProfile.FirstName);
+        Assert.Equal(lastName, _actualProfile.LastName);
+        Assert.Equal(profilePictureUrl, _actualProfile.ProfilePictureUrl);
+        Assert.Equal(bio, _actualProfile.Bio);
+        Assert.Equal(createdAt, _actualProfile.CreatedAt);
+    } 
 }

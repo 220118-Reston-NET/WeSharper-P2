@@ -23,9 +23,16 @@ namespace WeSharper.BusinessesManagement.Implements
         }
         public Profile GetAProfile(string userId)
         {
-            return _repo.GetAProfile(userId);
+            Profile profile = _repo.GetAllProfiles().FirstOrDefault(p => p.UserId == userId);
+            if(profile != null)       
+            {
+                return profile;
+            }
+            else
+            {
+                throw new Exception("Profile not found");
+            }
         }
-
         public Profile UpdateProfile(Profile p_profile)
         {
             return _repo.UpdateProfile(p_profile);
