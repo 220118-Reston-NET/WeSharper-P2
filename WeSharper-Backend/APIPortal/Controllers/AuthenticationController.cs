@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -13,6 +14,8 @@ using WeSharper.APIPortal.DataTransferObject;
 using WeSharper.APIPortal.DataTransferObjects;
 using WeSharper.BusinessesManagement.Interfaces;
 using WeSharper.Models;
+using System.Net.Mail;
+
 
 namespace WeSharper.APIPortal.Controllers
 {
@@ -43,12 +46,14 @@ namespace WeSharper.APIPortal.Controllers
         [HttpPost(RouteConfigs.Register)]
         public async Task<IActionResult> Register([FromBody] RegisterForm registerFrom)
         {
-
-            // //Validate the phonenumber
-            // if (string.IsNullOrEmpty(registerFrom.PhoneNumber))
             // {
-            //     return BadRequest(new { Result = "Phone number cannot be null or empty" });
+            //     return BadRequest(new { Result = "Phone number length should be greater or equal to 10" });
             // }
+            // //Validate the phonenumber
+            if (string.IsNullOrEmpty(registerFrom.PhoneNumber))
+            {
+                return BadRequest(new { Result = "Phone number cannot be null or empty" });
+            }
             // if (!registerFrom.PhoneNumber.All(Char.IsDigit))
             // {
             //     return BadRequest(new { Result = "Phone number cannot contains any letter" });
@@ -57,6 +62,29 @@ namespace WeSharper.APIPortal.Controllers
             // {
             //     return BadRequest(new { Result = "Phone number length should be greater or equal to 10" });
             // }
+            Regex phoneRegex = new Regex(@"\(?[0-9]{3}\)?\-?[0-9]{3}\-?[0-9]{4}$");
+            if( !phoneRegex.IsMatch(registerFrom.PhoneNumber) )
+            {
+                Log.Warning("Route: " + RouteConfigs.Register);
+                return BadRequest(new { Result = "Phone number is in the incorrect format" });
+            }
+            /*
+            Regex namesRegex = new Regex("^[A-Za-z]{1}[A-Za-z]")
+            if( !namesRegex.IsMatch(registerFrom.PhoneNumber) && string.IsNullOrEmpty(registerFrom.PhoneNumber) )
+            {
+                Log.Warning("Route: " + RouteConfigs.Register);
+                return BadRequest(new { Result = "user is in the incorrect format" });
+            }*/
+            /*
+            try
+            {
+                MailAddress m = new MailAddress(emailaddress);
+            }
+            catch(FormatException)
+            {
+                return BadRequest(new {Result = "Email is not in the correct format"})
+            }
+            */
 
             if (!(await _roleManager.RoleExistsAsync("User")))
             {
