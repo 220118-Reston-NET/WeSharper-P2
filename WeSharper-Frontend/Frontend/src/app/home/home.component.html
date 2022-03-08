@@ -1,1 +1,87 @@
-<p>home works!</p>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>We Sharper - Sign in!</title>
+</head>
+
+<div class="container">
+    <div class="col-sm-9"></div>
+    <div class="col-sm-4 offset-7">
+        <p class="text-end h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Login</p>
+    </div>
+
+    <div class="container col d-flex justify-content-end">
+        <form>
+            <!-- Email input -->
+            <div class="form-outline">
+                <input type="email" id="email" class="form-control" />
+                <label class="form-label" for="form2Example1">Email address</label>
+            </div>
+
+            <!-- Password input -->
+            <div class="form-outline">
+                <input type="password" id="password" class="form-control" />
+                <label class="form-label" for="form2Example2">Password</label>
+            </div>
+
+            <!-- 2 column grid layout for inline styling -->
+            <!-- <div class="row">
+            <div class="col d-flex justify-content-end">
+
+            </div>
+
+
+        </div> -->
+
+            <!-- Submit button -->
+            <div class="d-grid gap-2 mb-8">
+                <button (click)="registerToggle()" class="btn btn-primary">Login</button>
+            </div>
+
+            <!-- Register buttons -->
+            <div class="text-end">
+                <p>New? Don't have an account? <a href="#!">Sign Up!</a></p>
+            </div>
+
+        </form>
+    </div>
+
+
+
+
+
+    <!-- <div class="container mt-5">
+    <div *ngIf="!registerMode" style='text-align: right;'>
+        <h1>Welcome to WeSharper!</h1>
+        <p class="lead">Login Here</p>
+        <div>
+            <form>
+                <div class="form-floating mb-3 justify-content-end">
+                    <input type="email" id="email" name="email" id="floatingInput" placeholder="name@example.com"><br>
+                    <label for="floatingInput">Email address</label>
+                </div>
+                <div class="form-floating mb-3 justify-content-end">
+                    <input type="password" id="password" name="password" id="floatingPassword"
+                        placeholder="Password"><br>
+                    <label for="floatingPassword">Password</label>
+                </div>
+            </form>
+        </div>
+
+        <div class="d-grid gap-2 col-4 mb-3 offset-8">
+            <button (click)="registerToggle()" class="btn btn-primary">Login</button>
+
+
+
+        </div>
+    </div>
+
+    <div *ngIf="registerMode" class="container">
+        <div class="row justify-content-center">
+            <div class="col-4">
+                               <app-register (cancelRegister)="cancelRegisterMode($event)"></app-register>
+            </div>
+        </div>
+    </div>
+</div> -->
