@@ -1,0 +1,32 @@
+.top-container{
+    display: flex;
+    margin-bottom: 3rem;
+}
+.img-container{
+    width: 15rem;
+    height: 15rem;
+    background-color: black;
+}
+
+.id-button{
+    display: flex;
+    justify-content: space-between;
+    padding: 5rem;
+}
+button{
+    width: 10rem;
+}
+
+.text-box{
+    outline: 2px solid rgb(150, 150, 150);
+    padding: 1rem;
+    border-radius: 0.5rem;
+}
+
+.text-title{
+    display: flex;
+    justify-content: space-around;
+}
+a{
+    margin-right: 2rem;
+}
