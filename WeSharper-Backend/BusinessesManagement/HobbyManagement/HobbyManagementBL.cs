@@ -32,4 +32,4 @@ namespace WeSharper.BusinessesManagement.Implements
             return _repo.DeleteHobby(h_hobby);
         }
     }
-} 
+}

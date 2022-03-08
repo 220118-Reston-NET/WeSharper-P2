@@ -55,13 +55,10 @@ builder.Services.AddDbContext<WeSharperContext>(options =>
 //         .AddEntityFrameworkStores<WeSharperContext>();
 
 builder.Services.AddScoped<IProfileManagementDL>(repo => new ProfileManagementDL(new WeSharperContext(connectionString)));
-builder.Services.AddScoped<IProfileManagementBL, ProfileManagementBL>();
-
-//hobby
 builder.Services.AddScoped<IHobbyManagementDL>(repo => new HobbyManagementDL(new WeSharperContext(connectionString)));
-builder.Services.AddScoped<IHobbyManagementBL, HobbyManagementBL>();
 
-//Friends
+builder.Services.AddScoped<IProfileManagementBL, ProfileManagementBL>();
+builder.Services.AddScoped<IHobbyManagementBL, HobbyManagementBL>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -79,7 +76,6 @@ if (app.Environment.IsDevelopment())
 
 //Apply middlewares
 app.UseTokenManagerMiddleware();
-
 
 app.UseHttpsRedirection();
 
