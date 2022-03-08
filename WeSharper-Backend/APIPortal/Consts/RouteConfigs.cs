@@ -7,7 +7,6 @@ namespace WeSharper.APIPortal.Consts
         public const string Login = "Login";
 
         //USER
-        public const string Users = "Users";
         public const string UpdateProfile = "Profile";
         public const string GetAllProfiles = "GetAllProfiles";
         public const string GetAProfile = "GetAProfile";
@@ -15,7 +14,7 @@ namespace WeSharper.APIPortal.Consts
         //HOBBY
         public const string Hobby = "Hobby";
     }
-    
+
 }
 
 // add one for hobby

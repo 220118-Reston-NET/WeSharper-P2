@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WeSharper.APIPortal.Consts;
-using WeSharper.APIPortal.DataTransferObject;
 using WeSharper.APIPortal.DataTransferObjects;
 using WeSharper.BusinessesManagement.Interfaces;
 using WeSharper.DatabaseManagement.Interfaces;
@@ -19,72 +18,79 @@ namespace WeSharper.APIPortal.Controllers
     [ApiController]
     public class HobbyController : ControllerBase
     {
-        
+
         private readonly IHobbyManagementBL _hobbyBL;
-        public HobbyController(IHobbyManagementBL h_hobbyBL){
+        public HobbyController(IHobbyManagementBL h_hobbyBL)
+        {
             _hobbyBL = h_hobbyBL;
         }
-        // PUT: api/Hobby
+
+        // POST: api/Hobby
         [HttpPost(RouteConfigs.Hobby)]
-        public IActionResult AddNewHobby([FromBody] HobbyForm hobbyForm)
+        public IActionResult AddNewHobby([FromBody] string hobbyName)
         {
             try
             {
-                Regex hobbyRegex =  new Regex(@"^[a-zA-Z]$");
-                if( hobbyRegex.IsMatch(hobbyForm.HobbyName) )
+                if (Regex.IsMatch(hobbyName, @"^[a-zA-Z]*$"))
                 {
-                    Log.Warning("Route: " + RouteConfigs.Register);
-                    return BadRequest(new { Result = "Hobby is in the incorrect format" });
+                    Hobby _newHobby = new Hobby()
+                    {
+                        HobbyId = Guid.NewGuid().ToString(),
+                        HobbyName = hobbyName
+                    };
+                    _hobbyBL.AddNewHobby(_newHobby);
+                    Log.Information("Hobby Successfully created");
+                    return Created("Has created", _newHobby);
                 }
-                var newId = Guid.NewGuid().ToString();
-                Hobby h = new Hobby(){
-                    HobbyId = newId,
-                    HobbyName = hobbyForm.HobbyName
-                };
-                _hobbyBL.AddNewHobby(h);
-                Log.Information("Hobby Successfully created");
-                return Created("Has created",h);
+                Log.Warning("Route: " + RouteConfigs.Hobby);
+                return BadRequest(new { Result = "Hobby is in the incorrect format!" });
             }
-            catch(System.Exception exe)
+            catch (System.Exception exe)
             {
-                Log.Warning("Route:" + RouteConfigs.Register + ": " + exe.Message);
+                Log.Warning("Route:" + RouteConfigs.Hobby + ": " + exe.Message);
                 return Conflict(exe.Message);
             }
         }
-        // POST: api/Hobby
+
+        // PUT: api/Hobby
         [HttpPut(RouteConfigs.Hobby)]
-        public IActionResult Put([FromBody] HobbyForm hobbyForm, string HobbyID)
+        public IActionResult UpdateHobby([FromBody] Hobby p_hobby)
         {
-            try{
-                Hobby h = new Hobby(){
-                    HobbyId = HobbyID,
-                    HobbyName = hobbyForm.HobbyName
+            try
+            {
+                Hobby _hobby = new Hobby()
+                {
+                    HobbyId = p_hobby.HobbyId,
+                    HobbyName = p_hobby.HobbyName
                 };
-                _hobbyBL.UpdateHobby(h);
+                _hobbyBL.UpdateHobby(_hobby);
                 Log.Information("Hobby Successfully updated");
                 return Ok("Hobby Updated");
             }
-            catch(System.Exception exe)
+            catch (System.Exception exe)
             {
                 return Conflict(exe.Message);
             }
         }
+
         // DELETE: api/Hobby/5
         [HttpDelete(RouteConfigs.Hobby)]
-        public IActionResult Delete(Guid HobbyID)
+        public IActionResult DeleteHobby(Guid HobbyID)
         {
-            try{
-                Hobby h = new Hobby(){
+            try
+            {
+                Hobby _hobby = new Hobby()
+                {
                     HobbyId = HobbyID.ToString(),
                     HobbyName = ""
                 };
-                _hobbyBL.DeleteHobby(h);
+                _hobbyBL.DeleteHobby(_hobby);
                 Log.Information("Hobby Successfully deleted");
                 return Ok("Hobby Deleted");
             }
-            catch(System.Exception exe)
+            catch (System.Exception exe)
             {
-                Log.Warning("Route:" + RouteConfigs.Register + ": " + exe.Message);
+                Log.Warning("Route:" + RouteConfigs.Hobby + ": " + exe.Message);
                 return Conflict(exe.Message);
             }
         }

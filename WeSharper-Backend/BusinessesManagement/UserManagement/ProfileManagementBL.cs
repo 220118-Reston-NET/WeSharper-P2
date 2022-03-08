@@ -24,7 +24,7 @@ namespace WeSharper.BusinessesManagement.Implements
         public Profile GetAProfile(string userId)
         {
             Profile profile = _repo.GetAllProfiles().FirstOrDefault(p => p.UserId == userId);
-            if(profile != null)       
+            if (profile != null)
             {
                 return profile;
             }

@@ -20,37 +20,39 @@ namespace WeSharper.DatabaseManagement.Implements
 
             return h_hobby;
         }
+
         public List<Hobby> GetAllHobbies()
         {
             return _context.Hobbies.ToList();
         }
+
         public Hobby UpdateHobby(Hobby h_hobby)
         {
             Hobby hobbyToUpdate = _context.Hobbies.FirstOrDefault(h => h.HobbyId == h_hobby.HobbyId);
-                if(hobbyToUpdate != null)
-                {
-                    hobbyToUpdate.HobbyName = h_hobby.HobbyName;
-                    _context.SaveChanges();
-                }
-                else
-                {
-                    throw new Exception("No profiles found");
-                }
+            if (hobbyToUpdate != null)
+            {
+                hobbyToUpdate.HobbyName = h_hobby.HobbyName;
+                _context.SaveChanges();
+            }
+            else
+            {
+                throw new Exception("No profiles found");
+            }
             return h_hobby;
         }
+
         public Hobby DeleteHobby(Hobby h_hobby)
         {
             Hobby hobbyToRemove = _context.Hobbies.FirstOrDefault(h => h.HobbyId == h_hobby.HobbyId);
-            if(hobbyToRemove != null)
+            if (hobbyToRemove != null)
             {
                 _context.Hobbies.Remove(hobbyToRemove);
                 _context.SaveChanges();
             }
-            else 
+            else
             {
                 throw new Exception("Profile not found. Hobby could not be deleted.");
             }
-            
             return h_hobby;
         }
     }

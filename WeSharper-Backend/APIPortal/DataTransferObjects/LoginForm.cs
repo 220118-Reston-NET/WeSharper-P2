@@ -1,4 +1,4 @@
-namespace WeSharper.APIPortal.DataTransferObject
+namespace WeSharper.APIPortal.DataTransferObjects
 {
     public class LoginForm
     {

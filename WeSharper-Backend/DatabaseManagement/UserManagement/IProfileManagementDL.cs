@@ -10,11 +10,13 @@ namespace WeSharper.DatabaseManagement.Interfaces
         /// <param name="p_profile"></param>
         /// <returns></returns>
         Profile AddNewProfile(Profile p_profile);
+
         /// <summary>
         /// Gets all the profiles from the database
         /// </summary>
         /// <returns></returns>
         List<Profile> GetAllProfiles();
+
         /// <summary>
         /// Updates a profile
         /// </summary>
