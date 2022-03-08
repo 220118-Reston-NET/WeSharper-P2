@@ -13,6 +13,10 @@ namespace WeSharper.APIPortal.Consts
 
         //HOBBY
         public const string Hobby = "Hobby";
+
+        //USERPOST
+        public const string UserPosts = "UserPosts";
+        public const string UserPost = "UserPosts/{p_postID}";
     }
 
 }
