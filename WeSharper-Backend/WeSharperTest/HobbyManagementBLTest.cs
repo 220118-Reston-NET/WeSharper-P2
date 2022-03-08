@@ -125,7 +125,7 @@ public class HobbyManagementBLTest
             () => _newHobby = _hobbyBL.AddNewHobby(h)
         );
     }
-    /*
+    
     [Fact]
     public void Should_Delete_A_Hobby(){
         //Arrange
@@ -156,10 +156,10 @@ public class HobbyManagementBLTest
 
         
         //act
-        Hobby deletedHobby = hobbyBL.DeleteHobby(h);
+        Hobby deletedHobby = hobbyBL.DeleteHobby(h2);
 
         // //Assert
-        Assert.Equal(h,deletedHobby);
-    } */
+        Assert.Equal(h2,deletedHobby);
+    } 
 
 }
