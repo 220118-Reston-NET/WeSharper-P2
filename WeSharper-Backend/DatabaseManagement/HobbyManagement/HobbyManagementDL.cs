@@ -15,6 +15,7 @@ namespace WeSharper.DatabaseManagement.Implements
 
         public Hobby AddNewHobby(Hobby h_hobby)
         {
+            h_hobby.HobbyName.ToLower();
             _context.Hobbies.Add(h_hobby);
             _context.SaveChanges();
 
@@ -28,10 +29,10 @@ namespace WeSharper.DatabaseManagement.Implements
 
         public Hobby UpdateHobby(Hobby h_hobby)
         {
-            Hobby hobbyToUpdate = _context.Hobbies.FirstOrDefault(h => h.HobbyId == h_hobby.HobbyId);
+            Hobby hobbyToUpdate = _context.Hobbies.FirstOrDefault(h => h.HobbyId.ToLower() == h_hobby.HobbyId.ToLower());
             if (hobbyToUpdate != null)
             {
-                hobbyToUpdate.HobbyName = h_hobby.HobbyName;
+                hobbyToUpdate.HobbyName = h_hobby.HobbyName.ToLower();
                 _context.SaveChanges();
             }
             else
@@ -43,7 +44,7 @@ namespace WeSharper.DatabaseManagement.Implements
 
         public Hobby DeleteHobby(Hobby h_hobby)
         {
-            Hobby hobbyToRemove = _context.Hobbies.FirstOrDefault(h => h.HobbyId == h_hobby.HobbyId);
+            Hobby hobbyToRemove = _context.Hobbies.FirstOrDefault(h => h.HobbyId.ToLower() == h_hobby.HobbyId.ToLower());
             if (hobbyToRemove != null)
             {
                 _context.Hobbies.Remove(hobbyToRemove);
