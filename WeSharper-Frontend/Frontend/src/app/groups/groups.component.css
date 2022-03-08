@@ -1,0 +1,10 @@
+.image{
+    width:60rem;
+    height: 20rem;
+}
+
+.group-box{
+    border: 2px solid rgb(141, 141, 141);
+    padding: 2rem;
+    border-radius: 1rem;
+}

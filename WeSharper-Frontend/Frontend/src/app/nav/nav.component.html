@@ -1,1 +1,35 @@
-<p>nav works!</p>
+<nav class="navbar navbar navbar-expand-md navbar-dark fixed-top bg-primary">
+    <div class="container">
+        <a class="navbar-brand" routerLink="/">We#er</a>
+        <div class="container">
+
+            <ul class="navbar-nav" me-auto>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/profile" routerLinkActive="active">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/feeds" routerLinkActive="active">Feeds</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/friends" routerLinkActive="active">Friends</a>
+                    </li>                
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/groups" routerLinkActive="active">Groups</a>
+                    </li>                
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/setting" routerLinkActive="active">Setting</a>
+                    </li>           
+                </ul>
+        </div>
+
+            <div class="dropdown" dropdown>
+                <a class="dropdown-toggle text-light" dropdownToggle>Welcome</a>
+                <div class="dropdown-menu mt-3" *dropdownMenu>
+                    <a class="dropdown-item">Edit Profile</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item">Logout</a>
+                </div>
+            </div>
+        </div>
+    
+</nav>

@@ -1,7 +1,27 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { FeedsComponent } from './feeds/feeds.component';
+import { FriendsComponent } from './friends/friends.component';
+import { GroupsComponent } from './groups/groups.component';
+import { HomeComponent } from './home/home.component';
+import { ProfileComponent } from './profile/profile.component';
+import { RegisterComponent } from './register/register.component';
+import { SettingComponent } from './setting/setting.component';
 
-const routes: Routes = [];
+const routes: Routes = [
+  {path: '', component: HomeComponent},
+  {
+    path:'',
+    children:[
+      {path: 'register', component: RegisterComponent},
+      {path: 'profile', component: ProfileComponent},
+      {path: 'feeds', component: FeedsComponent},
+      {path: 'friends', component: FriendsComponent},
+      {path: 'groups', component: GroupsComponent},
+      {path: 'setting', component: SettingComponent},
+    ]
+  }
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
