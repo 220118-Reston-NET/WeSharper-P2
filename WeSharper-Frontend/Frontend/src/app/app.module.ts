@@ -16,6 +16,7 @@ import { SettingComponent } from './setting/setting.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { FriendListComponent } from './friend-list/friend-list.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { FormsModule } from '@angular/forms';
     FeedsComponent,
     GroupsComponent,
     FriendsComponent,
-    SettingComponent
+    SettingComponent,
+    FriendListComponent
   ],
   imports: [
     BrowserModule,

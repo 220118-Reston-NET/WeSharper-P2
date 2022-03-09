@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AccountService } from '../_services/account.service';
 
 @Component({
@@ -12,7 +13,7 @@ export class RegisterComponent implements OnInit {
   model: any = {}
   //users: any;
 
-  constructor(private http: HttpClient, private accountService: AccountService) { }
+  constructor(private http: HttpClient, private accountService: AccountService, private router: Router) { }
 
   ngOnInit(): void {
     //this.getUsers();
@@ -21,12 +22,11 @@ export class RegisterComponent implements OnInit {
 
   register(){
     this.accountService.register(this.model).subscribe(response => {
+      this.router.navigateByUrl('/feeds')
       console.log(response);
     }, error => {
       console.log(error);
     })
   }
-  // getUsers(){
-  //   this.http.get('https://localhost:7133/api/User/Profile').subscribe(users => this.users = users );
-  // }
+
 }
