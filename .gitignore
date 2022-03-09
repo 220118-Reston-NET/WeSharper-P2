@@ -34,12 +34,13 @@ yarn-error.log
 .history/*
 
 # Miscellaneous
-.angular/cache
+.angular
 connect.lock
 coverage
 libpeerconnection.log
 testem.log
 typings
+angular-webpack
 
 # System files
 Thumbs.db

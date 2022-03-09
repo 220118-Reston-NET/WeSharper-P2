@@ -12,7 +12,7 @@ export class AppComponent implements OnInit{
   title = 'We#er';
   users: any;
 
-  constructor(private http: HttpClient, private accountService: AccountService) {}
+  constructor(private accountService: AccountService) {}
 
   ngOnInit() {
     this.setCurrentUser();

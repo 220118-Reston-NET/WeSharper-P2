@@ -8,10 +8,11 @@ import { User } from '../_models/user';
 @Injectable({
   providedIn: 'root'
 })
+
 export class AccountService {
   baseUrl = environment.apiUrl;
   private currentUserSource = new ReplaySubject<User>(1);
-  currentUser$ = this.currentUserSource.asObservable();
+  currentUser = this.currentUserSource.asObservable();
 
   constructor(private http: HttpClient) { }
 
@@ -24,11 +25,11 @@ export class AccountService {
           this.currentUserSource.next(user);
         }
       })
-    )
+    ) 
   }
 
   register(model: any) {
-    return this.http.post(this.baseUrl + 'account/register', model).pipe(
+    return this.http.post(this.baseUrl + 'Authentication/Register', model).pipe(
       map((user: User) => {
         if (user) {
           localStorage.setItem('user', JSON.stringify(user));
