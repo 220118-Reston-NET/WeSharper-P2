@@ -57,10 +57,13 @@ builder.Services.AddDbContext<WeSharperContext>(options =>
 builder.Services.AddScoped<IProfileManagementDL>(repo => new ProfileManagementDL(new WeSharperContext(connectionString)));
 builder.Services.AddScoped<IHobbyManagementDL>(repo => new HobbyManagementDL(new WeSharperContext(connectionString)));
 builder.Services.AddScoped<IUserPostManagementDL>(repo => new UserPostManagementDL(new WeSharperContext(connectionString)));
+builder.Services.AddScoped<IFriendManagementDL>(repo => new FriendManagementDL(new WeSharperContext(connectionString)));
 
 builder.Services.AddScoped<IProfileManagementBL, ProfileManagementBL>();
 builder.Services.AddScoped<IHobbyManagementBL, HobbyManagementBL>();
 builder.Services.AddScoped<IUserPostManagementBL, UserPostManagementBL>();
+builder.Services.AddScoped<IFriendManagementBL, FriendManagementBL>();
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

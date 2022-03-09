@@ -17,6 +17,10 @@ namespace WeSharper.APIPortal.Consts
         //USERPOST
         public const string UserPosts = "UserPosts";
         public const string UserPost = "UserPosts/{p_postID}";
+
+        //Friend
+        public const string Friends = "Friend";
+        public const string Friend = "Friend/{f_userID}";
     }
 
 }

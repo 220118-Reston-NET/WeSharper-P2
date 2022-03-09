@@ -69,10 +69,10 @@ public class ProfileManagementBLTest
     }
 
     [Fact]
-    public void Should_Get_A_Profile()
+    public void Should_Get_A_New_Profile()
     {
         //Arrange
-        Profile profile1 = new Profile()
+        Profile _expectedProfile = new Profile()
         {
             ProfileId = Guid.NewGuid().ToString(),
             UserId = Guid.NewGuid().ToString(),
@@ -83,32 +83,45 @@ public class ProfileManagementBLTest
             CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"))
         };
 
-        Profile profile2 = new Profile()
+
+
+        Mock<IProfileManagementDL> _mockRepo = new Mock<IProfileManagementDL>();
+        _mockRepo.Setup(repo => repo.AddNewProfile(_expectedProfile)).Returns(_expectedProfile);
+        IProfileManagementBL _profileBL = new ProfileManagementBL(_mockRepo.Object);
+
+        //Act
+        Profile _actualProfile = new Profile();
+        _actualProfile = _profileBL.AddNewProfile(_expectedProfile);
+
+        //Assert
+        Assert.Same(_expectedProfile, _actualProfile);
+        
+    }
+    
+    [Fact]
+    public void Fail_Get_A_Profile_Because_No_Profiles()
+    {
+        //Arrange
+        Profile _expectedProfile = new Profile()
         {
             ProfileId = Guid.NewGuid().ToString(),
             UserId = Guid.NewGuid().ToString(),
-            FirstName = "JohnV2",
-            LastName = "SmithV2",
-            ProfilePictureUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTD7Q8VGyccQbLH5kWhpABbR9GjC6cK-jO9bg&usqp=CAU",
-            Bio = "DNEV2",
+            FirstName = "John",
+            LastName = "Smith",
+            ProfilePictureUrl = "https://i.kym-cdn.com/entries/icons/facebook/000/027/475/Screen_Shot_2018-10-25_at_11.02.15_AM.jpg",
+            Bio = "DNE",
             CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"))
         };
 
         List<Profile> _expectedListOfProfiles = new List<Profile>();
-        _expectedListOfProfiles.Add(profile1);
-        _expectedListOfProfiles.Add(profile2);
+        _expectedListOfProfiles.Add(_expectedProfile);
 
         Mock<IProfileManagementDL> _mockRepo = new Mock<IProfileManagementDL>();
         _mockRepo.Setup(repo => repo.GetAllProfiles()).Returns(_expectedListOfProfiles);
         IProfileManagementBL _profileBL = new ProfileManagementBL(_mockRepo.Object);
 
-        //Act
-        Profile _actualProfile = new Profile();
-        _actualProfile = _profileBL.GetAProfile(profile2.UserId);
-
-        //Assert
-        Assert.Same(profile2, _actualProfile);
-        Assert.Equal(profile2.ProfileId, _actualProfile.ProfileId);
-        Assert.Equal(profile2.FirstName, _actualProfile.FirstName);
-    }
+        Assert.Throws<Exception>(() => _profileBL.GetAProfile("asdf") );
+        
+    } 
+    
 }
