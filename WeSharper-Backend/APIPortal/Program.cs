@@ -22,6 +22,7 @@ var key = builder.Configuration["Token:Key"];
 var connectionString = builder.Configuration.GetConnectionString("Reference2DB");
 
 builder.Services.AddSingleton<IAccessTokenManager, AccessTokenManager>();
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddDistributedMemoryCache();
 
 //Identity Role
