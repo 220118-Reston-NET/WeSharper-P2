@@ -1,4 +1,4 @@
-# We#er(WeSharper) - Project 2 - Revature
+# We#er(WeSharper) - Project 2 - Revature 
 
 # Contributors
 - [Jasmine Tseng](https://github.com/JasmineTseng7)
