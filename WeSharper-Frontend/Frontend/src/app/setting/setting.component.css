@@ -1,0 +1,16 @@
+.set_text
+{
+    margin-left: 180px; 
+}
+
+.imgset
+{
+    float:left;
+    padding-left: 15px;
+    
+}
+
+.content {
+    max-width: 800px;
+    margin: auto;
+  }
