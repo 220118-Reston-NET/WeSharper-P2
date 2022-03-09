@@ -21,6 +21,11 @@ namespace WeSharper.BusinessesManagement.Implements
             return _repo.AddNewUserPost(p_post);
         }
 
+        public List<Post> GetFeedsByUserID(string p_userID)
+        {
+            return _repo.GetFeedsByUserID(p_userID);
+        }
+
         public Post GetUserPost(string p_postID)
         {
             return GetUserPosts().Find(p => p.PostId.Equals(p_postID));

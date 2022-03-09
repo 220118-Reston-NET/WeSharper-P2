@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using WeSharper.APIPortal.Consts;
 using WeSharper.APIPortal.DataTransferObjects;
@@ -18,21 +20,64 @@ namespace APIPortal.Controllers
     public class UserPostController : ControllerBase
     {
         private readonly IUserPostManagementBL _userPBL;
-        public UserPostController(IUserPostManagementBL userPBL)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly string? given_name;
+        public UserPostController(IUserPostManagementBL userPBL,
+                                    IHttpContextAccessor httpContextAccessor,
+                                    UserManager<ApplicationUser> userManager)
         {
             _userPBL = userPBL;
+            _httpContextAccessor = httpContextAccessor;
+            _userManager = userManager;
+
+            var token = _httpContextAccessor.HttpContext.Request.Headers["authorization"].Single().Split(" ").Last();
+            var tokenHandler = new JwtSecurityTokenHandler();
+            given_name = tokenHandler.ReadJwtToken(token).Payload["given_name"].ToString();
+        }
+
+        /*
+            FEEDS API
+        */
+        //GET: api/UserPost
+        [Authorize(Roles = "User")]
+        [HttpGet(RouteConfigs.Feeds)]
+        public async Task<IActionResult> GetFeeds()
+        {
+            var userFromDB = await _userManager.FindByNameAsync(given_name);
+            string p_cusID = userFromDB.UserName;
+
+            try
+            {
+                var result = _userPBL.GetFeedsByUserID(p_cusID);
+                Log.Information("Route: " + RouteConfigs.Feeds);
+                Log.Information("Get all new feeds for user!");
+
+                return Ok(result);
+            }
+            catch (System.Exception e)
+            {
+                Log.Warning("Route: " + RouteConfigs.Feeds);
+                Log.Warning(e.Message);
+
+                return NotFound(new { Results = "Cannot find any new feeds for this user!" });
+            }
         }
 
         /*
             USER POST APIs
         */
         //GET: api/UserPost
+        [Authorize(Roles = "User")]
         [HttpGet(RouteConfigs.UserPosts)]
-        public IActionResult GetUserPosts()
+        public async Task<IActionResult> GetUserPosts()
         {
+            var userFromDB = await _userManager.FindByNameAsync(given_name);
+            var p_cusID = userFromDB.Id;
+
             try
             {
-                var result = _userPBL.GetUserPostsByUserID("7638146b-4454-4d4a-be7e-86a5acbd82f0");
+                var result = _userPBL.GetUserPostsByUserID(p_cusID);
                 Log.Information("Route: " + RouteConfigs.UserPosts);
                 Log.Information("Get all user posts!");
 
