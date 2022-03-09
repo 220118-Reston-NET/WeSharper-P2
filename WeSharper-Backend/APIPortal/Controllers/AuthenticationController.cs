@@ -78,7 +78,9 @@ namespace WeSharper.APIPortal.Controllers
                 _profileBL.AddNewProfile(new Profile()
                 {
                     ProfileId = Guid.NewGuid().ToString(),
-                    UserId = userFromDB.Id
+                    UserId = userFromDB.Id,
+                    FirstName = registerFrom.FirstName,
+                    LastName = registerFrom.LastName
                 });
 
                 // Add default role to user("User")
