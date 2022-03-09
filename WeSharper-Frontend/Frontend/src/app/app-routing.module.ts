@@ -4,24 +4,25 @@ import { FeedsComponent } from './feeds/feeds.component';
 import { FriendsComponent } from './friends/friends.component';
 import { GroupsComponent } from './groups/groups.component';
 import { HomeComponent } from './home/home.component';
+import { NewPostComponent } from './new-post/new-post.component';
 import { ProfileComponent } from './profile/profile.component';
 import { RegisterComponent } from './register/register.component';
 import { SettingComponent } from './setting/setting.component';
 import { AuthGuard } from './_authGuards/auth.guard';
 
 const routes: Routes = [
-  {path: '', component: HomeComponent},
-  {path: 'register', component: RegisterComponent},
+  { path: '', component: HomeComponent },
+  { path: 'register', component: RegisterComponent },
   {
-    path:'',
+    path: '',
     runGuardsAndResolvers: 'always',
     canActivate: [AuthGuard],
-    children:[
-      {path: 'profile', component: ProfileComponent},
-      {path: 'feeds', component: FeedsComponent},
-      {path: 'friends', component: FriendsComponent},
-      {path: 'groups', component: GroupsComponent},
-      {path: 'setting', component: SettingComponent},
+    children: [
+      { path: 'profile', component: ProfileComponent },
+      { path: 'feeds', component: FeedsComponent },
+      { path: 'friends', component: FriendsComponent },
+      { path: 'groups', component: GroupsComponent },
+      { path: 'setting', component: SettingComponent },
     ]
   }
 ];

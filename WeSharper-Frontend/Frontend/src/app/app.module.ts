@@ -16,6 +16,8 @@ import { SettingComponent } from './setting/setting.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { NewPostComponent } from './new-post/new-post.component';
+import { NewGroupPostComponent } from './new-group-post/new-group-post.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { FormsModule } from '@angular/forms';
     FeedsComponent,
     GroupsComponent,
     FriendsComponent,
-    SettingComponent
+    SettingComponent,
+    NewPostComponent,
+    NewGroupPostComponent
   ],
   imports: [
     BrowserModule,
