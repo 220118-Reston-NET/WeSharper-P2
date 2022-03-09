@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WeSharper.APIPortal.Consts;
@@ -11,24 +12,27 @@ using WeSharper.Models;
 
 namespace APIPortal.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UserPostController : ControllerBase
     {
         private readonly IUserPostManagementBL _userPBL;
-
         public UserPostController(IUserPostManagementBL userPBL)
         {
             _userPBL = userPBL;
         }
 
+        /*
+            USER POST APIs
+        */
         //GET: api/UserPost
         [HttpGet(RouteConfigs.UserPosts)]
-        public IActionResult GetUserPosts([FromQuery] string p_userID)
+        public IActionResult GetUserPosts()
         {
             try
             {
-                var result = _userPBL.GetUserPostsByUserID(p_userID);
+                var result = _userPBL.GetUserPostsByUserID("7638146b-4454-4d4a-be7e-86a5acbd82f0");
                 Log.Information("Route: " + RouteConfigs.UserPosts);
                 Log.Information("Get all user posts!");
 
@@ -118,5 +122,10 @@ namespace APIPortal.Controllers
                 return NotFound(e.Message);
             }
         }
+
+        /*
+            USER POST COMMENT APIs
+        */
+        // api/UserPost
     }
 }

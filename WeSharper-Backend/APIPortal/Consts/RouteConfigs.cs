@@ -17,6 +17,9 @@ namespace WeSharper.APIPortal.Consts
         //USERPOST
         public const string UserPosts = "UserPosts";
         public const string UserPost = "UserPosts/{p_postID}";
+      
+        public const string UserPostComments = "UserPosts/{p_postID}/Comments";
+        public const string UserPostReactions = "UserPosts/{p_postID}/Reactions";
 
         //Friend
         public const string Friends = "Friend";
@@ -24,5 +27,3 @@ namespace WeSharper.APIPortal.Consts
     }
 
 }
-
-// add one for hobby

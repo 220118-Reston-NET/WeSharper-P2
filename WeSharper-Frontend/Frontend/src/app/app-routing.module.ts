@@ -7,13 +7,16 @@ import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
 import { RegisterComponent } from './register/register.component';
 import { SettingComponent } from './setting/setting.component';
+import { AuthGuard } from './_authGuards/auth.guard';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
+  {path: 'register', component: RegisterComponent},
   {
     path:'',
+    runGuardsAndResolvers: 'always',
+    canActivate: [AuthGuard],
     children:[
-      {path: 'register', component: RegisterComponent},
       {path: 'profile', component: ProfileComponent},
       {path: 'feeds', component: FeedsComponent},
       {path: 'friends', component: FriendsComponent},

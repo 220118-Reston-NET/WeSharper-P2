@@ -10,6 +10,43 @@
 *.userosscache
 *.sln.docstates
 
+# Hyunsoo From frontend gitignore list
+# Compiled output
+dist
+tmp
+out-tsc
+bazel-out
+
+# Node
+npm-debug.log
+yarn-error.log
+
+# IDEs and editors
+.idea/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# Visual Studio Code
+.history/*
+
+# Miscellaneous
+.angular
+connect.lock
+coverage
+libpeerconnection.log
+testem.log
+typings
+angular-webpack
+
+# System files
+Thumbs.db
+
+###############################################
+
 # Added
 bin
 obj
@@ -404,3 +441,4 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+

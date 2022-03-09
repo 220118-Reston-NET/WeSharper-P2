@@ -7,6 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using WeSharper.APIPortal.AuthenticationService.Implements;
 using WeSharper.APIPortal.AuthenticationService.Interfaces;
 using WeSharper.APIPortal.AuthenticationService.Middlewares;
+using WeSharper.APIPortal.Middleware;
 using WeSharper.BusinessesManagement.Implements;
 using WeSharper.BusinessesManagement.Interfaces;
 using WeSharper.DatabaseManagement.Implements;
@@ -81,6 +82,7 @@ if (app.Environment.IsDevelopment())
 
 //Apply middlewares
 app.UseTokenManagerMiddleware();
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseHttpsRedirection();
 

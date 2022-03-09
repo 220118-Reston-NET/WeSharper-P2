@@ -1,40 +1,37 @@
-// import { Component, OnInit } from '@angular/core';
-
-// @Component({
-//   selector: 'app-home',
-//   templateUrl: './home.component.html',
-//   styleUrls: ['./home.component.css']
-// })
-// export class HomeComponent implements OnInit {
-
-//   constructor() { }
-
-//   ngOnInit(): void {
-//   }
-
-// }
-import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AccountService } from '../_services/account.service';
+
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
-  registerMode = false;
 
-  constructor() { }
+export class HomeComponent implements OnInit {
+  model: any = {}
+  users: any;
+  constructor(public accountService: AccountService, private router: Router) { }
 
   ngOnInit(): void {
   }
-
-  registerToggle() {
-    this.registerMode = !this.registerMode;
+  
+  login(){
+    this.accountService.login(this.model).subscribe(response => {
+      this.router.navigateByUrl('/feeds');
+    }, error => {
+      console.log(error);
+    })
   }
+  
 
-  cancelRegisterMode(event: boolean) {
-    this.registerMode = event;
+
+  logout(){
+    this.accountService.logout();
+    this.router.navigateByUrl('/');
+
   }
 
 }
