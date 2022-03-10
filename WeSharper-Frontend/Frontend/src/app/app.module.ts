@@ -18,6 +18,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FriendListComponent } from './friend-list/friend-list.component';
 import { ToastrModule } from 'ngx-toastr';
+import { NewPostComponent } from './new-post/new-post.component';
+import { NewGroupPostComponent } from './new-group-post/new-group-post.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +33,8 @@ import { ToastrModule } from 'ngx-toastr';
     FriendsComponent,
     SettingComponent,
     FriendListComponent
+    NewPostComponent,
+    NewGroupPostComponent
   ],
   imports: [
     BrowserModule,

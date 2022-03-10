@@ -25,7 +25,8 @@ namespace WeSharper.APIPortal.Controllers
     public class UserController : ControllerBase
     {
         private readonly IProfileManagementBL _profileBL;
-        public UserController(IProfileManagementBL p_profileBL){
+        public UserController(IProfileManagementBL p_profileBL)
+        {
             _profileBL = p_profileBL;
         }
 
@@ -33,14 +34,15 @@ namespace WeSharper.APIPortal.Controllers
         [HttpGet(RouteConfigs.GetAllProfiles)]
         public IActionResult GetAllProfiles()
         {
-            
-            try{
-                Log.Information("Getting All Profiles");
-                return Ok(_profileBL.GetAllProfiles() );
-            }
-            catch(System.Exception exe)
+
+            try
             {
-                Log.Warning("Route:" + RouteConfigs.Hobby + ": " +  exe.Message);
+                Log.Information("Getting All Profiles");
+                return Ok(_profileBL.GetAllProfiles());
+            }
+            catch (System.Exception exe)
+            {
+                Log.Warning("Route:" + RouteConfigs.Hobby + ": " + exe.Message);
                 return Conflict(exe.Message);
             }
         }
@@ -52,9 +54,9 @@ namespace WeSharper.APIPortal.Controllers
             try
             {
                 Log.Information("Getting a profile");
-                return Ok( _profileBL.GetAProfile(userId) );
+                return Ok(_profileBL.GetAProfile(userId));
             }
-            catch(System.Exception exe)
+            catch (System.Exception exe)
             {
                 Log.Warning("Route:" + RouteConfigs.Hobby + ": " + exe.Message);
                 return NotFound(exe.Message);
@@ -65,12 +67,13 @@ namespace WeSharper.APIPortal.Controllers
         [HttpPut(RouteConfigs.UpdateProfile)]
         public IActionResult UpdateProfile([FromQuery] Profile ProfileForm)
         {
-            try{
+            try
+            {
                 _profileBL.UpdateProfile(ProfileForm);
                 Log.Information("Profile successfully updated for " + ProfileForm.FirstName + " " + ProfileForm.LastName);
                 return Ok("Profile Updated");
             }
-            catch(System.Exception exe)
+            catch (System.Exception exe)
             {
                 Log.Warning("Route:" + RouteConfigs.Hobby + ": " + exe.Message);
                 return NotFound(exe.Message);
