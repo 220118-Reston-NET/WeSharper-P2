@@ -47,11 +47,11 @@ namespace WeSharper.APIPortal.Controllers
             }
             catch (System.Exception exe)
             {
-                Log.Warning("Route:" + RouteConfigs.Friend + ": " + exe.Message);
+                Log.Warning("Route:" + RouteConfigs.Friends + ": " + exe.Message);
                 return BadRequest(exe.Message);
             }
         }
-
+        /* for admin
         // Get: api/Friend
         [HttpGet(RouteConfigs.Friends)]
         public IActionResult GetAllFriends()
@@ -62,11 +62,11 @@ namespace WeSharper.APIPortal.Controllers
             }
             catch(System.Exception exe)
             {
-                Log.Warning("Route:" + RouteConfigs.Hobby + ": " +  exe.Message);
+                Log.Warning("Route:" + RouteConfigs.Friends + ": " +  exe.Message);
                 return Conflict(exe.Message);
             }
         }
-
+        */
         // Get: api/Friend
         [HttpGet(RouteConfigs.Friend)]
         public IActionResult GetUserFriends(string f_userID)
@@ -77,7 +77,7 @@ namespace WeSharper.APIPortal.Controllers
             }
             catch(System.Exception exe)
             {
-                Log.Warning("Route:" + RouteConfigs.Hobby + ": " +  exe.Message);
+                Log.Warning("Route:" + RouteConfigs.Friend + ": " +  exe.Message);
                 return Conflict(exe.Message);
             }
         }
@@ -104,7 +104,7 @@ namespace WeSharper.APIPortal.Controllers
             }
             catch (System.Exception exe)
             {
-                Log.Warning("Route:" + RouteConfigs.Friend + ": " + exe.Message);
+                Log.Warning("Route:" + RouteConfigs.Friends + ": " + exe.Message);
                 return BadRequest(exe.Message);
             }
         }
@@ -121,7 +121,39 @@ namespace WeSharper.APIPortal.Controllers
             }
             catch (System.Exception exe)
             {
-                Log.Warning("Route:" + RouteConfigs.Friend + ": " + exe.Message);
+                Log.Warning("Route:" + RouteConfigs.Friends + ": " + exe.Message);
+                return Conflict(exe.Message);
+            }
+        }
+
+        [HttpGet(RouteConfigs.UnconfirmedSentFriends)]
+        public IActionResult GetUserUnconfirmedSentFriends(Guid f_userID)
+        {
+            try
+            {
+                List<Friend> listOfUnacceptedSentFriendRequests = _friendBL.GetUnacceptedSentRequests(f_userID.ToString());
+                Log.Information("Retrieved unaccepted sent friend requests");
+                return Ok(listOfUnacceptedSentFriendRequests);
+            }
+            catch (System.Exception exe)
+            {
+                Log.Warning("Route:" + RouteConfigs.UnconfirmedSentFriends + ": " + exe.Message);
+                return Conflict(exe.Message);
+            }
+        }
+
+        [HttpGet(RouteConfigs.UserPendingFriendRequests)]
+        public IActionResult GetUserPendingFriendRequests(Guid f_userID)
+        {
+            try
+            {
+                List<Friend> listOfUnacceptedRecievedFriendRequests= _friendBL.GetUserPendingFriendRequests(f_userID.ToString());
+                Log.Information("Retrieved unaccepted friend requests");
+                return Ok(listOfUnacceptedRecievedFriendRequests);
+            }
+            catch (System.Exception exe)
+            {
+                Log.Warning("Route:" + RouteConfigs.UnconfirmedSentFriends + ": " + exe.Message);
                 return Conflict(exe.Message);
             }
         }

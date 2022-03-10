@@ -60,11 +60,13 @@ builder.Services.AddScoped<IProfileManagementDL, ProfileManagementDL>();
 builder.Services.AddScoped<IHobbyManagementDL, HobbyManagementDL>();
 builder.Services.AddScoped<IUserPostManagementDL, UserPostManagementDL>();
 builder.Services.AddScoped<IFriendManagementDL, FriendManagementDL>();
+builder.Services.AddScoped<IGroupManagementDL, GroupManagementDL>();
 
 builder.Services.AddScoped<IProfileManagementBL, ProfileManagementBL>();
 builder.Services.AddScoped<IHobbyManagementBL, HobbyManagementBL>();
 builder.Services.AddScoped<IUserPostManagementBL, UserPostManagementBL>();
 builder.Services.AddScoped<IFriendManagementBL, FriendManagementBL>();
+builder.Services.AddScoped<IGroupManagementBL, GroupManagementBL>();
 
 builder.Services.AddControllers();
 // builder.Services.AddControllers().AddNewtonsoftJson(options =>
