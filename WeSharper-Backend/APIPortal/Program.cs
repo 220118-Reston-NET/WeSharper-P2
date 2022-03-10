@@ -60,11 +60,13 @@ builder.Services.AddScoped<IProfileManagementDL>(repo => new ProfileManagementDL
 builder.Services.AddScoped<IHobbyManagementDL>(repo => new HobbyManagementDL(new WeSharperContext(connectionString)));
 builder.Services.AddScoped<IUserPostManagementDL>(repo => new UserPostManagementDL(new WeSharperContext(connectionString)));
 builder.Services.AddScoped<IFriendManagementDL>(repo => new FriendManagementDL(new WeSharperContext(connectionString)));
+builder.Services.AddScoped<IGroupManagementDL>(repo => new GroupManagementDL(new WeSharperContext(connectionString)));
 
 builder.Services.AddScoped<IProfileManagementBL, ProfileManagementBL>();
 builder.Services.AddScoped<IHobbyManagementBL, HobbyManagementBL>();
 builder.Services.AddScoped<IUserPostManagementBL, UserPostManagementBL>();
 builder.Services.AddScoped<IFriendManagementBL, FriendManagementBL>();
+builder.Services.AddScoped<IGroupManagementBL, GroupManagementBL>();
 
 
 builder.Services.AddControllers();

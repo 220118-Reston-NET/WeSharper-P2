@@ -16,14 +16,17 @@ namespace WeSharper.BusinessesManagement.Implements
         public Friend SendFriendRequest(Friend f_friend)
         {
             // check to see if friend request is already in database
-            List<Friend> tempFriendList = _repo.GetAllFriends().Where(p => (p.RequestedUserId == f_friend.RequestedUserId) && (p.AcceptedUserId == f_friend.AcceptedUserId) ||
-                                                                           (p.RequestedUserId == f_friend.AcceptedUserId)  && (p.AcceptedUserId == f_friend.RequestedUserId)).ToList();
-            if(tempFriendList.Any())
+            try
+            {
+                Friend tempFriend = CheckFriend(f_friend.RequestedUserId,f_friend.AcceptedUserId);
+                return _repo.AddFriend(f_friend);
+            }
+            catch
             {
                 throw new Exception("Error, friend request already sent/recieved");
             }
 
-            return _repo.AddFriend(f_friend);
+            
         }
         public List<Friend> GetAllFriends()
         {
@@ -53,25 +56,12 @@ namespace WeSharper.BusinessesManagement.Implements
         } 
         public Friend UpdateFriendRequest(Friend f_friend)
         {
+            
             try
             {
-                try
-                {
-                    return(_repo.UpdateFriend(f_friend));
-                }
-                catch(System.Exception exe)
-                {
-                    Friend _newFriend = new Friend()
-                    {
-                        RelationshipId = null,
-                        RequestedUserId = f_friend.AcceptedUserId,
-                        AcceptedUserId = f_friend.RequestedUserId,
-                        IsAccepted = f_friend.IsAccepted,
-                        Relationship = f_friend.Relationship,
-                        CreatedAt = null
-                    };
-                    return (_repo.UpdateFriend(_newFriend));
-                }
+                Friend tempFriend = CheckFriend(f_friend.RequestedUserId,f_friend.AcceptedUserId);
+                f_friend.RelationshipId = tempFriend.RelationshipId;
+                return(_repo.UpdateFriend(f_friend));
             }
             catch(System.Exception exe)
             {
@@ -82,53 +72,57 @@ namespace WeSharper.BusinessesManagement.Implements
         {
             try
             {
-                try
-                {
-                    Friend _newFriend = new Friend()
-                    {
-                        RelationshipId = null,
-                        RequestedUserId = userId,
-                        AcceptedUserId = friendId,
-                        IsAccepted = false,
-                        Relationship = null,
-                        CreatedAt = null
-                    };
-                    return(_repo.DeleteFriend(_newFriend));
-                }
-                catch(System.Exception exe)
-                {
-                    Friend _newFriend = new Friend()
-                    {
-                        RelationshipId = null,
-                        RequestedUserId = friendId,
-                        AcceptedUserId = userId,
-                        IsAccepted = false,
-                        Relationship = null,
-                        CreatedAt = null
-                    };
-                    return (_repo.DeleteFriend(_newFriend));
-                }
+                Friend tempFriend = CheckFriend(userId,friendId);
+                return(_repo.DeleteFriend(tempFriend));
             }
             catch(System.Exception exe)
             {
                 throw new Exception(exe.Message);
             }
         }
-        /*
-        
-        bool ValidFriendName(string f_friend);
-        
-        public List<Friend> GetFriendsRequests(string userId)
+
+        public List<Friend> GetUnacceptedSentRequests(string userId)
         {
-            List<Friend> friends = _repo.GetAllFriends().Select(p => (p.RequestedUserId == userId) && (p.IsAccepted == true));
-            if (friends == null)
+            List<Friend> friends = _repo.GetAllFriends().Where(p => (p.RequestedUserId == userId) && (p.IsAccepted == false)).ToList();
+            if (!friends.Any())
             {
-                throw new Exception("Friend not found");
+                throw new Exception("No friend request sent");
             }
             else
             {
-                return friends.Concat(friends2) ;
+                return friends;
             }
-        } */
+        }
+        public List<Friend> GetUserPendingFriendRequests(string userId)
+        {
+            List<Friend> friends = _repo.GetAllFriends().Where(p => (p.AcceptedUserId == userId) && (p.IsAccepted == false)).ToList();
+            if (!friends.Any())
+            {
+                throw new Exception("No pending friend requests");
+            }
+            else
+            {
+                return friends;
+            }
+        }
+        
+        
+        public Friend CheckFriend(string userId, string friendId)
+        {
+            Friend friend = _repo.GetAllFriends().FirstOrDefault(p => (p.RequestedUserId == userId) && (p.AcceptedUserId == friendId) ||
+                                                                            (p.RequestedUserId == friendId)  && (p.AcceptedUserId == userId));
+            if(friend == null)
+            {
+                throw new Exception("User has no relations with this person");
+            }
+            else
+            {
+                return friend;
+            }
+        }
+        /*
+        bool ValidFriendName(string f_friend);
+        
+        */
     }
 }

@@ -37,26 +37,31 @@ namespace WeSharper.DatabaseManagement.Implements
 
         public Friend UpdateFriend(Friend f_friend)
         {
-            Friend friendToUpdate = _context.Friends.Where(f => f.RequestedUserId == f_friend.RequestedUserId)
-                                                    .Where( f => f.AcceptedUserId == f_friend.AcceptedUserId ).FirstOrDefault();
+            Friend friendToUpdate = _context.Friends.Where(f => f.RelationshipId == f_friend.RelationshipId).FirstOrDefault();
             if (friendToUpdate != null)
             {
                 if(friendToUpdate.IsAccepted == false && f_friend.IsAccepted == true)
                 {
                     friendToUpdate.CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"));
                     friendToUpdate.Relationship = f_friend.Relationship;
+                    if(friendToUpdate.RequestedUserId != f_friend.RequestedUserId)
+                    {
+                        friendToUpdate.RequestedUserId = f_friend.RequestedUserId;
+                        friendToUpdate.AcceptedUserId = f_friend.AcceptedUserId;
+                    }
                 }
                 if(friendToUpdate.IsAccepted == true && f_friend.IsAccepted == false)
                 {
                     friendToUpdate.CreatedAt = null;
                     friendToUpdate.Relationship = null;
                 }
+                
                 friendToUpdate.IsAccepted = f_friend.IsAccepted;
                 _context.SaveChanges();
             }
             else
             {
-                throw new Exception("No profiles found");
+                throw new Exception("No friends found");
             }
             return f_friend;
         }
@@ -72,7 +77,7 @@ namespace WeSharper.DatabaseManagement.Implements
             }
             else
             {
-                throw new Exception("Profile not found. Friend could not be deleted.");
+                throw new Exception("Friend not found. Friend could not be deleted.");
             }
             return f_friend;
         }
