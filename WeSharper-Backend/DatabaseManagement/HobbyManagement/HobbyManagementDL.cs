@@ -15,7 +15,6 @@ namespace WeSharper.DatabaseManagement.Implements
 
         public Hobby AddNewHobby(Hobby h_hobby)
         {
-            h_hobby.HobbyName.ToLower();
             _context.Hobbies.Add(h_hobby);
             _context.SaveChanges();
 

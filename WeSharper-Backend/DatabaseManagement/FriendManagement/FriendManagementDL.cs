@@ -15,10 +15,18 @@ namespace WeSharper.DatabaseManagement.Implements
 
         public Friend AddFriend(Friend f_friend)
         {
-            _context.Friends.Add(f_friend);
+            Friend newFriend = new Friend(){
+                RelationshipId = f_friend.RelationshipId,
+                RequestedUserId = f_friend.RequestedUserId,
+                AcceptedUserId = f_friend.AcceptedUserId,
+                IsAccepted = false,
+                Relationship = null,
+                CreatedAt = null
+            };
+            _context.Friends.Add(newFriend);
             _context.SaveChanges();
 
-            return f_friend;
+            return newFriend;
         }
 
         public List<Friend> GetAllFriends()
@@ -26,14 +34,24 @@ namespace WeSharper.DatabaseManagement.Implements
             return _context.Friends.ToList();
         }
 
+
         public Friend UpdateFriend(Friend f_friend)
         {
             Friend friendToUpdate = _context.Friends.Where(f => f.RequestedUserId == f_friend.RequestedUserId)
                                                     .Where( f => f.AcceptedUserId == f_friend.AcceptedUserId ).FirstOrDefault();
             if (friendToUpdate != null)
             {
+                if(friendToUpdate.IsAccepted == false && f_friend.IsAccepted == true)
+                {
+                    friendToUpdate.CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"));
+                    friendToUpdate.Relationship = f_friend.Relationship;
+                }
+                if(friendToUpdate.IsAccepted == true && f_friend.IsAccepted == false)
+                {
+                    friendToUpdate.CreatedAt = null;
+                    friendToUpdate.Relationship = null;
+                }
                 friendToUpdate.IsAccepted = f_friend.IsAccepted;
-                friendToUpdate.Relationship = f_friend.Relationship;
                 _context.SaveChanges();
             }
             else

@@ -15,7 +15,9 @@ import { FriendsComponent } from './friends/friends.component';
 import { SettingComponent } from './setting/setting.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FriendListComponent } from './friend-list/friend-list.component';
+import { ToastrModule } from 'ngx-toastr';
 import { NewPostComponent } from './new-post/new-post.component';
 import { NewGroupPostComponent } from './new-group-post/new-group-post.component';
 
@@ -30,6 +32,7 @@ import { NewGroupPostComponent } from './new-group-post/new-group-post.component
     GroupsComponent,
     FriendsComponent,
     SettingComponent,
+    FriendListComponent,
     NewPostComponent,
     NewGroupPostComponent
   ],
@@ -40,6 +43,10 @@ import { NewGroupPostComponent } from './new-group-post/new-group-post.component
     FontAwesomeModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
+    ToastrModule.forRoot({
+      positionClass:"toast-bottom-right"
+    }),
     //BsDropdownModule.forRoot(),
   ],
   providers: [],

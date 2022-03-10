@@ -60,6 +60,7 @@ namespace WeSharper.APIPortal.Controllers
             }
             catch (System.Exception exe)
             {
+                Log.Warning("Route:" + RouteConfigs.Hobby + ": " + exe.Message);
                 return BadRequest(exe.Message);
             }
         }
