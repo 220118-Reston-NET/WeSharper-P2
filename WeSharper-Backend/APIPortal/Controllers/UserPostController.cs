@@ -39,13 +39,13 @@ namespace APIPortal.Controllers
         /*
             FEEDS API
         */
-        //GET: api/UserPost
+        //GET: api/UserPost/Feeds
         [Authorize(Roles = "User")]
         [HttpGet(RouteConfigs.Feeds)]
         public async Task<IActionResult> GetFeeds()
         {
             var userFromDB = await _userManager.FindByNameAsync(given_name);
-            string p_cusID = userFromDB.UserName;
+            string p_cusID = userFromDB.Id;
 
             try
             {
@@ -67,7 +67,7 @@ namespace APIPortal.Controllers
         /*
             USER POST APIs
         */
-        //GET: api/UserPost
+        //GET: api/UserPost/UserPosts
         [Authorize(Roles = "User")]
         [HttpGet(RouteConfigs.UserPosts)]
         public async Task<IActionResult> GetUserPosts()
@@ -92,17 +92,18 @@ namespace APIPortal.Controllers
             }
         }
 
-        //GET: api/UserPost/5
+        //GET: api/UserPost/UserPosts/5
+        [Authorize(Roles = "User")]
         [HttpGet(RouteConfigs.UserPost)]
         public IActionResult GetUserPost(string p_postID)
         {
             try
             {
-                var result = _userPBL.GetUserPost(p_postID);
+                Post userPost = _userPBL.GetUserPost(p_postID);
                 Log.Information("Route: " + RouteConfigs.UserPost);
                 Log.Information("Get user post!");
 
-                return Ok(result);
+                return Ok(userPost);
             }
             catch (System.Exception e)
             {
@@ -113,16 +114,19 @@ namespace APIPortal.Controllers
             }
         }
 
-        //POST: api/UserPost
+        //POST: api/UserPost/UserPosts
+        [Authorize(Roles = "User")]
         [HttpPost(RouteConfigs.UserPosts)]
-        public IActionResult PostUserPost([FromBody] UserPost p_post)
+        public async Task<IActionResult> PostUserPost([FromBody] UserPost p_post)
         {
+            var userFromDB = await _userManager.FindByNameAsync(given_name);
+            var p_cusID = userFromDB.Id;
+
             try
             {
                 Post _newPost = new Post()
                 {
-                    PostId = Guid.NewGuid().ToString(),
-                    UserId = p_post.UserId,
+                    UserId = p_cusID,
                     PostContent = p_post.PostContent,
                     PostPhoto = p_post.PostPhoto
                 };
@@ -141,15 +145,20 @@ namespace APIPortal.Controllers
             }
         }
 
-        //PUT: api/UserPost/5
+        //PUT: api/UserPost/UserPosts/5
+        [Authorize(Roles = "User")]
         [HttpPut(RouteConfigs.UserPost)]
-        public IActionResult UpdateUserPost(string p_postID, [FromBody] UserPost p_post)
+        public async Task<IActionResult> UpdateUserPost(string p_postID, [FromBody] UserPost p_post)
         {
+            var userFromDB = await _userManager.FindByNameAsync(given_name);
+            var p_cusID = userFromDB.Id;
+
             try
             {
                 Post _updatedPost = new Post()
                 {
                     PostId = p_postID,
+                    UserId = p_cusID,
                     PostContent = p_post.PostContent,
                     PostPhoto = p_post.PostPhoto
                 };
@@ -171,6 +180,166 @@ namespace APIPortal.Controllers
         /*
             USER POST COMMENT APIs
         */
-        // api/UserPost
+        //POST: api/UserPost/UserPosts/5/Comments
+        [Authorize(Roles = "User")]
+        [HttpPost(RouteConfigs.UserPostComments)]
+        public async Task<IActionResult> PostUserPostComment(string p_postID, string p_comment)
+        {
+            var userFromDB = await _userManager.FindByNameAsync(given_name);
+            var p_cusID = userFromDB.Id;
+
+            try
+            {
+                PostComment _newPostComment = new PostComment()
+                {
+                    PostId = p_postID,
+                    UserId = p_cusID,
+                    PostComment1 = p_comment
+                };
+                var result = _userPBL.AddNewUserPostComment(_newPostComment);
+                Log.Information("Route: " + RouteConfigs.UserPostComments);
+                Log.Information("Posted new user post comment!");
+
+                return Created("Posted new comment!", result);
+            }
+            catch (System.Exception e)
+            {
+                Log.Warning("Route: " + RouteConfigs.UserPostComments);
+                Log.Warning(e.Message);
+
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        //PUT: api/UserPost/UserPosts/5/Comments/5
+        [Authorize(Roles = "User")]
+        [HttpPut(RouteConfigs.UserPostComment)]
+        public async Task<IActionResult> UpdateUserPostComment(string p_postID, string p_postCommentID, string p_comment)
+        {
+            var userFromDB = await _userManager.FindByNameAsync(given_name);
+            var p_cusID = userFromDB.Id;
+
+            try
+            {
+                PostComment _updatePostComment = new PostComment()
+                {
+                    PostId = p_postID,
+                    UserId = p_cusID,
+                    CommentId = p_postCommentID,
+                    PostComment1 = p_comment
+                };
+                var result = _userPBL.UpdateUserPostComment(_updatePostComment);
+                Log.Information("Route: " + RouteConfigs.UserPostComment);
+                Log.Information("Updated user post comment!");
+
+                return Ok(result);
+            }
+            catch (System.Exception e)
+            {
+                Log.Warning("Route: " + RouteConfigs.UserPostComment);
+                Log.Warning(e.Message);
+
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        //DELETE: api/UserPost/UserPosts/5/Comments/5
+        [Authorize(Roles = "User")]
+        [HttpDelete(RouteConfigs.UserPostComment)]
+        public async Task<IActionResult> DeleteUserPostComment(string p_postID, string p_postCommentID)
+        {
+            var userFromDB = await _userManager.FindByNameAsync(given_name);
+            var p_cusID = userFromDB.Id;
+
+            try
+            {
+                PostComment _deletedPostComment = new PostComment()
+                {
+                    PostId = p_postID,
+                    UserId = p_cusID,
+                    CommentId = p_postCommentID
+                };
+                var result = _userPBL.DeleteUserPostComment(_deletedPostComment);
+                Log.Information("Route: " + RouteConfigs.UserPostComment);
+                Log.Information("Deleted user post comment!");
+
+                return Ok("Deleted user post comment!");
+            }
+            catch (System.Exception e)
+            {
+                Log.Warning("Route: " + RouteConfigs.UserPostComment);
+                Log.Warning(e.Message);
+
+                return Conflict(e.Message);
+            }
+        }
+
+        /*
+            USER POST REACTION APIs
+        */
+        //POST: api/UserPost/UserPosts/5/Reactions
+        [Authorize(Roles = "User")]
+        [HttpPost(RouteConfigs.UserPostReactions)]
+        public async Task<IActionResult> ReactUserPost(string p_postID, string p_reactID)
+        {
+            var userFromDB = await _userManager.FindByNameAsync(given_name);
+            var p_cusID = userFromDB.Id;
+
+            try
+            {
+                PostReact _postReaction = new PostReact()
+                {
+                    PostId = p_postID,
+                    UserId = p_cusID,
+                    ReactId = p_reactID
+                };
+                var result = _userPBL.ReactUserPost(_postReaction);
+                Log.Information("Route: " + RouteConfigs.UserPostReactions);
+                Log.Information("Reacted user post!");
+
+                return Ok(result);
+            }
+            catch (System.Exception e)
+            {
+                Log.Warning("Route: " + RouteConfigs.UserPostReactions);
+                Log.Warning(e.Message);
+
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        /*
+            USER POST COMMENT REACTION APIs
+        */
+        //POST: api/UserPost/UserPosts/5/Comments/5/Reactions
+        [Authorize(Roles = "User")]
+        [HttpPost(RouteConfigs.UserPostCommentReactions)]
+        public async Task<IActionResult> ReactUserPostCommment(string p_postID, string p_postCommentID, string p_reactID)
+        {
+            var userFromDB = await _userManager.FindByNameAsync(given_name);
+            var p_cusID = userFromDB.Id;
+
+            try
+            {
+                PostCommentReact _postCommentReaction = new PostCommentReact()
+                {
+                    CommentId = p_postCommentID,
+                    UserId = p_cusID,
+                    ReactId = p_reactID
+                };
+                var result = _userPBL.ReactUserPostComment(_postCommentReaction);
+                Log.Information("Route: " + RouteConfigs.UserPostCommentReactions);
+                Log.Information("Reacted user post comment!");
+
+                return Ok(result);
+            }
+            catch (System.Exception e)
+            {
+                Log.Warning("Route: " + RouteConfigs.UserPostCommentReactions);
+                Log.Warning(e.Message);
+
+                return StatusCode(500, e.Message);
+            }
+        }
     }
 }
