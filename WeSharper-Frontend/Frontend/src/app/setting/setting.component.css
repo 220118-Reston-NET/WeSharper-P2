@@ -1,16 +1,178 @@
 .set_text
 {
-    margin-left: 180px; 
+    margin-left: 200px;
+}
+
+
+#uploadBtn{
+    height: 41px;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    background: rgba(0, 0, 0, 0.7);
+    color: wheat;
+    line-height: 30px;
+    font-family: sans-serif;
+    font-size: 15px;
+    cursor: pointer;
+    display: none;
 }
 
 .imgset
 {
     float:left;
     padding-left: 15px;
+    height: 150px !important;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
     
 }
 
-.content {
-    max-width: 800px;
-    margin: auto;
+
+  .box {
+    display: none;
   }
+
+  .column1 {
+    float: left;
+    width: 60%;
+  }
+
+  .column2 {
+    float: right;
+    width: 40%;
+    padding-top: 30px;
+    padding-left: 100px;
+  }
+
+  .column5 {
+    float: right;
+    width: 40%;
+  }
+
+  .column3 {
+    float: right;
+    width: 40%;
+    margin-left: 25px;
+  }
+
+  .column4 {
+    float: right;
+    width: 50%;
+    margin-left: 42px;
+  }
+
+
+  table {
+    border: 1px solid;
+    
+  }
+  
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+  
+h1{
+    font-family: sans-serif;
+    text-align: center;
+    font-size: 30px;
+    color: #222;
+}
+
+.profile-pic-div{
+    
+    position: absolute;
+    transform: translate(-50%,-50%);
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1px solid grey;
+    float:left;
+    height: 150px !important;
+    width: 150px !important;
+    display: block;
+    margin-top: 40px;
+    margin-left: 100px;
+    margin-right: auto;
+    padding-bottom: 20px;
+}
+
+#photo{
+    height: 100%;
+    width: 100%;
+}
+
+.wrapper
+{
+    height: 150px;
+    width: 160px;
+    position: relative;
+    border: 5px solid #000;
+    border-radius: 50%;
+    background: url('/assets/profil_img_setting.png');
+    background-size: 100% 100%;
+    display: block;
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: auto;
+    padding-bottom: 20px;
+    overflow: hidden;
+}
+
+
+.my_file
+{
+    position: absolute;
+    bottom: 0;
+    outline: none;
+    color: transparent;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 2px 25px;
+    cursor: pointer;
+    transition: 0.5s;
+    background: rgba(0,0,0,0.5);
+
+}
+.my_file::-webkit- file-upload-button
+{
+    visibility: hidden;
+}
+
+.my_file::before
+{
+    content: '\f030';
+    font-family: fontAwesome;
+    font-size: 40px;
+    color: #fff;
+    display: inline-block;
+    -webkit-user-select: none;
+}
+
+.my_file::after
+{
+    content: 'Update';
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    display: block;
+    font-size: 10px;
+    position: absolute;
+}
+
+
+.rectangle-7 {
+	width: 300px;
+	height: 300px;
+	padding: 8px 8px 8px 8px;
+	background: #ffffff;
+	border-color: #000000;
+	border-width: 1px;
+	border-style: solid;
+}
+

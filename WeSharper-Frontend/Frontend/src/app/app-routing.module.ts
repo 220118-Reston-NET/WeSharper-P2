@@ -10,18 +10,19 @@ import { SettingComponent } from './setting/setting.component';
 import { AuthGuard } from './_authGuards/auth.guard';
 
 const routes: Routes = [
-  {path: '', component: HomeComponent},
-  {path: 'register', component: RegisterComponent},
+
+  { path: '', component: HomeComponent },
+  { path: 'register', component: RegisterComponent },
   {
-    path:'',
+    path: '',
     runGuardsAndResolvers: 'always',
     canActivate: [AuthGuard],
-    children:[
-      {path: 'profile', component: ProfileComponent},
-      {path: 'feeds', component: FeedsComponent},
-      {path: 'friends', component: FriendsComponent},
-      {path: 'groups', component: GroupsComponent},
-      {path: 'setting', component: SettingComponent},
+    children: [
+      { path: 'profile', component: ProfileComponent },
+      { path: 'feeds', component: FeedsComponent },
+      { path: 'friends', component: FriendsComponent },
+      { path: 'groups', component: GroupsComponent },
+      { path: 'setting', component: SettingComponent },
     ]
   }
 ];
