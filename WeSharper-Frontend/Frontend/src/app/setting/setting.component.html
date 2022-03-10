@@ -1,24 +1,54 @@
 <section class="content" style="background-color: #fff;">
-    <img src="https://www.improvutopia.com/wp-content/uploads/2016/02/empty.png.jpeg" width="150px" class=" imgset rounded mx-auto d-block" alt="...">
-   
-    <div class="set_text">   
-    <h4 style="margin-top: 2rem !important;">Id: ex) We#er</h4>
-    <a href="#"><h5>Change Profil Picture</h5></a>
-    </div> 
 <br>
 <br>
 
-<div class="container py-4">
+
+    <div class="profile-pic-div">
+    <img src="../assets/profil_img_setting.png" id="photo">
+  </div>
+
+    <div class="set_text">   
+      <h6>Username</h6>
+      <h6>Joined date</h6>
+      <label for="photo"><p style="font-weight: bold;">Change Profile Photo</p></label>
+      <input type="file" name="photo" accept="image/*">
     
-    <form>
+      </div>
   
+  
+    <!--
+   <div id="change_picture" class="set_text">
+    <a href="#"><h6>Change Profil Picture</h6></a>
+   </div>
+
+    <div class="set_text">
+    <label for="photo"></label>
+    <input type="file" id="photo" name="photo" accept="image/*">
+    </div>
+    -->
+
+<br>
+<br>
+
+<div class="row">
+<div class="column3">
+  <p>Hobbies: Computer, Cooking, ... </p>
+</div>
+<div class="column4" >
+  <button class="btn-primary" style="border-radius: 5%;">Update Hobby</button>
+</div>
+</div>
+
+<div class=" row container py-4">
+    <div class="column1">
+    <form>
       <div class="mb-3">
-        <label class="form-label">Username</label>
+        <label class="form-label">First Name</label>
         <input class="form-control" type="text"/>
       </div>
   
       <div class="mb-3">
-        <label class="form-label">Website</label>
+        <label class="form-label">Last Name</label>
         <input class="form-control" type="text" />
       </div>
   
@@ -44,5 +74,39 @@
     </form>
   
   </div>
-  
+
+
+<div class="column2">
+  <div class="rectangle-7">
+    <div class="row">
+
+      <div class="column1">
+        <button class="btn-primary" style="margin-top: 30px; width: 100px;" >GYM</button>
+      </div>
+
+      <div class="column5">
+        <button class="btn-primary" style="margin-top: 30px; width: 100px;">Music</button>
+      </div>
+
+      <div class="column1">
+        <button class="btn-primary" style="margin-top: 30px; width: 100px;">IT</button>
+      </div>
+
+      <div class="column5">
+        <button class="btn-primary" style="margin-top: 30px; width: 100px;">Cars</button>
+      </div>
+
+      <div class="column1">
+        <button class="btn-primary" style="margin-top: 30px; width: 100px;">Cooking</button>
+      </div>
+
+      <div class="column5">
+        <button class="btn-primary" style="margin-top: 30px; width: 100px;">Drawing</button>
+      </div>
+
+    </div>
+    <button class="btn-primary" style="margin-left: 40%; margin-top: 70px;" >Save</button>
+  </div>
+</div>
+</div>
   </section>
