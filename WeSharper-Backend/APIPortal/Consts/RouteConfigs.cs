@@ -27,6 +27,13 @@ namespace WeSharper.APIPortal.Consts
         //Friend
         public const string Friends = "Friend";
         public const string Friend = "Friend/{f_userID}";
+        public const string UnconfirmedSentFriends = "Friend/UnconirmedSent/{f_userID}";
+        public const string UserPendingFriendRequests = "Friend/PendingFriendRequests/{f_userID}";
+
+        //Group
+        public const string Groups = "Group";
+        public const string Group = "Group/{g_userId}";
+        
     }
 
 }

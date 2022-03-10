@@ -56,20 +56,22 @@ builder.Services.AddDbContext<WeSharperContext>(options =>
 // builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
 //         .AddEntityFrameworkStores<WeSharperContext>();
 
-builder.Services.AddScoped<IProfileManagementDL>(repo => new ProfileManagementDL(new WeSharperContext(connectionString)));
-builder.Services.AddScoped<IHobbyManagementDL>(repo => new HobbyManagementDL(new WeSharperContext(connectionString)));
-builder.Services.AddScoped<IUserPostManagementDL>(repo => new UserPostManagementDL(new WeSharperContext(connectionString)));
-builder.Services.AddScoped<IFriendManagementDL>(repo => new FriendManagementDL(new WeSharperContext(connectionString)));
+builder.Services.AddScoped<IProfileManagementDL, ProfileManagementDL>();
+builder.Services.AddScoped<IHobbyManagementDL, HobbyManagementDL>();
+builder.Services.AddScoped<IUserPostManagementDL, UserPostManagementDL>();
+builder.Services.AddScoped<IFriendManagementDL, FriendManagementDL>();
+builder.Services.AddScoped<IGroupManagementDL, GroupManagementDL>();
 
 builder.Services.AddScoped<IProfileManagementBL, ProfileManagementBL>();
 builder.Services.AddScoped<IHobbyManagementBL, HobbyManagementBL>();
 builder.Services.AddScoped<IUserPostManagementBL, UserPostManagementBL>();
 builder.Services.AddScoped<IFriendManagementBL, FriendManagementBL>();
+builder.Services.AddScoped<IGroupManagementBL, GroupManagementBL>();
 
-
-builder.Services.AddControllers().AddNewtonsoftJson(options =>
-    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-);
+builder.Services.AddControllers();
+// builder.Services.AddControllers().AddNewtonsoftJson(options =>
+//     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+// );
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
