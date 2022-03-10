@@ -4,8 +4,6 @@ import { FeedsComponent } from './feeds/feeds.component';
 import { FriendsComponent } from './friends/friends.component';
 import { GroupsComponent } from './groups/groups.component';
 import { HomeComponent } from './home/home.component';
-import { NewGroupPostComponent } from './new-group-post/new-group-post.component';
-import { NewPostComponent } from './new-post/new-post.component';
 import { ProfileComponent } from './profile/profile.component';
 import { RegisterComponent } from './register/register.component';
 import { SettingComponent } from './setting/setting.component';
