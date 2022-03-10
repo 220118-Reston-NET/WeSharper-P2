@@ -1,8 +1,31 @@
-<h1>friend list</h1>
-<table>
+<h1 class="text-center">Friends</h1>
+<table class="table table-hover align-middle">
     <tbody>
         <tr *ngFor="let friend of listOfFriends">
-            <td>{{friend.}}</td>
+            <td><img class="img-thumbnail" src="{{friend.profilePictureUrl}}" alt="profile"></td>
+            <td >{{friend.firstName}} {{friend.lastName}}</td>
+            <td><button class="btn btn-primary">Remove</button></td>
+        </tr>
+    </tbody>
+</table>
+<h1 class="text-center">Follow Request</h1>
+<table class="table table-hover align-middle">
+    <tbody>
+        <tr *ngFor="let friend of listOfFriends">
+            <td><img class="img-thumbnail" src="{{friend.profilePictureUrl}}" alt="profile"></td>
+            <td >{{friend.firstName}} {{friend.lastName}}</td>
+            <td><button class="btn btn-primary">Confirm</button></td>
+            <td><button class="btn btn-primary">Delete</button></td>
+        </tr>
+    </tbody>
+</table>
+<h1 class="text-center">Requested</h1>
+<table class="table table-hover align-middle">
+    <tbody>
+        <tr *ngFor="let friend of listOfFriends">
+            <td><img class="img-thumbnail" src="{{friend.profilePictureUrl}}" alt="profile"></td>
+            <td >{{friend.firstName}} {{friend.lastName}}</td>
+            <td><button class="btn btn-primary">Requested</button></td>
         </tr>
     </tbody>
 </table>

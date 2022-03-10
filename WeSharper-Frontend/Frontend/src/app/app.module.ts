@@ -15,8 +15,9 @@ import { FriendsComponent } from './friends/friends.component';
 import { SettingComponent } from './setting/setting.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FriendListComponent } from './friend-list/friend-list.component';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,10 @@ import { FriendListComponent } from './friend-list/friend-list.component';
     FontAwesomeModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
+    ToastrModule.forRoot({
+      positionClass:"toast-bottom-right"
+    }),
     //BsDropdownModule.forRoot(),
   ],
   providers: [],

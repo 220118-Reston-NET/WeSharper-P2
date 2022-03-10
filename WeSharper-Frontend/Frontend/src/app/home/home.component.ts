@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { AccountService } from '../_services/account.service';
 
 
@@ -13,7 +14,9 @@ import { AccountService } from '../_services/account.service';
 export class HomeComponent implements OnInit {
   model: any = {}
   users: any;
-  constructor(public accountService: AccountService, private router: Router) { }
+  constructor(public accountService: AccountService, 
+          private router: Router, 
+          private toastr: ToastrService) { }
 
   ngOnInit(): void {
   }
@@ -23,6 +26,7 @@ export class HomeComponent implements OnInit {
       this.router.navigateByUrl('/feeds');
     }, error => {
       console.log(error);
+      this.toastr.error(error.error);
     })
   }
   
