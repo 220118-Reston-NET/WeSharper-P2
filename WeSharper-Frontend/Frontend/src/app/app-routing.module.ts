@@ -25,8 +25,8 @@ const routes: Routes = [
       { path: 'friends', component: FriendsComponent },
       { path: 'groups', component: GroupsComponent },
       { path: 'setting', component: SettingComponent },
-      { path: 'new group post', component: NewGroupPostComponent },
-      { path: 'new post', component: NewPostComponent },
+      { path: 'newgrouppost', component: NewGroupPostComponent },
+      { path: 'newpost', component: NewPostComponent },
     ]
   }
 ];
