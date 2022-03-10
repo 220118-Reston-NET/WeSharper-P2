@@ -32,7 +32,7 @@ import { NewGroupPostComponent } from './new-group-post/new-group-post.component
     GroupsComponent,
     FriendsComponent,
     SettingComponent,
-    FriendListComponent
+    FriendListComponent,
     NewPostComponent,
     NewGroupPostComponent
   ],
