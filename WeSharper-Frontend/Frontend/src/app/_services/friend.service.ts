@@ -15,9 +15,8 @@ export class FriendService {
   
   constructor(private http: HttpClient) { }
 
-  getAllFriends(): Observable<Friend[]>
+  getAllFriends(): Observable<any[]>
   {
-    //return this.http.get<Friend[]>(this.baseUrl + 'Friend/Friend');
-    return this.http.get<Friend[]>(this.baseUrl + 'Friend/Friend');
+    return this.http.get<any[]>(this.baseUrl + 'Friend/AllFriends');
   }
 }

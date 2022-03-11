@@ -1,14 +1,14 @@
 <div class="container">
     <div class="container top-container">
         
-        <div class="container img-container">
-            <img src="/assets/pokemon.png" class="img_profil rounded mx-auto d-block" alt="...">
+        <div class="col-md-2">
+            <img [src]='profile.profilePictureUrl' style="height:9rem; width:9rem;" alt="...">
         </div>
 
-        <div>
-            <div class="row">
+        <div class="col-md-10">
+            <div class="row" >
                 <div class="column1">
-                    <h4 style="margin-left: 50px;">Username</h4>
+                    <h4 style="margin-left: 50px;">{{profile.firstName}} {{profile.lastName}}</h4>
                 </div>
 
                 <div class="column2">
@@ -20,7 +20,8 @@
             </div>
             
             <h5 style="margin-left: 50px;" >About Me</h5>
-            <p style="margin-top: 10px; margin-left: 50px;">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Corporis autem consectetur esse doloribus quod possimus dolores qui porro alias nesciunt. Est ea officiis assumenda repudiandae cum facere, repellendus harum ab. Est ea officiis assumenda repudiandae cum facere, repellendus harum ab.</p>
+            <p style="margin-top: 10px; margin-left: 50px;">{{profile.bio}}</p>
+            <p style="margin-top: 10px; margin-left: 50px;">Joined at: {{profile.createdAt}}</p>
 
         </div>
         

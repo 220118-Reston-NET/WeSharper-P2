@@ -1,4 +1,4 @@
-<h1 class="text-center">Friends</h1>
+<!-- <h1 class="text-center">Friends</h1>
 
     <table class="table table-hover align-middle">
         <tbody>
@@ -31,4 +31,17 @@
             <td><button class="btn btn-primary">Requested</button></td>
         </tr>
     </tbody>
+</table> -->
+<h1 class="text-center">Everyone</h1>
+<table class="table table-hover align-middle">
+    <tbody>
+        <tr *ngFor="let friend of listOfFriends">
+            <td><img class="img-thumbnail" [src]='friend.friendProfileInformation.profilePictureUrl ?? "../../assets/profil_img_setting.png"' alt="profile"></td>      
+            <td>{{friend.friendProfileInformation.firstName}} {{friend.friendProfileInformation.lastName}}</td>
+            <td>{{friend.relationship.relationshipId}}</td>
+            <td><button class="btn btn-primary">Requested</button></td>
+        </tr>
+    </tbody>
 </table>
+
+
