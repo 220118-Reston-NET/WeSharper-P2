@@ -40,5 +40,8 @@ namespace WeSharper.APIPortal.Consts
         public const string GroupPostComment = "{p_groupID}/Posts/{p_groupPostID}/Comments/{p_groupPostCommentID}";
         public const string GroupPostReactions = "{p_groupID}/Posts/{p_groupPostID}/Reactions";
         public const string GroupPostCommentReactions = "{p_groupID}/Posts/{p_groupPostID}/Comments/{p_groupPostCommentID}/Reactions";
+
+        //MESSAGE
+        public const string CreateMessage = "";
     }
 }

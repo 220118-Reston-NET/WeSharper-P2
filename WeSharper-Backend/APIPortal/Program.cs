@@ -51,6 +51,8 @@ builder.Services.AddAuthentication(x =>
     };
 });
 
+builder.Services.AddSignalR();
+
 builder.Services.AddDbContext<WeSharperContext>(options =>
         options.UseSqlServer(connectionString));
 // builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
@@ -61,12 +63,17 @@ builder.Services.AddScoped<IHobbyManagementDL, HobbyManagementDL>();
 builder.Services.AddScoped<IUserPostManagementDL, UserPostManagementDL>();
 builder.Services.AddScoped<IFriendManagementDL, FriendManagementDL>();
 builder.Services.AddScoped<IGroupManagementDL, GroupManagementDL>();
+builder.Services.AddScoped<IGroupPostManagementDL, GroupPostManagementDL>();
+builder.Services.AddScoped<IMessageManagementDL, MessageManagementDL>();
 
 builder.Services.AddScoped<IProfileManagementBL, ProfileManagementBL>();
 builder.Services.AddScoped<IHobbyManagementBL, HobbyManagementBL>();
 builder.Services.AddScoped<IUserPostManagementBL, UserPostManagementBL>();
 builder.Services.AddScoped<IFriendManagementBL, FriendManagementBL>();
 builder.Services.AddScoped<IGroupManagementBL, GroupManagementBL>();
+builder.Services.AddScoped<IGroupPostManagementBL, GroupPostManagementBL>();
+builder.Services.AddScoped<IMessageManagementBL, MessageManagementBL>();
+
 
 builder.Services.AddControllers().AddJsonOptions(x =>
                 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
