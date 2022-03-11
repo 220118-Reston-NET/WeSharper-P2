@@ -43,9 +43,10 @@ import { NewGroupPostComponent } from './new-group-post/new-group-post.component
     FontAwesomeModule,
     HttpClientModule,
     FormsModule,
+    FontAwesomeModule,
     ReactiveFormsModule,
     ToastrModule.forRoot({
-      positionClass:"toast-bottom-right"
+      positionClass: "toast-bottom-right"
     }),
     //BsDropdownModule.forRoot(),
   ],
