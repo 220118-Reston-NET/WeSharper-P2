@@ -8,7 +8,7 @@ import { FriendService } from '../_services/friend.service';
   styleUrls: ['./friend-list.component.css']
 })
 export class FriendListComponent implements OnInit {
-  listOfFriends: Friend[];
+  listOfFriends: any[];
 
   constructor(private friendService: FriendService) { 
     this.listOfFriends = [];
@@ -26,9 +26,5 @@ export class FriendListComponent implements OnInit {
       console.log(error);
     })
   }
-
-
-
-
 
 }
