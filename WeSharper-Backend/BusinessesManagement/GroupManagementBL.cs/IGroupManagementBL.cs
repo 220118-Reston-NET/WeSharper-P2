@@ -38,5 +38,18 @@ namespace WeSharper.BusinessesManagement.Interfaces
         Group DeleteGroup(string userId, string groupId);
         public Group CheckGroupManager(string groupId, string userId);
         public Group CheckGroupId(string groupId);
+
+
+        // Group User
+        //GroupUser SendNewGroupUserRequest(GroupUser g_groupUser);
+        List<GroupUser> GetAllGroupUsers();
+        List<GroupUser> GetApprovedUsersInGroup(string groupId);
+        
+        List<GroupUser> GetGroupUnapprovedJoinRequests(string groupId);
+/*        GroupUser UpdateGroupUser(GroupUser g_groupUser);
+        GroupUser BanGroupUser(GroupUser g_groupUser);
+        GroupUser UnbanGroupUser(GroupUser g_groupUser);
+        GroupUser DeleteGroupUser(GroupUser g_groupUser); */
+        bool CheckValidGroupUser(string groupId, string userId); 
     }
 }

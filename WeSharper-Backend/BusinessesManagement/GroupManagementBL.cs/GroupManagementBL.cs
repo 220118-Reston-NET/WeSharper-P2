@@ -79,7 +79,7 @@ namespace WeSharper.BusinessesManagement.Implements
                 throw new Exception(exe.Message);
             }
         }
-        //
+        
         public Group DeleteGroup(string groupId, string managerId)
         {
             try
@@ -90,6 +90,112 @@ namespace WeSharper.BusinessesManagement.Implements
             {
                 throw new Exception(exe.Message);
             }
+        }
+
+        // GroupUser
+/*        public GroupUser SendNewGroupUserRequest(GroupUser g_groupUser)
+        {
+            g_groupUser.IsBanned = false;
+            g_groupUser.IsApproved = false;
+            return _repo.SendNewGroupUserRequest(g_groupUser);
+        } */
+        public List<GroupUser> GetAllGroupUsers()
+        {
+            List<GroupUser> allGroupUsers = _repo.GetAllGroupUsers();
+            if( !allGroupUsers.Any() )
+            {
+                throw new Exception("No one has any groups");
+            }
+            else
+            {
+                return allGroupUsers; 
+            }
+        }
+        public List<GroupUser> GetApprovedUsersInGroup(string groupId)
+        {
+            List<GroupUser> acceptedUserInGroups = _repo.GetGroupApprovedUsersInGroup(groupId);
+            if( !acceptedUserInGroups.Any() )
+            {
+                throw new Exception("No one has any groups");
+            }
+            else
+            {
+                return acceptedUserInGroups;
+            }
+        }
+        public List<GroupUser> GetGroupUnapprovedJoinRequests(string groupId)
+        {
+            try
+            {
+                List<GroupUser> joinRequests = GetAllGroupUsers().Where(g => (g.GroupId == groupId) && (!g.IsApproved)).ToList();
+                return joinRequests;
+            }
+            catch (System.Exception exe)
+            {
+                throw new Exception(exe.Message);
+            }
         } 
+/*        public GroupUser UpdateGroupUser(GroupUser g_groupUser)
+        {
+            try
+            {
+                CheckGroupId(g_groupUser.GroupId);
+                CheckValidGroupUser(g_groupUser.GroupId, g_groupUser.UserId);
+                return(_repo.UpdateGroupUser(g_groupUser));
+            }
+            catch(System.Exception exe)
+            {
+                throw new Exception(exe.Message);
+            } 
+        }
+        public GroupUser BanGroupUser(GroupUser g_groupUser)
+        {
+            try
+            {
+                CheckGroupId(g_groupUser.GroupId);
+                CheckValidGroupUser(g_groupUser.GroupId, g_groupUser.UserId);
+                return(_repo.BanGroupUser(g_groupUser));
+            }
+            catch(System.Exception exe)
+            {
+                throw new Exception(exe.Message);
+            }
+        }
+        public GroupUser UnbanGroupUser(GroupUser g_groupUser)
+        {
+            try
+            {
+                CheckGroupId(g_groupUser.GroupId);
+                CheckValidGroupUser(g_groupUser.GroupId, g_groupUser.UserId);
+                return(_repo.UnbanGroupUser(g_groupUser));
+            }
+            catch(System.Exception exe)
+            {
+                throw new Exception(exe.Message);
+            }
+        }
+        public GroupUser DeleteGroupUser(GroupUser g_groupUser)
+        {
+            try
+            {
+                CheckGroupId(g_groupUser.GroupId);
+                CheckValidGroupUser(g_groupUser.GroupId, g_groupUser.UserId);
+                return(_repo.DeleteGroupUser(g_groupUser));
+            }
+            catch(System.Exception exe)
+            {
+                throw new Exception(exe.Message);
+            }
+        } */
+        public bool CheckValidGroupUser(string groupId, string userId)
+        {
+            GroupUser tempGroupUser = _repo.GetAllGroupUsers().FirstOrDefault(g => (g.UserId == userId) && (g.GroupId == groupId));
+            if(tempGroupUser == null)
+            {
+                throw new Exception("Invalid user in group");
+            }
+            return true;
+        } 
+        
     }
 }

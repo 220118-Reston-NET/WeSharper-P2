@@ -27,5 +27,21 @@ namespace WeSharper.DatabaseManagement.Interfaces
         /// <param name="g_group"></param>
         /// <returns></returns>
         Group DeleteGroup(string groupId, string groupManagerId);
+
+        // group user
+
+        /// <summary>
+        /// Sends a request for a user to join a group
+        /// </summary>
+        /// <param name="g_groupUser"></param>
+        /// <returns></returns>
+        
+        GroupUser SendNewGroupUserRequest(GroupUser g_groupUser);
+        List<GroupUser> GetAllGroupUsers();
+        List<GroupUser> GetGroupApprovedUsersInGroup(string groupId);
+        GroupUser UpdateGroupUser(GroupUser g_groupUser);
+        GroupUser BanGroupUser(GroupUser g_groupUser);
+        GroupUser UnbanGroupUser(GroupUser g_groupUser);
+        GroupUser DeleteGroupUser(GroupUser g_groupUser); 
     }
 }

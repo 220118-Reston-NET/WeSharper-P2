@@ -9,10 +9,8 @@ namespace WeSharper.Models
 {
     public partial class WeSharperContext : IdentityDbContext<ApplicationUser, IdentityRole, string>
     {
-        private readonly string _connectionString;
-        public WeSharperContext(string connectionString)
+        public WeSharperContext()
         {
-            _connectionString = connectionString;
         }
 
         public WeSharperContext(DbContextOptions<WeSharperContext> options)
@@ -38,10 +36,6 @@ namespace WeSharper.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlServer(_connectionString);
-            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
