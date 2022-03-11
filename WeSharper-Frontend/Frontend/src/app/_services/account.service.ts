@@ -41,6 +41,8 @@ export class AccountService {
   }
 
   setCurrentUser(user: User) {
+    user.friend = [];
+    const token = this.getDecodeToken(user.token);
     this.currentUserSource.next(user);
   }
 
@@ -49,4 +51,7 @@ export class AccountService {
     this.currentUserSource.next(null);
   }
 
+  getDecodeToken(token){
+    return JSON.parse(atob(token.split('.')[1]));
+  }
 }
