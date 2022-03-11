@@ -40,7 +40,7 @@ import { LoaderInterceptor } from './_interceptors/loader.interceptor';
     NewPostComponent,
     NewGroupPostComponent,
     PostComponent,
-    ProfileUserComponent
+    ProfileUserComponent,
     MessagesComponent
   ],
   imports: [
