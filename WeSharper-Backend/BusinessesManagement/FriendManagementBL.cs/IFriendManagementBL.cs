@@ -41,5 +41,9 @@ namespace WeSharper.BusinessesManagement.Interfaces
         /// <param name="userId"></param>
         /// <param name="friendId"></param>
         /// <returns></returns>
+        Friend CheckFriend(string userId, string friendId);
+        List<Friend> GetUnacceptedSentRequests(string userId);
+        List<Friend> GetUserPendingFriendRequests(string userId);
+        
     }
 }

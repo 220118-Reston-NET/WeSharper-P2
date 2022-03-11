@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using WeSharper.DatabaseManagement.Interfaces;
 using WeSharper.Models;
 
@@ -46,14 +47,14 @@ namespace WeSharper.DatabaseManagement.Implements
                                   join f in _context.Friends
                                   on p.UserId equals f.AcceptedUserId
                                   where f.RequestedUserId == p_userID
-                                    && f.IsAccepted == true
+                                    && f.IsAccepted
                                   select p)
                                   .Union
                                   (from p in _context.Posts
                                    join f in _context.Friends
                                    on p.UserId equals f.RequestedUserId
                                    where f.AcceptedUserId == p_userID
-                                      && f.IsAccepted == true
+                                      && f.IsAccepted
                                    select p)
                                     .ToList();
 
@@ -77,16 +78,40 @@ namespace WeSharper.DatabaseManagement.Implements
 
         public List<Post> GetUserPosts()
         {
-            var _result = _context.Posts.ToList();
-            foreach (var item in _result)
-            {
-                item.PostComments = GetPostCommentsByPostID(item.PostId);
-                foreach (var item2 in item.PostComments)
-                {
-                    item2.PostCommentReacts = GetPostCommentReactionsByCommentID(item2.CommentId);
-                }
-                item.PostReacts = GetPostReactionsByPostID(item.PostId);
-            }
+            var _result = _context.Posts
+                                .Select(p => new Post
+                                {
+                                    PostId = p.PostId,
+                                    UserId = p.UserId,
+                                    PostContent = p.PostContent,
+                                    PostPhoto = p.PostPhoto,
+                                    IsDeleted = p.IsDeleted,
+                                    CreatedAt = p.CreatedAt,
+                                    PostComments = p.PostComments
+                                                    .Select(pc => new PostComment
+                                                    {
+                                                        CommentId = pc.CommentId,
+                                                        UserId = pc.UserId,
+                                                        PostComment1 = pc.PostComment1,
+                                                        IsDeleted = pc.IsDeleted,
+                                                        CreatedAt = pc.CreatedAt,
+                                                        PostCommentReacts = pc.PostCommentReacts
+                                                                                .Select(pcr => new PostCommentReact
+                                                                                {
+                                                                                    PostCommentReactId = pcr.PostCommentReactId,
+                                                                                    UserId = pcr.UserId,
+                                                                                    ReactId = pcr.ReactId
+                                                                                }).ToList()
+                                                    }).ToList(),
+                                    PostReacts = p.PostReacts
+                                                    .Select(pr => new PostReact
+                                                    {
+                                                        PostReactId = pr.PostReactId,
+                                                        UserId = pr.UserId,
+                                                        ReactId = pr.ReactId
+                                                    }).ToList()
+                                })
+                                .ToList();
 
             return _result;
         }
