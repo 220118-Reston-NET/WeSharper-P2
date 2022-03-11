@@ -78,10 +78,40 @@ namespace WeSharper.DatabaseManagement.Implements
 
         public List<Post> GetUserPosts()
         {
-            var _result = _context.Posts.Include("PostComment")
-                                        .Include("PostReact")
-                                        .Include("PostCommentReact")
-                                        .ToList();
+            var _result = _context.Posts
+                                .Select(p => new Post
+                                {
+                                    PostId = p.PostId,
+                                    UserId = p.UserId,
+                                    PostContent = p.PostContent,
+                                    PostPhoto = p.PostPhoto,
+                                    IsDeleted = p.IsDeleted,
+                                    CreatedAt = p.CreatedAt,
+                                    PostComments = p.PostComments
+                                                    .Select(pc => new PostComment
+                                                    {
+                                                        CommentId = pc.CommentId,
+                                                        UserId = pc.UserId,
+                                                        PostComment1 = pc.PostComment1,
+                                                        IsDeleted = pc.IsDeleted,
+                                                        CreatedAt = pc.CreatedAt,
+                                                        PostCommentReacts = pc.PostCommentReacts
+                                                                                .Select(pcr => new PostCommentReact
+                                                                                {
+                                                                                    PostCommentReactId = pcr.PostCommentReactId,
+                                                                                    UserId = pcr.UserId,
+                                                                                    ReactId = pcr.ReactId
+                                                                                }).ToList()
+                                                    }).ToList(),
+                                    PostReacts = p.PostReacts
+                                                    .Select(pr => new PostReact
+                                                    {
+                                                        PostReactId = pr.PostReactId,
+                                                        UserId = pr.UserId,
+                                                        ReactId = pr.ReactId
+                                                    }).ToList()
+                                })
+                                .ToList();
 
             return _result;
         }
