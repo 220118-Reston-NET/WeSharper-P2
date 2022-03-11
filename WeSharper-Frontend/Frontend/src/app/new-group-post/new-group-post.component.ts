@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { faImage } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
   selector: 'app-new-group-post',
@@ -12,11 +13,9 @@ import { Component, OnInit } from '@angular/core';
 export class NewGroupPostComponent /*implements OnInit*/ {
   selectedFile: File | null = null;
 
-  constructor(private http: HttpClient) { }
+  faImage = faImage;
 
-  onFileSelect(event: { target: { files: File[]; }; }) {
-    this.selectedFile = <File>event.target.files[0];
-  }
+  constructor(private http: HttpClient) { }
 
 
   onUpload() {
@@ -24,7 +23,7 @@ export class NewGroupPostComponent /*implements OnInit*/ {
     if (this.selectedFile !== null) {
       fd.append('image', this.selectedFile, this.selectedFile?.name)
     }
-    this.http.post('upload url here', fd)
+    this.http.post('url request insert here', fd)
       .subscribe(res => {
         console.log(res);
       });
@@ -33,4 +32,15 @@ export class NewGroupPostComponent /*implements OnInit*/ {
   ngOnInit(): void {
   }
 
+  url = null;
+
+  onFileSelected(e: { target: { files: Blob[]; }; }) {
+    if (e.target.files) {
+      var reader = new FileReader();
+      reader.readAsDataURL(e.target.files[0]);
+      reader.onload = (event: any) => {
+        this.url = event.target.result;
+      }
+    }
+  }
 }

@@ -3,16 +3,21 @@
 
 <div class>
     <div class="container">
-        <!-- <label for="exampleFormControlTextarea1" class="form-label"></label> -->
-
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-
+        <form>
+            <div class="form-group">
+                <textarea ngModel name="post" id="post" cols="30" rows="10" (change)="onFileSelected($event)"
+                    class="form-control"></textarea>
+            </div>
+        </form>
     </div>
-
-
     <div class="col d-flex justify-content-end">
-
-        <input type="file" id="img" (change)="onFileSelect($event)">
-        <button type="button" class="btn btn-primary">Post</button>
-    </div>
-</div>
+        <div>
+            <img [src]="url" height="40">
+            <button type="button" class="btn btn-primary" accept="image/gif, image/jpeg, image/png"
+                (click)="fileInput.click()">
+                <span>
+                    <i class="fa fa-image fa-lg"></i>
+                </span>
+                <input #fileInput type="file" (change)="onFileSelected($event)" style="display:none;">
+            </button>
+            <button type="button" (click)="onUpload" class="btn btn-primary">Submit</button>

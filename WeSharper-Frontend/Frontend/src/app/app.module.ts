@@ -50,9 +50,10 @@ import { LoaderInterceptor } from './_interceptors/loader.interceptor';
     FontAwesomeModule,
     HttpClientModule,
     FormsModule,
+    FontAwesomeModule,
     ReactiveFormsModule,
     ToastrModule.forRoot({
-      positionClass:"toast-bottom-right"
+      positionClass: "toast-bottom-right"
     }),
     NgxSpinnerModule
   ],
