@@ -20,6 +20,7 @@ import { FriendListComponent } from './friend-list/friend-list.component';
 import { ToastrModule } from 'ngx-toastr';
 import { NewPostComponent } from './new-post/new-post.component';
 import { NewGroupPostComponent } from './new-group-post/new-group-post.component';
+import { MessagesComponent } from './messages/messages.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { NewGroupPostComponent } from './new-group-post/new-group-post.component
     SettingComponent,
     FriendListComponent,
     NewPostComponent,
-    NewGroupPostComponent
+    NewGroupPostComponent,
+    MessagesComponent
   ],
   imports: [
     BrowserModule,

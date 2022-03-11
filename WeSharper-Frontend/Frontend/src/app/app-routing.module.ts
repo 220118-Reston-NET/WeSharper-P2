@@ -4,6 +4,7 @@ import { FeedsComponent } from './feeds/feeds.component';
 import { FriendsComponent } from './friends/friends.component';
 import { GroupsComponent } from './groups/groups.component';
 import { HomeComponent } from './home/home.component';
+import { MessagesComponent } from './messages/messages.component';
 import { ProfileComponent } from './profile/profile.component';
 import { RegisterComponent } from './register/register.component';
 import { SettingComponent } from './setting/setting.component';
@@ -23,6 +24,8 @@ const routes: Routes = [
       { path: 'friends', component: FriendsComponent },
       { path: 'groups', component: GroupsComponent },
       { path: 'setting', component: SettingComponent },
+      { path: 'messages', component: MessagesComponent },
+
     ]
   }
 ];
