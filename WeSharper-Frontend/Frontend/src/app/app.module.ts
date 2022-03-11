@@ -19,6 +19,8 @@ import { FriendListComponent } from './friend-list/friend-list.component';
 import { ToastrModule } from 'ngx-toastr';
 import { NewPostComponent } from './new-post/new-post.component';
 import { NewGroupPostComponent } from './new-group-post/new-group-post.component';
+import { PostComponent } from './post/post.component';
+import { ProfileUserComponent } from './profile-user/profile-user.component';
 import { MessagesComponent } from './messages/messages.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { LoaderInterceptor } from './_interceptors/loader.interceptor';
@@ -37,6 +39,8 @@ import { LoaderInterceptor } from './_interceptors/loader.interceptor';
     FriendListComponent,
     NewPostComponent,
     NewGroupPostComponent,
+    PostComponent,
+    ProfileUserComponent
     MessagesComponent
   ],
   imports: [

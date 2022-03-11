@@ -1,0 +1,16 @@
+.img_profil{
+    width: 3rem;
+    height: 3rem;
+}
+
+  .img-container{
+    width: 3rem;
+    height: 3rem;
+    border: 1px solid;
+    border-color: rgba(53, 51, 51, 0.479);
+}
+
+.top-container{
+    display: flex;
+    margin-bottom: 3rem;
+}
