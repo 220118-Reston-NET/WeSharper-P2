@@ -79,7 +79,7 @@ a{
 .my_file
 {
   position: absolute;
-  bottom: 0;
+  bottom: 20;
   outline: none;
   color: transparent;
   width: 100%;
@@ -87,7 +87,7 @@ a{
   padding: 5px 20px;
   cursor: pointer;
   transition: 0.5s;
-  opacity: 1;
+  opacity: 0;
 }
 .my_file::-webkit-file-upload-button
 {
@@ -98,11 +98,12 @@ a{
 {
   content: '\f030';
   font-family: fontAwesome;
-  font-size: 30px;
+  font-size: 40px;
   color: rgb(0, 0, 0);
   display: inline-block;
   -webkit-user-select: none;
   margin-left: 32px;
+  
 }
 
 .my_file::after
@@ -119,5 +120,5 @@ a{
 }
 .my_file:hover
 {
-  opacity: 1;
+  opacity: 0;
 }
