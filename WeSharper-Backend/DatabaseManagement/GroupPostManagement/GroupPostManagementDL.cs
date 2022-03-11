@@ -44,7 +44,7 @@ namespace WeSharper.DatabaseManagement.Implements
             return _deletedPostComment;
         }
 
-        public GroupPost GetAllGroupPostByGroupPostID(string p_groupPostID)
+        public List<GroupPost> GetGroupPosts()
         {
             var _result = _context.GroupPosts
                                 .Select(p => new GroupPost
@@ -79,47 +79,6 @@ namespace WeSharper.DatabaseManagement.Implements
                                                         ReactId = pr.ReactId
                                                     }).ToList()
                                 })
-                                .FirstOrDefault(p => p.GroupPostId.Equals(p_groupPostID));
-
-            return _result;
-        }
-
-        public List<GroupPost> GetGroupPostsByGroupID(string p_groupID)
-        {
-            var _result = _context.GroupPosts
-                                .Select(p => new GroupPost
-                                {
-                                    GroupPostId = p.GroupPostId,
-                                    UserId = p.UserId,
-                                    PostContent = p.PostContent,
-                                    PostPhoto = p.PostPhoto,
-                                    IsDeleted = p.IsDeleted,
-                                    CreatedAt = p.CreatedAt,
-                                    GroupPostComments = p.GroupPostComments
-                                                    .Select(pc => new GroupPostComment
-                                                    {
-                                                        GroupPostCommentId = pc.GroupPostCommentId,
-                                                        UserId = pc.UserId,
-                                                        GroupPostComment1 = pc.GroupPostComment1,
-                                                        IsDeleted = pc.IsDeleted,
-                                                        CreatedAt = pc.CreatedAt,
-                                                        GroupPostCommentReacts = pc.GroupPostCommentReacts
-                                                                                .Select(pcr => new GroupPostCommentReact
-                                                                                {
-                                                                                    GroupPostCommentReactId = pcr.GroupPostCommentReactId,
-                                                                                    UserId = pcr.UserId,
-                                                                                    ReactId = pcr.ReactId
-                                                                                }).ToList()
-                                                    }).ToList(),
-                                    GroupPostReacts = p.GroupPostReacts
-                                                    .Select(pr => new GroupPostReact
-                                                    {
-                                                        GroupPostReactId = pr.GroupPostReactId,
-                                                        UserId = pr.UserId,
-                                                        ReactId = pr.ReactId
-                                                    }).ToList()
-                                })
-                                .Where(p => p.GroupId.Equals(p_groupID))
                                 .ToList();
 
             return _result;

@@ -4,6 +4,7 @@ namespace WeSharper.BusinessesManagement.Interfaces
 {
     public interface IGroupPostManagementBL
     {
+        List<GroupPost> GetGroupPosts();
         List<GroupPost> GetGroupPostsByGroupID(string p_groupID);
         GroupPost GetAllGroupPostByGroupPostID(string p_groupPostID);
         GroupPost PostNewPostToGroup(GroupPost p_groupPost);

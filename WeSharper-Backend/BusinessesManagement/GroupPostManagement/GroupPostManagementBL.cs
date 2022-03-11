@@ -34,12 +34,17 @@ namespace WeSharper.BusinessesManagement.Implements
 
         public GroupPost GetAllGroupPostByGroupPostID(string p_groupPostID)
         {
-            return _repo.GetAllGroupPostByGroupPostID(p_groupPostID);
+            return GetGroupPosts().FirstOrDefault(p => p.GroupPostId.Equals(p_groupPostID));
+        }
+
+        public List<GroupPost> GetGroupPosts()
+        {
+            return _repo.GetGroupPosts();
         }
 
         public List<GroupPost> GetGroupPostsByGroupID(string p_groupID)
         {
-            return _repo.GetGroupPostsByGroupID(p_groupID);
+            return GetGroupPosts().FindAll(p => p.GroupId.Equals(p_groupID));
         }
 
         public GroupPost PostNewPostToGroup(GroupPost p_groupPost)

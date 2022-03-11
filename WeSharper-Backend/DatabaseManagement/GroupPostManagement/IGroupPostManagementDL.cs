@@ -4,8 +4,7 @@ namespace WeSharper.DatabaseManagement.Interfaces
 {
     public interface IGroupPostManagementDL
     {
-        List<GroupPost> GetGroupPostsByGroupID(string p_groupID);
-        GroupPost GetAllGroupPostByGroupPostID(string p_groupPostID);
+        List<GroupPost> GetGroupPosts();
         GroupPost PostNewPostToGroup(GroupPost p_groupPost);
         GroupPost UpdateGroupPost(GroupPost p_groupPost);
         GroupPost DeleteGroupPost(GroupPost p_groupPost);
