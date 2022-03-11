@@ -24,6 +24,7 @@ import { ProfileUserComponent } from './profile-user/profile-user.component';
 import { MessagesComponent } from './messages/messages.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { LoaderInterceptor } from './_interceptors/loader.interceptor';
+import { JwtInterceptor } from './_interceptors/jwt.interceptor';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { LoaderInterceptor } from './_interceptors/loader.interceptor';
     NgxSpinnerModule
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })
