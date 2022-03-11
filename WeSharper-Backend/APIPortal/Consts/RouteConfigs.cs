@@ -35,6 +35,8 @@ namespace WeSharper.APIPortal.Consts
         public const string Groups = "Group";
         public const string Group = "Group/{g_userId}";
 
+        public const string GroupUsers = "Group";
+
         //GROUPPOST
         public const string GroupPosts = "{p_groupID}/Posts";
         public const string GroupPost = "{p_groupID}/Posts/{p_groupPostID}";
