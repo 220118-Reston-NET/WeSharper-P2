@@ -411,7 +411,7 @@ public class FriendManagementBLTest
 
 
 
-
+    [Fact]
     public void Friend_In_Database()
     {
         // Arrange

@@ -256,5 +256,120 @@ public class GroupManagementBLTest
         Assert.Same(_expectedGroup, actualGroup);
     }
 
+
+
+    /*
+    // GroupUsers
+    [Fact]
+    public void Should_Add_A_Group_User_Request()
+    {
+        //Arrange
+        GroupUser _expectedGroupUser = new GroupUser(){
+                    GroupId = Guid.NewGuid().ToString(),
+                    UserId = Guid.NewGuid().ToString(),
+                    IsBanned = false,
+                    IsApproved = true,
+                    CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"))
+                };
+
+        Mock<IGroupManagementDL> _mockRepo = new Mock<IGroupManagementDL>();
+        _mockRepo.Setup(repo => repo.SendNewGroupUserRequest(_expectedGroupUser)).Returns(_expectedGroupUser);
+        IGroupManagementBL groupBL = new GroupManagementBL(_mockRepo.Object);
+
+        //act
+        GroupUser actualGroup = groupBL.SendNewGroupUserRequest(_expectedGroupUser);
+
+        //Assert
+        Assert.Same(_expectedGroupUser, actualGroup);
+    }
+    
+    [Fact]
+    public void Should_Not_Get_All_GroupUsers_Because_No_GroupUsers()
+    {
+        // Arrange
+        List<GroupUser> _expectedListOfGroupUsers = new List<GroupUser>();
+
+        Mock<IGroupManagementDL> _mockRepo = new Mock<IGroupManagementDL>();
+        _mockRepo.Setup(repo => repo.GetAllGroupUsers()).Returns( _expectedListOfGroupUsers );
+        IGroupManagementBL _groupBL = new GroupManagementBL(_mockRepo.Object);
+
+        Assert.Throws<Exception>(() => _groupBL.GetAllGroupUsers() );
+    }
+
+    [Fact]
+    public void Should_Get_All_GroupUsers()
+    {
+        //Arrange
+        GroupUser _expectedGroupUser = new GroupUser(){
+                    GroupId = Guid.NewGuid().ToString(),
+                    UserId = Guid.NewGuid().ToString(),
+                    IsBanned = false,
+                    IsApproved = true,
+                    CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"))
+                };
+
+        List<GroupUser> _expectedListOfGroupUsers = new List<GroupUser>();
+        _expectedListOfGroupUsers.Add(_expectedGroupUser);
+
+        Mock<IGroupManagementDL> _mockRepo = new Mock<IGroupManagementDL>();
+        _mockRepo.Setup(repo => repo.GetAllGroupUsers()).Returns( _expectedListOfGroupUsers );
+        IGroupManagementBL _groupBL = new GroupManagementBL(_mockRepo.Object);
+
+        //Act
+        List<Group> _actualListOfGroupUsers = _groupBL.GetAllGroups();
+        
+        // Assert
+        Assert.Same(_expectedListOfGroupUsers,_actualListOfGroupUsers);
+    }
+
+    [Fact]
+    public void Fail_Get_An_Unapproved_Join_Request_Because_DNE()
+    {
+        //Arrange
+        GroupUser _expectedGroupUser = new GroupUser(){
+                    GroupId = Guid.NewGuid().ToString(),
+                    UserId = Guid.NewGuid().ToString(),
+                    IsBanned = false,
+                    IsApproved = true,
+                    CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"))
+                };
+
+        List<GroupUser> _expectedListOfGroupUsers = new List<GroupUser>();
+        _expectedListOfGroupUsers.Add(_expectedGroupUser);
+
+        Mock<IGroupManagementDL> _mockRepo = new Mock<IGroupManagementDL>();
+        _mockRepo.Setup(repo => repo.GetAllGroupUsers()).Returns(_expectedListOfGroupUsers);
+        IGroupManagementBL _profileBL = new GroupManagementBL(_mockRepo.Object);
+
+        Assert.Throws<Exception>(() => _profileBL.GetGroupUnapprovedJoinRequests("asdf") );
+        
+    } 
+
+    [Fact]
+    public void Fail_Get_A_GroupUser_Because_No_GroupUsers()
+    {
+        //Arrange
+        GroupUser _expectedGroupUser = new GroupUser(){
+                    GroupId = Guid.NewGuid().ToString(),
+                    UserId = Guid.NewGuid().ToString(),
+                    IsBanned = false,
+                    IsApproved = true,
+                    CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"))
+                };
+
+        List<GroupUser> _expectedListOfGroupUsers = new List<GroupUser>();
+        _expectedListOfGroupUsers.Add(_expectedGroupUser);
+
+        Mock<IGroupManagementDL> _mockRepo = new Mock<IGroupManagementDL>();
+        _mockRepo.Setup(repo => repo.GetAllGroupUsers()).Returns(_expectedListOfGroupUsers);
+        IGroupManagementBL _profileBL = new GroupManagementBL(_mockRepo.Object);
+
+        Assert.Throws<Exception>(() => _profileBL.GetGroupUnapprovedJoinRequests("asdf") );
+        
+    } 
+
+    */
+    
+
     
 } 

@@ -30,6 +30,8 @@ namespace WeSharper.APIPortal.Consts
         public const string UserPendingFriendRequests = "Friend/PendingFriendRequests/{f_userID}";
 
         //Group
+        public const string ApprovedGroupUser = "Group/Approved/{groupId}";
+        public const string BanGroupUser = "Group/Ban/{groupId}/{userId}";
         public const string Groups = "Group";
         public const string Group = "Group/{g_userId}";
 

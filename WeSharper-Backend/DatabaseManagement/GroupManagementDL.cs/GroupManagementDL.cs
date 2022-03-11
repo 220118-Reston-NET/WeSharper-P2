@@ -84,5 +84,65 @@ namespace WeSharper.DatabaseManagement.Implements
                 throw new Exception("Profile not found. Group could not be deleted.");
             }
         }
+
+
+
+
+        public GroupUser SendNewGroupUserRequest(GroupUser g_groupUser)
+        {   
+            g_groupUser.User = _context.Users.FirstOrDefault(u => (u.Id == g_groupUser.UserId));
+            g_groupUser.Group = _context.Groups.FirstOrDefault(g => (g.GroupId == g_groupUser.GroupId));
+            _context.GroupUsers.Add(g_groupUser);
+            _context.SaveChanges();
+            return g_groupUser;
+        }
+        
+
+        public List<GroupUser> GetAllGroupUsers()
+        {
+            return _context.GroupUsers.ToList();
+        }
+        public List<GroupUser> GetGroupApprovedUsersInGroup(string groupId)
+        { 
+            return _context.GroupUsers.Where(g => (g.GroupId == groupId) && (g.IsApproved == true ) && (g.IsBanned == false)).ToList();
+        }
+
+        public GroupUser UpdateGroupUser(GroupUser g_groupUser)
+        {
+            try
+            {
+                GroupUser groupUserToUpdate= _context.GroupUsers.FirstOrDefault(g => (g.UserId == g_groupUser.UserId) && (g.GroupId == g_groupUser.GroupId) );
+
+                _context.SaveChanges();
+                return groupUserToUpdate;
+            }
+            catch(System.Exception exe)
+            {
+                throw new Exception("User could not be found in the group");
+            }  
+        }
+        public GroupUser BanGroupUser(GroupUser g_groupUser)
+        {
+            GroupUser groupUser = _context.GroupUsers.FirstOrDefault(g => (g.UserId == g_groupUser.UserId) && (g.GroupId == g_groupUser.GroupId));
+            groupUser.IsBanned = true;
+            _context.SaveChanges();
+            return groupUser;
+        }
+        public GroupUser UnbanGroupUser(GroupUser g_groupUser)
+        {
+            GroupUser groupUser = _context.GroupUsers.FirstOrDefault(g => (g.UserId == g_groupUser.UserId) && (g.GroupId == g_groupUser.GroupId));
+            groupUser.IsBanned = false;
+            _context.SaveChanges();
+            return groupUser;
+        }
+        public GroupUser DeleteGroupUser(GroupUser g_groupUser)
+        {
+            GroupUser groupUserToRemove = _context.GroupUsers.FirstOrDefault(g => (g.UserId == g_groupUser.UserId) && (g.GroupId == g_groupUser.GroupId));
+            Console.WriteLine("crymaru");
+            _context.Remove(groupUserToRemove); 
+            return groupUserToRemove;
+        } 
+
+        
     }
 }
