@@ -1,5 +1,5 @@
 global using Serilog;
-using System.Text;
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -45,11 +45,13 @@ builder.Services.AddAuthentication(x =>
     x.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(key)),
+        IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.ASCII.GetBytes(key)),
         ValidateIssuer = false,
         ValidateAudience = false
     };
 });
+
+builder.Services.AddSignalR();
 
 builder.Services.AddDbContext<WeSharperContext>(options =>
         options.UseSqlServer(connectionString));
@@ -61,17 +63,20 @@ builder.Services.AddScoped<IHobbyManagementDL, HobbyManagementDL>();
 builder.Services.AddScoped<IUserPostManagementDL, UserPostManagementDL>();
 builder.Services.AddScoped<IFriendManagementDL, FriendManagementDL>();
 builder.Services.AddScoped<IGroupManagementDL, GroupManagementDL>();
+builder.Services.AddScoped<IGroupPostManagementDL, GroupPostManagementDL>();
+builder.Services.AddScoped<IMessageManagementDL, MessageManagementDL>();
 
 builder.Services.AddScoped<IProfileManagementBL, ProfileManagementBL>();
 builder.Services.AddScoped<IHobbyManagementBL, HobbyManagementBL>();
 builder.Services.AddScoped<IUserPostManagementBL, UserPostManagementBL>();
 builder.Services.AddScoped<IFriendManagementBL, FriendManagementBL>();
 builder.Services.AddScoped<IGroupManagementBL, GroupManagementBL>();
+builder.Services.AddScoped<IGroupPostManagementBL, GroupPostManagementBL>();
+builder.Services.AddScoped<IMessageManagementBL, MessageManagementBL>();
 
-builder.Services.AddControllers();
-// builder.Services.AddControllers().AddNewtonsoftJson(options =>
-//     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-// );
+
+builder.Services.AddControllers().AddJsonOptions(x =>
+                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

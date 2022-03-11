@@ -22,6 +22,7 @@ public class UserPostManagementBLTest
             PostContent = "Hello World!",
             PostPhoto = "https://previews.123rf.com/images/fordzolo/fordzolo1506/fordzolo150600296/41026708-example-white-stamp-text-on-red-backgroud.jpg",
             IsDeleted = false,
+            User = new ApplicationUser(),
             CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"))
         };
         List<Post> _expectedListUserPost = new List<Post>();
@@ -122,6 +123,33 @@ public class UserPostManagementBLTest
     }
 
     [Fact]
+    public void Should_Delete_User_Post()
+    {
+        //Arrange
+        Post _expectedDeletedPost = new Post()
+        {
+            PostId = Guid.NewGuid().ToString(),
+            UserId = Guid.NewGuid().ToString(),
+            PostContent = "Hello World!",
+            PostPhoto = "https://previews.123rf.com/images/fordzolo/fordzolo1506/fordzolo150600296/41026708-example-white-stamp-text-on-red-backgroud.jpg",
+            PostComments = new HashSet<PostComment>(),
+            PostReacts = new HashSet<PostReact>(),
+            IsDeleted = true,
+            CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"))
+        };
+
+        Mock<IUserPostManagementDL> _mockRepo = new Mock<IUserPostManagementDL>();
+        _mockRepo.Setup(repo => repo.DeleteUserPost(_expectedDeletedPost)).Returns(_expectedDeletedPost);
+        IUserPostManagementBL _userPostBL = new UserPostManagementBL(_mockRepo.Object);
+
+        //Act
+        Post _actualUpdatedPost = _userPostBL.DeleteUserPost(_expectedDeletedPost);
+
+        //Assert
+        Assert.Same(_expectedDeletedPost, _actualUpdatedPost);
+    }
+
+    [Fact]
     public void Should_Add_New_User_Post()
     {
         //Arrange
@@ -213,6 +241,8 @@ public class UserPostManagementBLTest
             UserId = Guid.NewGuid().ToString(),
             PostComment1 = "Hello World!",
             IsDeleted = false,
+            Post = new Post(),
+            User = new ApplicationUser(),
             CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"))
         };
 
@@ -311,7 +341,10 @@ public class UserPostManagementBLTest
             PostReactId = Guid.NewGuid().ToString(),
             PostId = Guid.NewGuid().ToString(),
             UserId = Guid.NewGuid().ToString(),
-            ReactId = Guid.NewGuid().ToString()
+            ReactId = Guid.NewGuid().ToString(),
+            Post = new Post(),
+            React = new Reaction(),
+            User = new ApplicationUser()
         };
 
         Mock<IUserPostManagementDL> _mockRepo = new Mock<IUserPostManagementDL>();
@@ -334,7 +367,10 @@ public class UserPostManagementBLTest
             PostCommentReactId = Guid.NewGuid().ToString(),
             CommentId = Guid.NewGuid().ToString(),
             UserId = Guid.NewGuid().ToString(),
-            ReactId = Guid.NewGuid().ToString()
+            ReactId = Guid.NewGuid().ToString(),
+            Comment = new PostComment(),
+            React = new Reaction(),
+            User = new ApplicationUser()
         };
         List<PostCommentReact> _expectedListUserPostCommentReact = new List<PostCommentReact>();
         _expectedListUserPostCommentReact.Add(_commentReact);
