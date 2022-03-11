@@ -30,14 +30,14 @@ public class GroupPostManagementBLTest
         _expectedListGroupPost.Add(_groupPost);
 
         Mock<IGroupPostManagementDL> _mockRepo = new Mock<IGroupPostManagementDL>();
-        _mockRepo.Setup(repo => repo.GetGroupPostsByGroupID(_groupPost.GroupId)).Returns(_expectedListGroupPost);
+        _mockRepo.Setup(repo => repo.GetGroupPosts()).Returns(_expectedListGroupPost);
         IGroupPostManagementBL _groupPostBL = new GroupPostManagementBL(_mockRepo.Object);
 
         //Act
         List<GroupPost> _actualListGroupPost = _groupPostBL.GetGroupPostsByGroupID(_groupPost.GroupId);
 
         //Assert
-        Assert.Same(_expectedListGroupPost, _actualListGroupPost);
+        Assert.Equal(_expectedListGroupPost.Count, _actualListGroupPost.Count);
     }
 
     [Fact]
@@ -54,9 +54,11 @@ public class GroupPostManagementBLTest
             IsDeleted = false,
             CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"))
         };
+        List<GroupPost> _listGroupPost = new List<GroupPost>();
+        _listGroupPost.Add(_expectedGroupPost);
 
         Mock<IGroupPostManagementDL> _mockRepo = new Mock<IGroupPostManagementDL>();
-        _mockRepo.Setup(repo => repo.GetAllGroupPostByGroupPostID(_expectedGroupPost.GroupPostId)).Returns(_expectedGroupPost);
+        _mockRepo.Setup(repo => repo.GetGroupPosts()).Returns(_listGroupPost);
         IGroupPostManagementBL _groupPostBL = new GroupPostManagementBL(_mockRepo.Object);
 
         //Act
@@ -104,6 +106,7 @@ public class GroupPostManagementBLTest
             PostContent = "Hello World!",
             PostPhoto = "https://previews.123rf.com/images/fordzolo/fordzolo1506/fordzolo150600296/41026708-example-white-stamp-text-on-red-backgroud.jpg",
             IsDeleted = false,
+            Group = new Group(),
             CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"))
         };
 

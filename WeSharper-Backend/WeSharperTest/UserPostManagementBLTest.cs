@@ -241,6 +241,7 @@ public class UserPostManagementBLTest
             UserId = Guid.NewGuid().ToString(),
             PostComment1 = "Hello World!",
             IsDeleted = false,
+            Post = new Post(),
             User = new ApplicationUser(),
             CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"))
         };
