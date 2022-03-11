@@ -45,11 +45,11 @@ namespace APIPortal.Controllers
         public async Task<IActionResult> GetFeeds()
         {
             var userFromDB = await _userManager.FindByNameAsync(given_name);
-            string p_cusID = userFromDB.Id;
+            string p_userID = userFromDB.Id;
 
             try
             {
-                var result = _userPBL.GetFeedsByUserID(p_cusID);
+                var result = _userPBL.GetFeedsByUserID(p_userID);
                 Log.Information("Route: " + RouteConfigs.Feeds);
                 Log.Information("Get all new feeds for user!");
 
@@ -73,11 +73,11 @@ namespace APIPortal.Controllers
         public async Task<IActionResult> GetUserPosts()
         {
             var userFromDB = await _userManager.FindByNameAsync(given_name);
-            var p_cusID = userFromDB.Id;
+            var p_userID = userFromDB.Id;
 
             try
             {
-                var result = _userPBL.GetUserPostsByUserID(p_cusID);
+                var result = _userPBL.GetUserPostsByUserID(p_userID);
                 Log.Information("Route: " + RouteConfigs.UserPosts);
                 Log.Information("Get all user posts!");
 
@@ -120,13 +120,13 @@ namespace APIPortal.Controllers
         public async Task<IActionResult> PostUserPost([FromBody] UserPost p_post)
         {
             var userFromDB = await _userManager.FindByNameAsync(given_name);
-            var p_cusID = userFromDB.Id;
+            var p_userID = userFromDB.Id;
 
             try
             {
                 Post _newPost = new Post()
                 {
-                    UserId = p_cusID,
+                    UserId = p_userID,
                     PostContent = p_post.PostContent,
                     PostPhoto = p_post.PostPhoto
                 };
@@ -151,20 +151,50 @@ namespace APIPortal.Controllers
         public async Task<IActionResult> UpdateUserPost(string p_postID, [FromBody] UserPost p_post)
         {
             var userFromDB = await _userManager.FindByNameAsync(given_name);
-            var p_cusID = userFromDB.Id;
+            var p_userID = userFromDB.Id;
 
             try
             {
                 Post _updatedPost = new Post()
                 {
                     PostId = p_postID,
-                    UserId = p_cusID,
+                    UserId = p_userID,
                     PostContent = p_post.PostContent,
                     PostPhoto = p_post.PostPhoto
                 };
                 var result = _userPBL.UpdateUserPost(_updatedPost);
                 Log.Information("Route: " + RouteConfigs.UserPost);
                 Log.Information("Update user post!");
+
+                return Ok(result);
+            }
+            catch (System.Exception e)
+            {
+                Log.Warning("Route: " + RouteConfigs.UserPost);
+                Log.Warning(e.Message);
+
+                return NotFound(e.Message);
+            }
+        }
+
+        //DELETE: api/UserPost/UserPosts/5
+        [Authorize(Roles = "User")]
+        [HttpDelete(RouteConfigs.UserPost)]
+        public async Task<IActionResult> DeleteUserPost(string p_postID)
+        {
+            var userFromDB = await _userManager.FindByNameAsync(given_name);
+            var p_userID = userFromDB.Id;
+
+            try
+            {
+                Post _deletedPost = new Post()
+                {
+                    PostId = p_postID,
+                    UserId = p_userID
+                };
+                var result = _userPBL.DeleteUserPost(_deletedPost);
+                Log.Information("Route: " + RouteConfigs.UserPost);
+                Log.Information("Deleted user post!");
 
                 return Ok(result);
             }
@@ -186,14 +216,14 @@ namespace APIPortal.Controllers
         public async Task<IActionResult> PostUserPostComment(string p_postID, string p_comment)
         {
             var userFromDB = await _userManager.FindByNameAsync(given_name);
-            var p_cusID = userFromDB.Id;
+            var p_userID = userFromDB.Id;
 
             try
             {
                 PostComment _newPostComment = new PostComment()
                 {
                     PostId = p_postID,
-                    UserId = p_cusID,
+                    UserId = p_userID,
                     PostComment1 = p_comment
                 };
                 var result = _userPBL.AddNewUserPostComment(_newPostComment);
@@ -217,14 +247,14 @@ namespace APIPortal.Controllers
         public async Task<IActionResult> UpdateUserPostComment(string p_postID, string p_postCommentID, string p_comment)
         {
             var userFromDB = await _userManager.FindByNameAsync(given_name);
-            var p_cusID = userFromDB.Id;
+            var p_userID = userFromDB.Id;
 
             try
             {
                 PostComment _updatePostComment = new PostComment()
                 {
                     PostId = p_postID,
-                    UserId = p_cusID,
+                    UserId = p_userID,
                     CommentId = p_postCommentID,
                     PostComment1 = p_comment
                 };
@@ -249,14 +279,14 @@ namespace APIPortal.Controllers
         public async Task<IActionResult> DeleteUserPostComment(string p_postID, string p_postCommentID)
         {
             var userFromDB = await _userManager.FindByNameAsync(given_name);
-            var p_cusID = userFromDB.Id;
+            var p_userID = userFromDB.Id;
 
             try
             {
                 PostComment _deletedPostComment = new PostComment()
                 {
                     PostId = p_postID,
-                    UserId = p_cusID,
+                    UserId = p_userID,
                     CommentId = p_postCommentID
                 };
                 var result = _userPBL.DeleteUserPostComment(_deletedPostComment);
@@ -283,14 +313,14 @@ namespace APIPortal.Controllers
         public async Task<IActionResult> ReactUserPost(string p_postID, string p_reactID)
         {
             var userFromDB = await _userManager.FindByNameAsync(given_name);
-            var p_cusID = userFromDB.Id;
+            var p_userID = userFromDB.Id;
 
             try
             {
                 PostReact _postReaction = new PostReact()
                 {
                     PostId = p_postID,
-                    UserId = p_cusID,
+                    UserId = p_userID,
                     ReactId = p_reactID
                 };
                 var result = _userPBL.ReactUserPost(_postReaction);
@@ -317,14 +347,14 @@ namespace APIPortal.Controllers
         public async Task<IActionResult> ReactUserPostCommment(string p_postID, string p_postCommentID, string p_reactID)
         {
             var userFromDB = await _userManager.FindByNameAsync(given_name);
-            var p_cusID = userFromDB.Id;
+            var p_userID = userFromDB.Id;
 
             try
             {
                 PostCommentReact _postCommentReaction = new PostCommentReact()
                 {
                     CommentId = p_postCommentID,
-                    UserId = p_cusID,
+                    UserId = p_userID,
                     ReactId = p_reactID
                 };
                 var result = _userPBL.ReactUserPostComment(_postCommentReaction);
