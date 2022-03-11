@@ -85,8 +85,6 @@
                       class="invalid-feedback">Please Enter a password</div>
                   <div *ngIf="registerForm.get('password').hasError('minlength')" 
                       class="invalid-feedback">Minium Length is at least 6 characters</div>
-                  <div *ngIf="registerForm.get('password').hasError('maxlength')" 
-                      class="invalid-feedback">Maximum Length is at least 8 chracters</div>
           </div>
         </div>  
         <div class="d-flex flex-row align-items-center mb-4 form-group">
