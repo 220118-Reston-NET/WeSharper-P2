@@ -13,20 +13,27 @@ namespace WeSharper.DatabaseManagement.Implements
             _context = context;
         }
 
-        public Friend AddFriend(Friend f_friend)
+        public Friend AddFriend(string p_userID, string p_friendID)
         {
-            Friend newFriend = new Friend(){
-                RelationshipId = f_friend.RelationshipId,
-                RequestedUserId = f_friend.RequestedUserId,
-                AcceptedUserId = f_friend.AcceptedUserId,
-                IsAccepted = false,
-                Relationship = null,
-                CreatedAt = null
-            };
-            _context.Friends.Add(newFriend);
-            _context.SaveChanges();
+            Friend _currentRelationship = _context.Friends.FirstOrDefault(p => p.AcceptedUserId.Equals(p_userID)
+                                                                                && p.RequestedUserId.Equals(p_friendID)
+                                                                            || p.AcceptedUserId.Equals(p_friendID)
+                                                                                && p.RequestedUserId.Equals(p_userID));
+            if (_currentRelationship != null && _currentRelationship.IsAccepted)
+            {
+                throw new Exception("You already added this friend!");
+            }
+            else if (_currentRelationship != null && _currentRelationship.IsAccepted)
+            {
 
-            return newFriend;
+            }
+
+            return _currentRelationship;
+        }
+
+        public List<Profile> GetAllFriendProfiles()
+        {
+            return _context.Profiles.ToList();
         }
 
         public List<Friend> GetAllFriends()
@@ -34,52 +41,15 @@ namespace WeSharper.DatabaseManagement.Implements
             return _context.Friends.ToList();
         }
 
-
-        public Friend UpdateFriend(Friend f_friend)
+        public Profile GetFriendProfileByFriendID(string p_friendID)
         {
-            Friend friendToUpdate = _context.Friends.Where(f => f.RelationshipId == f_friend.RelationshipId).FirstOrDefault();
-            if (friendToUpdate != null)
-            {
-                if(friendToUpdate.IsAccepted == false && f_friend.IsAccepted == true)
-                {
-                    friendToUpdate.CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"));
-                    friendToUpdate.Relationship = f_friend.Relationship;
-                    if(friendToUpdate.RequestedUserId != f_friend.RequestedUserId)
-                    {
-                        friendToUpdate.RequestedUserId = f_friend.RequestedUserId;
-                        friendToUpdate.AcceptedUserId = f_friend.AcceptedUserId;
-                    }
-                }
-                if(friendToUpdate.IsAccepted == true && f_friend.IsAccepted == false)
-                {
-                    friendToUpdate.CreatedAt = null;
-                    friendToUpdate.Relationship = null;
-                }
-                
-                friendToUpdate.IsAccepted = f_friend.IsAccepted;
-                _context.SaveChanges();
-            }
-            else
-            {
-                throw new Exception("No friends found");
-            }
-            return f_friend;
+            return _context.Profiles.FirstOrDefault(p => p.UserId.Equals(p_friendID));
         }
 
-        public Friend DeleteFriend(Friend f_friend)
+        public Friend GetRelationship(string p_userID, string p_friendID)
         {
-            Friend friendToRemove = _context.Friends.Where(f => f.RequestedUserId == f_friend.RequestedUserId)
-                                                    .Where( f => f.AcceptedUserId == f_friend.AcceptedUserId ).FirstOrDefault();
-            if (friendToRemove != null)
-            {
-                _context.Friends.Remove(friendToRemove);
-                _context.SaveChanges();
-            }
-            else
-            {
-                throw new Exception("Friend not found. Friend could not be deleted.");
-            }
-            return f_friend;
+            return _context.Friends.FirstOrDefault(p => p.AcceptedUserId.Equals(p_userID) && p.RequestedUserId.Equals(p_friendID)
+                                                    || p.AcceptedUserId.Equals(p_friendID) && p.RequestedUserId.Equals(p_userID));
         }
     }
 }

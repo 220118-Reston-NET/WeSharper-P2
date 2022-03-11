@@ -24,8 +24,10 @@ namespace WeSharper.APIPortal.Consts
 
 
         //Friend
-        public const string Friends = "Friend";
-        public const string Friend = "Friend/{f_userID}";
+        public const string Friends = "Friends";
+        public const string Friend = "Friends/{p_friendID}";
+        public const string AllFriends = "AllFriends";
+        public const string AddFriend = "Friends/{p_friendID}/add";
         public const string UnconfirmedSentFriends = "Friend/UnconirmedSent/{f_userID}";
         public const string UserPendingFriendRequests = "Friend/PendingFriendRequests/{f_userID}";
 
@@ -34,7 +36,6 @@ namespace WeSharper.APIPortal.Consts
         public const string BanGroupUser = "Group/Ban/{groupId}/{userId}";
         public const string Groups = "Group";
         public const string Group = "Group/{g_userId}";
-
         public const string GroupUsers = "Group";
 
         //GROUPPOST

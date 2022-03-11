@@ -11,150 +11,126 @@ using WeSharper.BusinessesManagement.Interfaces;
 using WeSharper.DatabaseManagement.Interfaces;
 using WeSharper.Models;
 using WeSharper.APIPortal.AuthenticationService.Interfaces;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using System.IdentityModel.Tokens.Jwt;
+using System.Text.Json;
 
 namespace WeSharper.APIPortal.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class FriendController : ControllerBase
     {
-
         private readonly IFriendManagementBL _friendBL;
-        public FriendController(IFriendManagementBL f_friendBL)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly string? given_name;
+        public FriendController(IFriendManagementBL friendBL,
+                                IHttpContextAccessor httpContextAccessor,
+                                UserManager<ApplicationUser> userManager)
         {
-            _friendBL = f_friendBL;
+            _friendBL = friendBL;
+            _httpContextAccessor = httpContextAccessor;
+            _userManager = userManager;
+
+            var token = _httpContextAccessor.HttpContext.Request.Headers["authorization"].Single().Split(" ").Last();
+            var tokenHandler = new JwtSecurityTokenHandler();
+            given_name = tokenHandler.ReadJwtToken(token).Payload["given_name"].ToString();
         }
 
-        // POST: api/Friend
-        [HttpPost(RouteConfigs.Friends)]
-        public IActionResult AddNewFriend([FromQuery] FriendForm friend)
-        {
-            try
-            {
-                ///_friendBL.ExistingFriendId(friendName);
-                Friend _newFriend = new Friend()
-                {
-                    RelationshipId = Guid.NewGuid().ToString(),
-                    RequestedUserId = friend.RequestedUserId,
-                    AcceptedUserId = friend.AcceptedUserId,
-                    IsAccepted = false,
-                    Relationship = friend.Relationship,
-                    CreatedAt = null
-                };
-                _friendBL.SendFriendRequest(_newFriend);
-                Log.Information("Friend request successfully sent");
-                return Created("Friend request successfully sent", _newFriend);
-            }
-            catch (System.Exception exe)
-            {
-                Log.Warning("Route:" + RouteConfigs.Friends + ": " + exe.Message);
-                return BadRequest(exe.Message);
-            }
-        }
-        /* for admin
-        // Get: api/Friend
+        // GET: api/Friend/Friends
         [HttpGet(RouteConfigs.Friends)]
-        public IActionResult GetAllFriends()
-        {  
-            try{
-                Log.Information("Getting All Friends");
-                return Ok(_friendBL.GetAllFriends() );
-            }
-            catch(System.Exception exe)
-            {
-                Log.Warning("Route:" + RouteConfigs.Friends + ": " +  exe.Message);
-                return Conflict(exe.Message);
-            }
-        }
-        */
-        // Get: api/Friend
-        [HttpGet(RouteConfigs.Friend)]
-        public IActionResult GetUserFriends(string f_userID)
+        public async Task<IActionResult> GetAllFriendByUserID()
         {
-            try{
-                Log.Information("Getting All Friends");
-                return Ok(_friendBL.GetUserFriends(f_userID) );
-            }
-            catch(System.Exception exe)
+            var userFromDB = await _userManager.FindByNameAsync(given_name);
+            string p_userID = userFromDB.Id;
+
+            try
             {
-                Log.Warning("Route:" + RouteConfigs.Friend + ": " +  exe.Message);
-                return Conflict(exe.Message);
+                Log.Information("Getting All Friends of UserID: " + p_userID);
+                return Ok(_friendBL.GetAllFriendByUserID(p_userID));
+            }
+            catch (System.Exception e)
+            {
+                Log.Warning("Route:" + RouteConfigs.Friends + ": " + e.Message);
+                return Conflict(e.Message);
             }
         }
 
-        // PUT: api/Friend
-        [HttpPut(RouteConfigs.Friends)]
-        public IActionResult UpdateFriend([FromQuery] FriendForm f_friend)
+        // GET: api/Friend/AllFriends
+        [HttpGet(RouteConfigs.AllFriends)]
+        public async Task<IActionResult> GetAllFriends()
         {
+            var userFromDB = await _userManager.FindByNameAsync(given_name);
+            string p_userID = userFromDB.Id;
+
             try
             {
-                ///_friendBL.ExistingFriendId(friendName);
-                Friend _newFriend = new Friend()
+                List<Profile> _listOfProfiles = new List<Profile>();
+                List<FriendProfile> _listFriendProfiles = new List<FriendProfile>();
+                _listOfProfiles = _friendBL.GetAllFriendProfiles();
+                foreach (var item in _listOfProfiles)
                 {
-                    RelationshipId = null,
-                    RequestedUserId = f_friend.RequestedUserId,
-                    AcceptedUserId = f_friend.AcceptedUserId,
-                    IsAccepted = f_friend.IsAccepted,
-                    Relationship = f_friend.Relationship,
-                    CreatedAt = null
+                    _listFriendProfiles.Add(new FriendProfile()
+                    {
+                        FriendProfileInformation = _friendBL.GetFriendProfileByFriendID(item.UserId),
+                        Relationship = _friendBL.GetRelationship(p_userID, item.UserId)
+                    });
                 };
-                _friendBL.UpdateFriendRequest(_newFriend);
-                Log.Information("Friend Successfully updated");
-                return Ok("Friend Updated");
+
+                Log.Information("Getting All Friends");
+                return Ok(_listFriendProfiles);
             }
-            catch (System.Exception exe)
+            catch (System.Exception e)
             {
-                Log.Warning("Route:" + RouteConfigs.Friends + ": " + exe.Message);
-                return BadRequest(exe.Message);
+                Log.Warning("Route:" + RouteConfigs.AllFriends + ": " + e.Message);
+                return Conflict(e.Message);
             }
         }
 
-        // DELETE: api/Friend/5
-        [HttpDelete(RouteConfigs.Friends)]
-        public IActionResult DeleteFriend(Guid userId, Guid friendId)
+        // GET: api/Friend/Friends/5
+        [HttpGet(RouteConfigs.Friend)]
+        public async Task<IActionResult> GetFriendProfileByFriendID(string p_friendID)
         {
+            var userFromDB = await _userManager.FindByNameAsync(given_name);
+            string p_userID = userFromDB.Id;
+
             try
             {
-                _friendBL.DeleteFriend(userId.ToString(), friendId.ToString());
-                Log.Information("Friend Successfully deleted");
-                return Ok("Friend Deleted");
+                FriendProfile _friendProfile = new FriendProfile()
+                {
+                    FriendProfileInformation = _friendBL.GetFriendProfileByFriendID(p_friendID),
+                    Relationship = _friendBL.GetRelationship(p_userID, p_friendID)
+                };
+
+                Log.Information("Getting Friend Profile By ID: " + p_friendID);
+                return Ok(_friendProfile);
             }
-            catch (System.Exception exe)
+            catch (System.Exception e)
             {
-                Log.Warning("Route:" + RouteConfigs.Friends + ": " + exe.Message);
-                return Conflict(exe.Message);
+                Log.Warning("Route:" + RouteConfigs.Friend + ": " + e.Message);
+                return Conflict(e.Message);
             }
         }
 
-        [HttpGet(RouteConfigs.UnconfirmedSentFriends)]
-        public IActionResult GetUserUnconfirmedSentFriends(Guid f_userID)
+        // POST: api/Friend/Friends/5/add
+        [HttpPost(RouteConfigs.AddFriend)]
+        public async Task<IActionResult> AddFriend(string p_friendID)
         {
-            try
-            {
-                List<Friend> listOfUnacceptedSentFriendRequests = _friendBL.GetUnacceptedSentRequests(f_userID.ToString());
-                Log.Information("Retrieved unaccepted sent friend requests");
-                return Ok(listOfUnacceptedSentFriendRequests);
-            }
-            catch (System.Exception exe)
-            {
-                Log.Warning("Route:" + RouteConfigs.UnconfirmedSentFriends + ": " + exe.Message);
-                return Conflict(exe.Message);
-            }
-        }
+            var userFromDB = await _userManager.FindByNameAsync(given_name);
+            string p_userID = userFromDB.Id;
 
-        [HttpGet(RouteConfigs.UserPendingFriendRequests)]
-        public IActionResult GetUserPendingFriendRequests(Guid f_userID)
-        {
             try
             {
-                List<Friend> listOfUnacceptedRecievedFriendRequests= _friendBL.GetUserPendingFriendRequests(f_userID.ToString());
-                Log.Information("Retrieved unaccepted friend requests");
-                return Ok(listOfUnacceptedRecievedFriendRequests);
+                Log.Information("Add Friend By FriendID: " + p_friendID);
+                return Ok(_friendBL.AddFriend(p_userID, p_friendID));
             }
-            catch (System.Exception exe)
+            catch (System.Exception e)
             {
-                Log.Warning("Route:" + RouteConfigs.UnconfirmedSentFriends + ": " + exe.Message);
-                return Conflict(exe.Message);
+                Log.Warning("Route:" + RouteConfigs.AddFriend + ": " + e.Message);
+                return Conflict(e.Message);
             }
         }
     }
