@@ -7,6 +7,7 @@ namespace WeSharper.DatabaseManagement.Interfaces
         List<Post> GetUserPosts();
         Post AddNewUserPost(Post p_post);
         Post UpdateUserPost(Post p_post);
+        Post DeleteUserPost(Post p_post);
         List<Post> GetFeedsByUserID(string p_userID);
         List<PostComment> GetPostCommentsByPostID(string p_postID);
         PostComment AddNewUserPostComment(PostComment p_userPostComment);

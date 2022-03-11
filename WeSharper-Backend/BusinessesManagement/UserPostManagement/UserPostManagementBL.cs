@@ -31,6 +31,11 @@ namespace WeSharper.BusinessesManagement.Implements
             return _repo.AddNewUserPostComment(p_userPostComment);
         }
 
+        public Post DeleteUserPost(Post p_post)
+        {
+            return _repo.DeleteUserPost(p_post);
+        }
+
         public PostComment DeleteUserPostComment(PostComment p_deletedPostComment)
         {
             return _repo.DeleteUserPostComment(p_deletedPostComment);
@@ -79,6 +84,7 @@ namespace WeSharper.BusinessesManagement.Implements
 
         public PostCommentReact ReactUserPostComment(PostCommentReact p_postCommentReaction)
         {
+            p_postCommentReaction.PostCommentReactId = Guid.NewGuid().ToString();
             return _repo.ReactUserPostComment(p_postCommentReaction);
         }
 

@@ -69,10 +69,7 @@ builder.Services.AddScoped<IFriendManagementBL, FriendManagementBL>();
 builder.Services.AddScoped<IGroupManagementBL, GroupManagementBL>();
 
 builder.Services.AddControllers().AddJsonOptions(x =>
-                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles); ;
-// builder.Services.AddControllers().AddNewtonsoftJson(options =>
-//     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-// );
+                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

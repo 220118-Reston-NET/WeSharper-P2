@@ -8,8 +8,7 @@ namespace WeSharper.APIPortal.Consts
 
         //USER
         public const string UpdateProfile = "Profile";
-        public const string GetAllProfiles = "GetAllProfiles";
-        public const string GetAProfile = "GetAProfile";
+        public const string GetProfile = "Profile";
 
         //HOBBY
         public const string Hobby = "Hobby";
@@ -33,7 +32,13 @@ namespace WeSharper.APIPortal.Consts
         //Group
         public const string Groups = "Group";
         public const string Group = "Group/{g_userId}";
-        
-    }
 
+        //GROUPPOST
+        public const string GroupPosts = "{p_groupID}/Posts";
+        public const string GroupPost = "{p_groupID}/Posts/{p_groupPostID}";
+        public const string GroupPostComments = "{p_groupID}/Posts/{p_groupPostID}/Comments";
+        public const string GroupPostComment = "{p_groupID}/Posts/{p_groupPostID}/Comments/{p_groupPostCommentID}";
+        public const string GroupPostReactions = "{p_groupID}/Posts/{p_groupPostID}/Reactions";
+        public const string GroupPostCommentReactions = "{p_groupID}/Posts/{p_groupPostID}/Comments/{p_groupPostCommentID}/Reactions";
+    }
 }
