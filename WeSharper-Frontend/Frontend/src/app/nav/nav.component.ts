@@ -20,10 +20,20 @@ export class NavComponent implements OnInit {
   login(){
     this.accountService.login(this.model).subscribe(response => {
       console.log(response);
+      alert("your loggined");
     }, error => {
       console.log(error);
     })
     
+  }
+
+  register(){
+    this.accountService.register(this.model).subscribe(response => {
+      this.router.navigateByUrl('/feeds')
+      console.log(response);
+    }, error => {
+      console.log(error);
+    })
   }
 
   logout(){
