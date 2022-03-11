@@ -29,6 +29,18 @@ namespace WeSharper.DatabaseManagement.Implements
             return p_userPostComment;
         }
 
+        public Post DeleteUserPost(Post p_post)
+        {
+            Post _deletedPost = _context.Posts.FirstOrDefault(p => p.PostId.Equals(p_post.PostId));
+            if (_deletedPost != null)
+            {
+                _deletedPost.IsDeleted = true;
+                _context.SaveChanges();
+            }
+
+            return _deletedPost;
+        }
+
         public PostComment DeleteUserPostComment(PostComment p_deletedPostComment)
         {
             PostComment _deletedPostComment = _context.PostComments.FirstOrDefault(p => p.CommentId.Equals(p_deletedPostComment.CommentId));
