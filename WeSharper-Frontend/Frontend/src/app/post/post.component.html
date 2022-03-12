@@ -7,6 +7,8 @@
         </div>
     
     <div class="container">
+        <p>{{post.postContent}}</p>
+        <!--
         <h5>hello world</h5>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
             Et, consequatur alias tempora accusantium natus ab magnam, autem, 
@@ -14,19 +16,17 @@
             fugiat dolorem tenetur soluta deleniti?. autem, commodi provident distinctio 
             pariatur nemo voluptatibus atque temporibus fugiat dolorem tenetur soluta deleniti? 
             autem, commodi provident distinctio pariatur nemo voluptatibus.</p>
-        <br>
-        <img src="/assets/Beach.jpg" class="img_post rounded mx-auto d-block" alt="...">
+        -->
+            <br>
+            <img [src]='post.postPhoto' class="img_post rounded mx-auto d-block" alt="Post-photo">
+        <!--<img src="/assets/Beach.jpg" class="img_post rounded mx-auto d-block" alt="...">-->
     </div>
 </div>
 <br>
 <br>
 
-
-<br>
-<br>
-
 <div class="container text-box">
-    <span style="margin-left: 12px;">03/03/2022</span>
+    <span style="margin-left: 12px;">{{post.createdAt}}</span>
    
         <div class="container column2">
             <a href="">Edit</a>
@@ -34,9 +34,13 @@
         </div>
     
     <div class="container">
+        <p>{{post.postContent}}</p>
+        <br>
+        <img [src]='post.postPhoto' class="img_post rounded mx-auto d-block" alt="Post-photo">
+        <!--
         <h5>hello world</h5>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Et, consequatur alias tempora accusantium natus ab magnam, autem, commodi provident distinctio pariatur nemo voluptatibus atque temporibus fugiat dolorem tenetur soluta deleniti?</p>
         <img src="..." class="rounded mx-auto d-block" alt="...">
+        -->
     </div>
-    <p></p>
 </div>
