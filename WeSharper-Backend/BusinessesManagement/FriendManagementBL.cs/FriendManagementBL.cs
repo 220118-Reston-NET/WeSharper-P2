@@ -36,12 +36,12 @@ namespace WeSharper.BusinessesManagement.Implements
 
         public List<Friend> GetAllIncomingFriendByUserID(string p_userID)
         {
-            return GetAllFriends().FindAll(p => p.AcceptedUserId.Equals(p_userID));
+            return GetAllFriends().FindAll(p => p.AcceptedUserId.Equals(p_userID) && p.IsAccepted.Equals(false));
         }
 
         public List<Friend> GetAllOutcomingFriendByUserID(string p_userID)
         {
-            return GetAllFriends().FindAll(p => p.RequestedUserId.Equals(p_userID));
+            return GetAllFriends().FindAll(p => p.RequestedUserId.Equals(p_userID) && p.IsAccepted.Equals(false));
         }
 
         public List<Post> GetFriendPostsByFriendID(string p_friendID)

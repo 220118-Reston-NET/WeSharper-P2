@@ -1,28 +1,47 @@
-<!-- <h1 class="text-center">Friends</h1>
+<h1 class="text-center">Friends</h1>
+<table class="table table-hover align-middle">
+    <tbody>
+        <tr *ngFor="let friend of listOfFriends">
+            <a *ngIf="friend.acceptedUserId == profile.userId">
+                <td class="col-md-3"><img class="img-thumbnail" [src]='friend.requestedUser.profiles.profilePictureUrl ?? "../../assets/profil_img_setting.png"' alt="profile"></td>        
+                <td class="col-md-5">{{friend.requestedUser.profiles.firstName}} {{friend.requestedUser.profiles.lastName}}</td>
+                <td class="col-md-4"><button class="btn btn-primary" style="width: 11rem;">Remove</button></td>
+            </a>
+            <a *ngIf="friend.requestedUserId == profile.userId">
+                <td class="col-md-3"><img class="img-thumbnail" [src]='friend.acceptedUser.profiles.profilePictureUrl ?? "../../assets/profil_img_setting.png"' alt="profile"></td> 
+                <td class="col-md-5">{{friend.acceptedUser.profiles.firstName}} {{friend.acceptedUser.profiles.lastName}}</td>
+                <td class="col-md-4"><button class="btn btn-primary" style="width: 11rem;">Remove</button></td>
+            </a>
+        </tr>
+    </tbody>
+</table>
 
-    <table class="table table-hover align-middle">
-        <tbody>
-            <tr *ngFor="let friend of listOfFriends">
-                    <td><img class="img-thumbnail" [src]='friend.profilePictureUrl ?? "../../assets/profil_img_setting.png"' alt="profile"></td>        
-                <td >{{friend.firstName}} {{friend.lastName}}</td>
-                <td><button class="btn btn-primary">Remove</button></td>
-            </tr>
-        </tbody>
-    </table>
-
+<h1 class="text-center">Requested</h1>
+<table class="table table-hover align-middle">
+    <tbody>
+        <tr *ngFor="let friend of listOfOutComingRequest">
+            <td class="col-md-3"><img class="img-thumbnail" [src]='friend.acceptedUser.profiles.profilePictureUrl ?? "../../assets/profil_img_setting.png"' alt="profile"></td> 
+            <td class="col-md-5">{{friend.acceptedUser.profiles.firstName}} {{friend.acceptedUser.profiles.lastName}}</td>
+            <td class="col-md-4"><button class="btn btn-primary" style="width: 11rem;">Cancel Request</button></td>
+        </tr>
+    </tbody>
+</table>
 
 <h1 class="text-center">Follow Request</h1>
 <table class="table table-hover align-middle">
     <tbody>
-        <tr *ngFor="let friend of listOfFriends">
-            <td><img class="img-thumbnail" [src]='friend.profilePictureUrl ?? "../../assets/profil_img_setting.png"' alt="profile"></td>      
-            <td >{{friend.firstName}} {{friend.lastName}}</td>
-            <td><button class="btn btn-primary">Confirm</button></td>
-            <td><button class="btn btn-primary">Delete</button></td>
+        <tr *ngFor="let friend of listOfInComingRequest">
+            <td class="col-md-3"><img class="img-thumbnail" [src]='friend.requestedUser.profiles.profilePictureUrl ?? "../../assets/profil_img_setting.png"' alt="profile"></td> 
+            <td class="col-md-5">{{friend.requestedUser.profiles.firstName}} {{friend.requestedUser.profiles.lastName}}</td>
+            <td class="col-md-4">
+                <button class="btn btn-primary" style="width: 11rem;">Accept</button>
+                <button class="btn btn-primary" style="width: 11rem;">Delete</button>
+            </td>
         </tr>
     </tbody>
 </table>
-<h1 class="text-center">Requested</h1>
+
+<!-- <h1 class="text-center">Requested</h1>
 <table class="table table-hover align-middle">
     <tbody>
         <tr *ngFor="let friend of listOfFriends">
@@ -31,17 +50,4 @@
             <td><button class="btn btn-primary">Requested</button></td>
         </tr>
     </tbody>
-</table> -->
-<h1 class="text-center">Everyone</h1>
-<table class="table table-hover align-middle">
-    <tbody>
-        <tr *ngFor="let friend of listOfFriends">
-            <td><img class="img-thumbnail" [src]='friend.friendProfileInformation.profilePictureUrl ?? "../../assets/profil_img_setting.png"' alt="profile"></td>      
-            <td>{{friend.friendProfileInformation.firstName}} {{friend.friendProfileInformation.lastName}}</td>
-            <td>{{friend.relationship.relationshipId}}</td>
-            <td><button class="btn btn-primary">Requested</button></td>
-        </tr>
-    </tbody>
-</table>
-
-
+</table>  -->
