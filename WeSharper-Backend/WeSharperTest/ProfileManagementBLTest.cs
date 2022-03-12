@@ -95,33 +95,6 @@ public class ProfileManagementBLTest
 
         //Assert
         Assert.Same(_expectedProfile, _actualProfile);
-        
+
     }
-    
-    [Fact]
-    public void Fail_Get_A_Profile_Because_No_Profiles()
-    {
-        //Arrange
-        Profile _expectedProfile = new Profile()
-        {
-            ProfileId = Guid.NewGuid().ToString(),
-            UserId = Guid.NewGuid().ToString(),
-            FirstName = "John",
-            LastName = "Smith",
-            ProfilePictureUrl = "https://i.kym-cdn.com/entries/icons/facebook/000/027/475/Screen_Shot_2018-10-25_at_11.02.15_AM.jpg",
-            Bio = "DNE",
-            CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"))
-        };
-
-        List<Profile> _expectedListOfProfiles = new List<Profile>();
-        _expectedListOfProfiles.Add(_expectedProfile);
-
-        Mock<IProfileManagementDL> _mockRepo = new Mock<IProfileManagementDL>();
-        _mockRepo.Setup(repo => repo.GetAllProfiles()).Returns(_expectedListOfProfiles);
-        IProfileManagementBL _profileBL = new ProfileManagementBL(_mockRepo.Object);
-
-        Assert.Throws<Exception>(() => _profileBL.GetAProfile("asdf") );
-        
-    } 
-    
 }

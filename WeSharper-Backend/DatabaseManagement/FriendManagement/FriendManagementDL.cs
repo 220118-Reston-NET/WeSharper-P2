@@ -13,43 +13,160 @@ namespace WeSharper.DatabaseManagement.Implements
             _context = context;
         }
 
+        public Friend AcceptFriend(string p_userID, string p_friendID)
+        {
+            Friend _currentRelationship = _context.Friends.FirstOrDefault(p => p.AcceptedUserId.Equals(p_userID)
+                                                                                && p.RequestedUserId.Equals(p_friendID));
+            if (_currentRelationship != null)
+            {
+                _currentRelationship.IsAccepted = true;
+                _currentRelationship.Relationship = "Friend";
+                _currentRelationship.CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"));
+                _context.SaveChanges();
+            }
+            return _currentRelationship;
+        }
+
         public Friend AddFriend(string p_userID, string p_friendID)
         {
             Friend _currentRelationship = _context.Friends.FirstOrDefault(p => p.AcceptedUserId.Equals(p_userID)
                                                                                 && p.RequestedUserId.Equals(p_friendID)
                                                                             || p.AcceptedUserId.Equals(p_friendID)
                                                                                 && p.RequestedUserId.Equals(p_userID));
-            if (_currentRelationship != null && _currentRelationship.IsAccepted)
+            if (_currentRelationship != null)
             {
-                throw new Exception("You already added this friend!");
+                _currentRelationship.RequestedUserId = p_userID;
+                _currentRelationship.AcceptedUserId = p_friendID;
+                _currentRelationship.CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"));
+                _context.SaveChanges();
             }
-            else if (_currentRelationship != null && _currentRelationship.IsAccepted)
+            else
             {
+                Friend _newFriendShip = new Friend()
+                {
+                    RelationshipId = Guid.NewGuid().ToString(),
+                    RequestedUserId = p_userID,
+                    AcceptedUserId = p_friendID,
+                    IsAccepted = false,
+                    Relationship = "Friend",
+                    CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"))
+                };
+                _context.Add(_newFriendShip);
+                _context.SaveChanges();
 
+                return _newFriendShip;
             }
 
             return _currentRelationship;
         }
 
-        public List<Profile> GetAllFriendProfiles()
-        {
-            return _context.Profiles.ToList();
-        }
-
         public List<Friend> GetAllFriends()
         {
-            return _context.Friends.ToList();
+            List<Friend> _listOfAllRelationship = new List<Friend>();
+            _listOfAllRelationship = _context.Friends
+                                        .Select(f => new Friend
+                                        {
+                                            RelationshipId = f.RelationshipId,
+                                            RequestedUserId = f.RequestedUserId,
+                                            AcceptedUserId = f.AcceptedUserId,
+                                            IsAccepted = f.IsAccepted,
+                                            Relationship = f.Relationship,
+                                            CreatedAt = f.CreatedAt,
+                                            AcceptedUser = new ApplicationUser
+                                            {
+                                                Profiles = f.AcceptedUser.Profiles
+                                                            .Select(p => new Profile
+                                                            {
+                                                                FirstName = p.FirstName,
+                                                                LastName = p.LastName,
+                                                                ProfilePictureUrl = p.ProfilePictureUrl
+                                                            }).ToList()
+                                            },
+                                            RequestedUser = new ApplicationUser
+                                            {
+                                                Profiles = f.AcceptedUser.Profiles
+                                                            .Select(p => new Profile
+                                                            {
+                                                                FirstName = p.FirstName,
+                                                                LastName = p.LastName,
+                                                                ProfilePictureUrl = p.ProfilePictureUrl
+                                                            }).ToList()
+                                            },
+                                        }).ToList();
+
+            return _listOfAllRelationship;
+        }
+
+        public List<Post> GetFriendPostsByFriendID(string p_friendID)
+        {
+            var _result = _context.Posts
+                                .Select(p => new Post
+                                {
+                                    PostId = p.PostId,
+                                    UserId = p.UserId,
+                                    PostContent = p.PostContent,
+                                    PostPhoto = p.PostPhoto,
+                                    IsDeleted = p.IsDeleted,
+                                    CreatedAt = p.CreatedAt,
+                                    PostComments = p.PostComments
+                                                    .Select(pc => new PostComment
+                                                    {
+                                                        CommentId = pc.CommentId,
+                                                        UserId = pc.UserId,
+                                                        PostComment1 = pc.PostComment1,
+                                                        IsDeleted = pc.IsDeleted,
+                                                        CreatedAt = pc.CreatedAt,
+                                                        PostCommentReacts = pc.PostCommentReacts
+                                                                                .Select(pcr => new PostCommentReact
+                                                                                {
+                                                                                    PostCommentReactId = pcr.PostCommentReactId,
+                                                                                    UserId = pcr.UserId,
+                                                                                    ReactId = pcr.ReactId
+                                                                                }).ToList()
+                                                    }).ToList(),
+                                    PostReacts = p.PostReacts
+                                                    .Select(pr => new PostReact
+                                                    {
+                                                        PostReactId = pr.PostReactId,
+                                                        UserId = pr.UserId,
+                                                        ReactId = pr.ReactId
+                                                    }).ToList()
+                                })
+                                .Where(p => p.UserId.Equals(p_friendID))
+                                .ToList();
+
+            return _result;
         }
 
         public Profile GetFriendProfileByFriendID(string p_friendID)
         {
-            return _context.Profiles.FirstOrDefault(p => p.UserId.Equals(p_friendID));
+            return _context.Profiles.Where(p => p.UserId.Equals(p_friendID))
+                                    .Select(p => new Profile
+                                    {
+                                        UserId = p.UserId,
+                                        FirstName = p.FirstName,
+                                        LastName = p.LastName,
+                                        ProfilePictureUrl = p.ProfilePictureUrl,
+                                        Bio = p.Bio,
+                                        CreatedAt = p.CreatedAt
+                                    }).First();
         }
 
-        public Friend GetRelationship(string p_userID, string p_friendID)
+        public Friend RemoveFriend(string p_userID, string p_friendID)
         {
-            return _context.Friends.FirstOrDefault(p => p.AcceptedUserId.Equals(p_userID) && p.RequestedUserId.Equals(p_friendID)
-                                                    || p.AcceptedUserId.Equals(p_friendID) && p.RequestedUserId.Equals(p_userID));
+            Friend _currentRelationship = _context.Friends.FirstOrDefault(p => p.AcceptedUserId.Equals(p_userID)
+                                                                                && p.RequestedUserId.Equals(p_friendID)
+                                                                            || p.AcceptedUserId.Equals(p_friendID)
+                                                                                && p.RequestedUserId.Equals(p_userID));
+            if (_currentRelationship != null)
+            {
+                _currentRelationship.IsAccepted = false;
+                _currentRelationship.Relationship = null;
+                _currentRelationship.CreatedAt = null;
+                _context.SaveChanges();
+            }
+
+            return _currentRelationship;
         }
     }
 }
