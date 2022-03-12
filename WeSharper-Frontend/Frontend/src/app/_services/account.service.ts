@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, ReplaySubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { Post } from '../_models/post';
 import { Profile } from '../_models/profile';
 import { User } from '../_models/user';
 
@@ -60,4 +61,10 @@ export class AccountService {
     {
       return this.http.get<Profile>(this.baseUrl + 'User/Profile');
     }
+
+  getPost() : Observable<Post>
+  {
+    return this.http.get<Post>(this.baseUrl + 'UserPost/UserPosts');
+  }
 }
+
