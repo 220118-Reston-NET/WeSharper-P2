@@ -19,7 +19,7 @@ export class AccountService {
   constructor(private http: HttpClient) { }
 
   login(model: any) {
-    return this.http.post(this.baseUrl + 'Authentication/Login', model).pipe(
+    return this.http.post(this.baseUrl + 'Authentication/Login', model, {responseType: 'json'}).pipe(
       map((response: User) => {
         const user = response;
         if (user) {
@@ -32,7 +32,7 @@ export class AccountService {
   }
 
   register(model: any) {
-    return this.http.post(this.baseUrl + 'Authentication/Register', model).pipe(
+    return this.http.post(this.baseUrl + 'Authentication/Register', model, {responseType: 'json'}).pipe(
       map((user: User) => {
         if (user) {
           localStorage.setItem('user', JSON.stringify(user));
