@@ -34,7 +34,6 @@ namespace WeSharper.DatabaseManagement.Implements
             {
                 profToUpdate.FirstName = p_profile.FirstName;
                 profToUpdate.LastName = p_profile.LastName;
-                profToUpdate.ProfilePictureUrl = p_profile.ProfilePictureUrl;
                 profToUpdate.Bio = p_profile.Bio;
                 _context.SaveChanges();
             }
@@ -43,6 +42,22 @@ namespace WeSharper.DatabaseManagement.Implements
                 throw new Exception("No profiles found");
             }
             return p_profile;
+        }
+
+        public Profile UpdateProfilePicture(Profile p_profile)
+        {
+            Profile _profile = _context.Profiles.FirstOrDefault(p => p.UserId == p_profile.UserId);
+            if (_profile != null)
+            {
+                _profile.ProfilePictureUrl = p_profile.ProfilePictureUrl;
+                _context.SaveChanges();
+            }
+            else
+            {
+                throw new Exception("No profiles found");
+            }
+
+            return _profile;
         }
     }
 }

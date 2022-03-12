@@ -29,6 +29,11 @@ namespace WeSharper.BusinessesManagement.Implements
         {
             return _repo.UpdateProfile(p_profile);
         }
+
+        public Profile UpdateProfilePicture(Profile p_profile)
+        {
+            return _repo.UpdateProfilePicture(p_profile);
+        }
     }
 }
 

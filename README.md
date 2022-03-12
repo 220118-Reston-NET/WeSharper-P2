@@ -33,6 +33,7 @@ N/A
 - [Entity Framework Core](https://docs.microsoft.com/en-us/ef/core/)
 - [ASP.NET Core Web APIs](https://dotnet.microsoft.com/en-us/apps/aspnet/apis)
 - [ASP.NET Identity](https://docs.microsoft.com/en-us/aspnet/identity/overview/getting-started/introduction-to-aspnet-identity)
+- [Azure Blob Storage](https://azure.microsoft.com/en-us/services/storage/blobs/)
 - [ASP.NET SignalR](https://docs.microsoft.com/en-us/aspnet/core/signalr/introduction?view=aspnetcore-6.0)
 - [Swagger](https://swagger.io)
   

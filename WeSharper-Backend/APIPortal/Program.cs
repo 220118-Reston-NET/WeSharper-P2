@@ -7,6 +7,8 @@ using Microsoft.IdentityModel.Tokens;
 using WeSharper.APIPortal.AuthenticationService.Implements;
 using WeSharper.APIPortal.AuthenticationService.Interfaces;
 using WeSharper.APIPortal.AuthenticationService.Middlewares;
+using WeSharper.APIPortal.BlobService.Implements;
+using WeSharper.APIPortal.BlobService.Interfaces;
 using WeSharper.APIPortal.Middleware;
 using WeSharper.BusinessesManagement.Implements;
 using WeSharper.BusinessesManagement.Interfaces;
@@ -57,6 +59,8 @@ builder.Services.AddDbContext<WeSharperContext>(options =>
         options.UseSqlServer(connectionString));
 // builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
 //         .AddEntityFrameworkStores<WeSharperContext>();
+
+builder.Services.AddScoped<IBlobService, BlobService>();
 
 builder.Services.AddScoped<IProfileManagementDL, ProfileManagementDL>();
 builder.Services.AddScoped<IHobbyManagementDL, HobbyManagementDL>();
