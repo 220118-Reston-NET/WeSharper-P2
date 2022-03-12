@@ -9,6 +9,7 @@ namespace WeSharper.APIPortal.Consts
         //USER
         public const string UpdateProfile = "Profile";
         public const string GetProfile = "Profile";
+        public const string ProfilePicture = "ProfilePicture";
 
         //HOBBY
         public const string Hobby = "Hobby";

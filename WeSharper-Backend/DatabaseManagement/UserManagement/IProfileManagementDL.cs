@@ -23,5 +23,6 @@ namespace WeSharper.DatabaseManagement.Interfaces
         /// <param name="p_profile"></param>
         /// <returns></returns>
         Profile UpdateProfile(Profile p_profile);
+        Profile UpdateProfilePicture(Profile p_profile);
     }
 }
