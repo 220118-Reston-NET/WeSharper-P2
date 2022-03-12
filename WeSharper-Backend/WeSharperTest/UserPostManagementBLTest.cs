@@ -77,7 +77,15 @@ public class UserPostManagementBLTest
             PostContent = "Hello World!",
             PostPhoto = "https://previews.123rf.com/images/fordzolo/fordzolo1506/fordzolo150600296/41026708-example-white-stamp-text-on-red-backgroud.jpg",
             PostComments = new HashSet<PostComment>(),
-            PostReacts = new HashSet<PostReact>(),
+            PostReacts = new HashSet<PostReact>(){
+                new PostReact(){
+                    React = new Reaction(){
+                        ReactId = Guid.NewGuid().ToString(),
+                        ReactName = "Love",
+                        ReactIcon = "LoveIcon"
+                    }
+                }
+            },
             IsDeleted = false,
             CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"))
         };

@@ -14,16 +14,19 @@ namespace WeSharper.Test;
 public class GroupManagementBLTest
 {
     [Fact]
-    public void Should_Add_A_Group(){
+    public void Should_Add_A_Group()
+    {
         //Arrange
-        Group _expectedGroup = new Group(){
-                GroupId = Guid.NewGuid().ToString(),
-                GroupManagerId = Guid.NewGuid().ToString(),
-                GroupName = "TestGroup",
-                GroupPicture = "https://i.kym-cdn.com/entries/icons/facebook/000/027/475/Screen_Shot_2018-10-25_at_11.02.15_AM.jpg",
-                Description = "TestDescription",
-                IsActivated = true,
-                CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"))
+        Group _expectedGroup = new Group()
+        {
+            GroupId = Guid.NewGuid().ToString(),
+            GroupManagerId = Guid.NewGuid().ToString(),
+            GroupName = "TestGroup",
+            GroupPicture = "https://i.kym-cdn.com/entries/icons/facebook/000/027/475/Screen_Shot_2018-10-25_at_11.02.15_AM.jpg",
+            Description = "TestDescription",
+            IsActivated = true,
+            GroupManager = new ApplicationUser(),
+            CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"))
         };
 
         Mock<IGroupManagementDL> _mockRepo = new Mock<IGroupManagementDL>();
@@ -44,39 +47,40 @@ public class GroupManagementBLTest
         List<Group> _expectedListOfGroups = new List<Group>();
 
         Mock<IGroupManagementDL> _mockRepo = new Mock<IGroupManagementDL>();
-        _mockRepo.Setup(repo => repo.GetAllGroups()).Returns( _expectedListOfGroups );
+        _mockRepo.Setup(repo => repo.GetAllGroups()).Returns(_expectedListOfGroups);
         IGroupManagementBL _groupBL = new GroupManagementBL(_mockRepo.Object);
 
-        Assert.Throws<Exception>(() => _groupBL.GetAllGroups() );
+        Assert.Throws<Exception>(() => _groupBL.GetAllGroups());
     }
 
     [Fact]
     public void Should_Get_All_Groups()
     {
         // Arrange
-        Group _expectedGroup = new Group(){
-                GroupId = Guid.NewGuid().ToString(),
-                GroupManagerId = Guid.NewGuid().ToString(),
-                GroupName = "TestGroup",
-                GroupPicture = "https://i.kym-cdn.com/entries/icons/facebook/000/027/475/Screen_Shot_2018-10-25_at_11.02.15_AM.jpg",
-                Description = "TestDescription",
-                IsActivated = true,
-                CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"))
+        Group _expectedGroup = new Group()
+        {
+            GroupId = Guid.NewGuid().ToString(),
+            GroupManagerId = Guid.NewGuid().ToString(),
+            GroupName = "TestGroup",
+            GroupPicture = "https://i.kym-cdn.com/entries/icons/facebook/000/027/475/Screen_Shot_2018-10-25_at_11.02.15_AM.jpg",
+            Description = "TestDescription",
+            IsActivated = true,
+            CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"))
         };
 
         List<Group> _expectedListOfGroups = new List<Group>();
         _expectedListOfGroups.Add(_expectedGroup);
 
         Mock<IGroupManagementDL> _mockRepo = new Mock<IGroupManagementDL>();
-        _mockRepo.Setup(repo => repo.GetAllGroups()).Returns( _expectedListOfGroups );
+        _mockRepo.Setup(repo => repo.GetAllGroups()).Returns(_expectedListOfGroups);
         //_mockRepo.Setup(repo => repo.AddGroup(_expectedGroup)).Returns(_expectedGroup);
         IGroupManagementBL _groupBL = new GroupManagementBL(_mockRepo.Object);
 
         //Act
         List<Group> _actualListOfGroups = _groupBL.GetAllGroups();
-        
+
         // Assert
-        Assert.Same(_expectedListOfGroups,_actualListOfGroups);
+        Assert.Same(_expectedListOfGroups, _actualListOfGroups);
     }
 
     [Fact]
@@ -86,104 +90,109 @@ public class GroupManagementBLTest
         List<Group> _expectedListOfGroups = new List<Group>();
 
         Mock<IGroupManagementDL> _mockRepo = new Mock<IGroupManagementDL>();
-        _mockRepo.Setup(repo => repo.GetAllGroups()).Returns( _expectedListOfGroups );
+        _mockRepo.Setup(repo => repo.GetAllGroups()).Returns(_expectedListOfGroups);
         IGroupManagementBL _groupBL = new GroupManagementBL(_mockRepo.Object);
 
-        Assert.Throws<Exception>(() => _groupBL.CheckGroupId("45165") );
+        Assert.Throws<Exception>(() => _groupBL.CheckGroupId("45165"));
     }
 
     [Fact]
     public void Pass_GroupId_Check()
     {
         // Arrange
-        Group _expectedGroup = new Group(){
-                GroupId = Guid.NewGuid().ToString(),
-                GroupManagerId = Guid.NewGuid().ToString(),
-                GroupName = "TestGroup",
-                GroupPicture = "https://i.kym-cdn.com/entries/icons/facebook/000/027/475/Screen_Shot_2018-10-25_at_11.02.15_AM.jpg",
-                Description = "TestDescription",
-                IsActivated = true,
-                CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"))
+        Group _expectedGroup = new Group()
+        {
+            GroupId = Guid.NewGuid().ToString(),
+            GroupManagerId = Guid.NewGuid().ToString(),
+            GroupName = "TestGroup",
+            GroupPicture = "https://i.kym-cdn.com/entries/icons/facebook/000/027/475/Screen_Shot_2018-10-25_at_11.02.15_AM.jpg",
+            Description = "TestDescription",
+            IsActivated = true,
+            CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"))
         };
 
         List<Group> _expectedListOfGroups = new List<Group>();
         _expectedListOfGroups.Add(_expectedGroup);
 
         Mock<IGroupManagementDL> _mockRepo = new Mock<IGroupManagementDL>();
-        _mockRepo.Setup(repo => repo.GetAllGroups()).Returns( _expectedListOfGroups );
+        _mockRepo.Setup(repo => repo.GetAllGroups()).Returns(_expectedListOfGroups);
         //_mockRepo.Setup(repo => repo.AddGroup(_expectedGroup)).Returns(_expectedGroup);
         IGroupManagementBL _groupBL = new GroupManagementBL(_mockRepo.Object);
 
         //Act
         Group _actualGroups = _groupBL.CheckGroupId(_expectedGroup.GroupId);
-        
+
         // Assert
-        Assert.Same(_expectedGroup,_actualGroups);
+        Assert.Same(_expectedGroup, _actualGroups);
     }
 
     [Fact]
     public void Fail_Group_Manager_Check()
     {
-        Group _expectedGroup = new Group(){
-                GroupId = Guid.NewGuid().ToString(),
-                GroupManagerId = Guid.NewGuid().ToString(),
-                GroupName = "TestGroup",
-                GroupPicture = "https://i.kym-cdn.com/entries/icons/facebook/000/027/475/Screen_Shot_2018-10-25_at_11.02.15_AM.jpg",
-                Description = "TestDescription",
-                IsActivated = true,
-                CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"))
+        Group _expectedGroup = new Group()
+        {
+            GroupId = Guid.NewGuid().ToString(),
+            GroupManagerId = Guid.NewGuid().ToString(),
+            GroupName = "TestGroup",
+            GroupPicture = "https://i.kym-cdn.com/entries/icons/facebook/000/027/475/Screen_Shot_2018-10-25_at_11.02.15_AM.jpg",
+            Description = "TestDescription",
+            IsActivated = true,
+            CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"))
         };
 
         List<Group> _expectedListOfGroups = new List<Group>();
         _expectedListOfGroups.Add(_expectedGroup);
 
         Mock<IGroupManagementDL> _mockRepo = new Mock<IGroupManagementDL>();
-        _mockRepo.Setup(repo => repo.GetAllGroups()).Returns( _expectedListOfGroups );
+        _mockRepo.Setup(repo => repo.GetAllGroups()).Returns(_expectedListOfGroups);
         IGroupManagementBL _groupBL = new GroupManagementBL(_mockRepo.Object);
 
-        Assert.Throws<Exception>(() => _groupBL.CheckGroupManager(_expectedGroup.GroupId,Guid.NewGuid().ToString()) );
+        Assert.Throws<Exception>(() => _groupBL.CheckGroupManager(_expectedGroup.GroupId, Guid.NewGuid().ToString()));
     }
 
     [Fact]
     public void Pass_Group_Manager_Check()
     {
         // Arrange
-        Group _expectedGroup = new Group(){
-                GroupId = Guid.NewGuid().ToString(),
-                GroupManagerId = Guid.NewGuid().ToString(),
-                GroupName = "TestGroup",
-                GroupPicture = "https://i.kym-cdn.com/entries/icons/facebook/000/027/475/Screen_Shot_2018-10-25_at_11.02.15_AM.jpg",
-                Description = "TestDescription",
-                IsActivated = true,
-                CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"))
+        Group _expectedGroup = new Group()
+        {
+            GroupId = Guid.NewGuid().ToString(),
+            GroupManagerId = Guid.NewGuid().ToString(),
+            GroupName = "TestGroup",
+            GroupPicture = "https://i.kym-cdn.com/entries/icons/facebook/000/027/475/Screen_Shot_2018-10-25_at_11.02.15_AM.jpg",
+            Description = "TestDescription",
+            IsActivated = true,
+            CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"))
         };
 
         List<Group> _expectedListOfGroups = new List<Group>();
         _expectedListOfGroups.Add(_expectedGroup);
 
         Mock<IGroupManagementDL> _mockRepo = new Mock<IGroupManagementDL>();
-        _mockRepo.Setup(repo => repo.GetAllGroups()).Returns( _expectedListOfGroups );
+        _mockRepo.Setup(repo => repo.GetAllGroups()).Returns(_expectedListOfGroups);
         //_mockRepo.Setup(repo => repo.AddGroup(_expectedGroup)).Returns(_expectedGroup);
         IGroupManagementBL _groupBL = new GroupManagementBL(_mockRepo.Object);
 
         //Act
         Group _actualGroups = _groupBL.CheckGroupManager(_expectedGroup.GroupId, _expectedGroup.GroupManagerId);
-        
+
         // Assert
-        Assert.Same(_expectedGroup,_actualGroups);
+        Assert.Same(_expectedGroup, _actualGroups);
     }
 
     [Fact]
-    public void Should_Update_A_Group(){
-        
-        Group _expectedGroup = new Group(){
-                GroupId = Guid.NewGuid().ToString(),
-                GroupManagerId = Guid.NewGuid().ToString(),
-                GroupName = "TestGroup",
-                GroupPicture = "https://i.kym-cdn.com/entries/icons/facebook/000/027/475/Screen_Shot_2018-10-25_at_11.02.15_AM.jpg",
-                Description = "TestDescription",
-                IsActivated = true,
-                CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"))
+    public void Should_Update_A_Group()
+    {
+
+        Group _expectedGroup = new Group()
+        {
+            GroupId = Guid.NewGuid().ToString(),
+            GroupManagerId = Guid.NewGuid().ToString(),
+            GroupName = "TestGroup",
+            GroupPicture = "https://i.kym-cdn.com/entries/icons/facebook/000/027/475/Screen_Shot_2018-10-25_at_11.02.15_AM.jpg",
+            Description = "TestDescription",
+            IsActivated = true,
+            CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"))
         };
 
         List<Group> _expectedListOfGroups = new List<Group>();
@@ -191,28 +200,30 @@ public class GroupManagementBLTest
 
 
         Mock<IGroupManagementDL> _mockRepo = new Mock<IGroupManagementDL>();
-        _mockRepo.Setup(repo => repo.GetAllGroups()).Returns( _expectedListOfGroups );
-        _mockRepo.Setup(repo => repo.UpdateGroup(_expectedGroup,_expectedGroup.GroupManagerId)).Returns(_expectedGroup);
+        _mockRepo.Setup(repo => repo.GetAllGroups()).Returns(_expectedListOfGroups);
+        _mockRepo.Setup(repo => repo.UpdateGroup(_expectedGroup, _expectedGroup.GroupManagerId)).Returns(_expectedGroup);
         IGroupManagementBL groupBL = new GroupManagementBL(_mockRepo.Object);
 
         //act
-        Group actualGroup = groupBL.UpdateGroupInformation(_expectedGroup,_expectedGroup.GroupManagerId);
+        Group actualGroup = groupBL.UpdateGroupInformation(_expectedGroup, _expectedGroup.GroupManagerId);
 
         //Assert
         Assert.Same(_expectedGroup, actualGroup);
     }
 
     [Fact]
-    public void Should_Not_Update_A_Group(){
-        
-        Group _expectedGroup = new Group(){
-                GroupId = Guid.NewGuid().ToString(),
-                GroupManagerId = Guid.NewGuid().ToString(),
-                GroupName = "TestGroup",
-                GroupPicture = "https://i.kym-cdn.com/entries/icons/facebook/000/027/475/Screen_Shot_2018-10-25_at_11.02.15_AM.jpg",
-                Description = "TestDescription",
-                IsActivated = true,
-                CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"))
+    public void Should_Not_Update_A_Group()
+    {
+
+        Group _expectedGroup = new Group()
+        {
+            GroupId = Guid.NewGuid().ToString(),
+            GroupManagerId = Guid.NewGuid().ToString(),
+            GroupName = "TestGroup",
+            GroupPicture = "https://i.kym-cdn.com/entries/icons/facebook/000/027/475/Screen_Shot_2018-10-25_at_11.02.15_AM.jpg",
+            Description = "TestDescription",
+            IsActivated = true,
+            CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"))
         };
 
         List<Group> _expectedListOfGroups = new List<Group>();
@@ -220,23 +231,24 @@ public class GroupManagementBLTest
 
 
         Mock<IGroupManagementDL> _mockRepo = new Mock<IGroupManagementDL>();
-        _mockRepo.Setup(repo => repo.UpdateGroup(_expectedGroup,_expectedGroup.GroupManagerId)).Returns(_expectedGroup);
+        _mockRepo.Setup(repo => repo.UpdateGroup(_expectedGroup, _expectedGroup.GroupManagerId)).Returns(_expectedGroup);
         IGroupManagementBL groupBL = new GroupManagementBL(_mockRepo.Object);
 
-        Assert.Throws<Exception>(() => groupBL.UpdateGroupInformation(_expectedGroup,"1561") );
+        Assert.Throws<Exception>(() => groupBL.UpdateGroupInformation(_expectedGroup, "1561"));
     }
 
     [Fact]
     public void Should_Delete_Group()
     {
-        Group _expectedGroup = new Group(){
-                GroupId = Guid.NewGuid().ToString(),
-                GroupManagerId = Guid.NewGuid().ToString(),
-                GroupName = "TestGroup",
-                GroupPicture = "https://i.kym-cdn.com/entries/icons/facebook/000/027/475/Screen_Shot_2018-10-25_at_11.02.15_AM.jpg",
-                Description = "TestDescription",
-                IsActivated = true,
-                CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"))
+        Group _expectedGroup = new Group()
+        {
+            GroupId = Guid.NewGuid().ToString(),
+            GroupManagerId = Guid.NewGuid().ToString(),
+            GroupName = "TestGroup",
+            GroupPicture = "https://i.kym-cdn.com/entries/icons/facebook/000/027/475/Screen_Shot_2018-10-25_at_11.02.15_AM.jpg",
+            Description = "TestDescription",
+            IsActivated = true,
+            CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"))
         };
 
         List<Group> _expectedListOfGroups = new List<Group>();
@@ -244,13 +256,13 @@ public class GroupManagementBLTest
 
 
         Mock<IGroupManagementDL> _mockRepo = new Mock<IGroupManagementDL>();
-        _mockRepo.Setup(repo => repo.GetAllGroups()).Returns( _expectedListOfGroups );
-        _mockRepo.Setup(repo => repo.UpdateGroup(_expectedGroup,_expectedGroup.GroupManagerId)).Returns(_expectedGroup);
-        _mockRepo.Setup(repo => repo.DeleteGroup(_expectedGroup.GroupId ,_expectedGroup.GroupManagerId)).Returns(_expectedGroup);
+        _mockRepo.Setup(repo => repo.GetAllGroups()).Returns(_expectedListOfGroups);
+        _mockRepo.Setup(repo => repo.UpdateGroup(_expectedGroup, _expectedGroup.GroupManagerId)).Returns(_expectedGroup);
+        _mockRepo.Setup(repo => repo.DeleteGroup(_expectedGroup.GroupId, _expectedGroup.GroupManagerId)).Returns(_expectedGroup);
         IGroupManagementBL groupBL = new GroupManagementBL(_mockRepo.Object);
 
         //act
-        Group actualGroup = groupBL.DeleteGroup(_expectedGroup.GroupId,_expectedGroup.GroupManagerId);
+        Group actualGroup = groupBL.DeleteGroup(_expectedGroup.GroupId, _expectedGroup.GroupManagerId);
 
         //Assert
         Assert.Same(_expectedGroup, actualGroup);
@@ -369,7 +381,7 @@ public class GroupManagementBLTest
     } 
 
     */
-    
 
-    
-} 
+
+
+}

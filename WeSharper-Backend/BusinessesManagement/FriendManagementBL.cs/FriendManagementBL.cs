@@ -13,6 +13,11 @@ namespace WeSharper.BusinessesManagement.Implements
             _repo = repo;
         }
 
+        public Friend AcceptFriend(string p_userID, string p_friendID)
+        {
+            return _repo.AcceptFriend(p_userID, p_friendID);
+        }
+
         public Friend AddFriend(string p_userID, string p_friendID)
         {
             return _repo.AddFriend(p_userID, p_friendID);
@@ -24,14 +29,24 @@ namespace WeSharper.BusinessesManagement.Implements
                                             || p.RequestedUserId.Equals(p_userID) && p.IsAccepted);
         }
 
-        public List<Profile> GetAllFriendProfiles()
-        {
-            return _repo.GetAllFriendProfiles();
-        }
-
         public List<Friend> GetAllFriends()
         {
             return _repo.GetAllFriends();
+        }
+
+        public List<Friend> GetAllIncomingFriendByUserID(string p_userID)
+        {
+            return GetAllFriends().FindAll(p => p.AcceptedUserId.Equals(p_userID));
+        }
+
+        public List<Friend> GetAllOutcomingFriendByUserID(string p_userID)
+        {
+            return GetAllFriends().FindAll(p => p.RequestedUserId.Equals(p_userID));
+        }
+
+        public List<Post> GetFriendPostsByFriendID(string p_friendID)
+        {
+            return _repo.GetFriendPostsByFriendID(p_friendID);
         }
 
         public Profile GetFriendProfileByFriendID(string p_friendID)
@@ -39,9 +54,9 @@ namespace WeSharper.BusinessesManagement.Implements
             return _repo.GetFriendProfileByFriendID(p_friendID);
         }
 
-        public Friend GetRelationship(string p_userID, string p_friendID)
+        public Friend RemoveFriend(string p_userID, string p_friendID)
         {
-            return _repo.GetRelationship(p_userID, p_friendID);
+            return _repo.RemoveFriend(p_userID, p_friendID);
         }
     }
 }

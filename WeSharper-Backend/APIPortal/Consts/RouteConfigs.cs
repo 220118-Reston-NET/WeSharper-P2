@@ -25,17 +25,18 @@ namespace WeSharper.APIPortal.Consts
 
         //Friend
         public const string Friends = "Friends";
-        public const string Friend = "Friends/{p_friendID}";
-        public const string AllFriends = "AllFriends";
-        public const string AddFriend = "Friends/{p_friendID}/add";
-        public const string UnconfirmedSentFriends = "Friend/UnconirmedSent/{f_userID}";
-        public const string UserPendingFriendRequests = "Friend/PendingFriendRequests/{f_userID}";
+        public const string IncomingFriends = "IncomingFriends";
+        public const string OutcomingFriends = "OutcomingFriends";
+        public const string FriendProfile = "Friends/{p_friendID}/Profile";
+        public const string FriendPosts = "Friends/{p_friendID}/Posts";
+        public const string AddFriend = "Friends/{p_friendID}/Add";
+        public const string RemoveFriend = "Friends/{p_friendID}/Remove";
+        public const string AcceptFriend = "Friends/{p_friendID}/Accept";
 
         //Group
         public const string ApprovedGroupUser = "Group/Approved/{groupId}";
         public const string BanGroupUser = "Group/Ban/{groupId}/{userId}";
         public const string Groups = "Group";
-        public const string Group = "Group/{g_userId}";
         public const string GroupUsers = "Group";
 
         //GROUPPOST
