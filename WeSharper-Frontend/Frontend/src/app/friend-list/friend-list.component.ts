@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Friend } from '../_models/friend';
+import { Profile } from '../_models/profile';
+import { AccountService } from '../_services/account.service';
 import { FriendService } from '../_services/friend.service';
 
 @Component({
@@ -8,23 +10,61 @@ import { FriendService } from '../_services/friend.service';
   styleUrls: ['./friend-list.component.css']
 })
 export class FriendListComponent implements OnInit {
-  listOfFriends: any[];
+  profile: Profile;
+  listOfUsers: Friend[]
+  listOfFriends: Friend[];
+  listOfInComingRequest: Friend[];
+  listOfOutComingRequest: Friend[];
 
-  constructor(private friendService: FriendService) { 
+
+  constructor(private readonly friendService: FriendService,
+    private readonly accountService: AccountService) {
+    this.listOfUsers = [];
     this.listOfFriends = [];
   }
 
   ngOnInit(): void {
+    this.getAllUsers();
     this.getAllFriends();
+    this.getAllInComingFriends();
+    this.getAllOutComingFriends();
+    this.accountService.getProfile().subscribe(result => {
+      this.profile = result;
+    })
   }
 
-  getAllFriends(){
-    this.friendService.getAllFriends().subscribe(response => {
+  getAllUsers() {
+    this.friendService.getAllUsers().subscribe(response => {
       console.log(response);
-      this.listOfFriends = response;
+      this.listOfUsers = response;
     }, error => {
       console.log(error);
     })
   }
 
+  getAllFriends() {
+    this.friendService.getAllFriends().subscribe(res => {
+      console.log(res);
+      this.listOfFriends = res;
+    }, error => {
+      console.log(error);
+    })
+  }
+
+  getAllOutComingFriends() {
+    this.friendService.getAllOutComingFriends().subscribe(res => {
+      console.log(res);
+      this.listOfOutComingRequest = res;
+    }, error => {
+      console.log(error);
+    })
+  }
+
+  getAllInComingFriends() {
+    this.friendService.getAllInComingFriends().subscribe(response => {
+      this.listOfInComingRequest = response;
+    }, error => {
+      console.log(error);
+    })
+  }
 }

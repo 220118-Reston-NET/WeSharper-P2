@@ -12,11 +12,22 @@ export class FriendService {
   baseUrl = environment.apiUrl;
   friends: Friend[] = [];
   user: User;
-  
+
   constructor(private http: HttpClient) { }
 
-  getAllFriends(): Observable<any[]>
-  {
-    return this.http.get<any[]>(this.baseUrl + 'Friend/AllFriends');
+  getAllUsers(): Observable<Friend[]> {
+    return this.http.get<Friend[]>(this.baseUrl + 'Friend/AllFriends');
+  }
+
+  getAllFriends(): Observable<Friend[]> {
+    return this.http.get<Friend[]>(this.baseUrl + 'Friend/Friends');
+  }
+
+  getAllOutComingFriends(): Observable<Friend[]> {
+    return this.http.get<Friend[]>(this.baseUrl + 'Friend/OutcomingFriends');
+  }
+
+  getAllInComingFriends(): Observable<Friend[]> {
+    return this.http.get<Friend[]>(this.baseUrl + 'Friend/IncomingFriends');
   }
 }

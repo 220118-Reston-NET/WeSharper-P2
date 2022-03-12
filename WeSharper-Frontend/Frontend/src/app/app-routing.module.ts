@@ -9,9 +9,9 @@ import { ProfileComponent } from './profile/profile.component';
 import { RegisterComponent } from './register/register.component';
 import { SettingComponent } from './setting/setting.component';
 import { AuthGuard } from './_authGuards/auth.guard';
+import { LoginGuard } from './_authGuards/login.guard';
 
 const routes: Routes = [
-
   { path: '', component: HomeComponent },
   { path: 'register', component: RegisterComponent },
   {
@@ -25,9 +25,11 @@ const routes: Routes = [
       { path: 'groups', component: GroupsComponent },
       { path: 'setting', component: SettingComponent },
       { path: 'messages', component: MessagesComponent },
+      { path: '**', redirectTo: 'feeds' },
 
     ]
-  }
+  },
+  { path: '**', redirectTo: '' },
 ];
 
 @NgModule({
