@@ -68,14 +68,14 @@ h1{
 
 .wrapper
    {
-    height: 140px;
+    height: 145px;
     width: 155px;
-    border: 1px solid #fff;
+    border: 1px solid rgb(148, 148, 148);
     border-radius: 50%;
-    /* background: url('/assets/pokemon.png'); */
+     /* background: url('/assets/pokemon.png'); */
     background-size: 100% 100%;
     display: block;
-    margin-top: 20px;
+    margin-top: 40px;
     margin-left: 100px;
     margin-right: auto;
     padding-bottom: 20px;
