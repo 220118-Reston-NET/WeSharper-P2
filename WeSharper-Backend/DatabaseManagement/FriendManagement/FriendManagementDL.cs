@@ -84,7 +84,7 @@ namespace WeSharper.DatabaseManagement.Implements
                                             },
                                             RequestedUser = new ApplicationUser
                                             {
-                                                Profiles = f.AcceptedUser.Profiles
+                                                Profiles = f.RequestedUser.Profiles
                                                             .Select(p => new Profile
                                                             {
                                                                 FirstName = p.FirstName,
