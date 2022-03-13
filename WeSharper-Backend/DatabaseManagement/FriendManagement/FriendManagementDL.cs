@@ -20,7 +20,6 @@ namespace WeSharper.DatabaseManagement.Implements
             if (_currentRelationship != null)
             {
                 _currentRelationship.IsAccepted = true;
-                _currentRelationship.Relationship = "Friend";
                 _currentRelationship.CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"));
                 _context.SaveChanges();
             }
@@ -37,6 +36,7 @@ namespace WeSharper.DatabaseManagement.Implements
             {
                 _currentRelationship.RequestedUserId = p_userID;
                 _currentRelationship.AcceptedUserId = p_friendID;
+                _currentRelationship.Relationship = "Friend";
                 _currentRelationship.CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"));
                 _context.SaveChanges();
             }
@@ -95,6 +95,33 @@ namespace WeSharper.DatabaseManagement.Implements
                                         }).ToList();
 
             return _listOfAllRelationship;
+        }
+
+        public List<Profile> GetAllRecommenedFriendByUserID(string p_userID)
+        {
+            List<Profile> _listAllProfiles = _context.Profiles.Where(p => p.UserId != p_userID).ToList();
+
+            List<Profile> _result = new List<Profile>();
+
+            //Get List Of Friends, IncomingFriends and OutcomingFriends
+            List<Friend> _listOfFriends = _context.Friends.Where(p => p.AcceptedUserId.Equals(p_userID) && p.IsAccepted
+                                                                || p.RequestedUserId.Equals(p_userID) && p.IsAccepted
+                                                                || p.AcceptedUserId.Equals(p_userID)
+                                                                    && p.IsAccepted.Equals(false)
+                                                                    && p.Relationship.Equals("Friend")
+                                                                || p.RequestedUserId.Equals(p_userID)
+                                                                    && p.IsAccepted.Equals(false)
+                                                                    && p.Relationship.Equals("Friend")).ToList();
+
+            foreach (var item in _listAllProfiles)
+            {
+                if (_listOfFriends.All(p => p.AcceptedUserId != item.UserId) && _listOfFriends.All(p => p.RequestedUserId != item.UserId))
+                {
+                    _result.Add(item);
+                }
+            }
+
+            return _result;
         }
 
         public List<Post> GetFriendPostsByFriendID(string p_friendID)

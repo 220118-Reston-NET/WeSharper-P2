@@ -128,6 +128,35 @@ public class FriendManagementBLTest
     }
 
     [Fact]
+    public void Should_Get_All_Recommended_Friends_By_UserID()
+    {
+        //Arrange
+        Profile _exptedfriendProfile = new Profile()
+        {
+            ProfileId = Guid.NewGuid().ToString(),
+            UserId = Guid.NewGuid().ToString(),
+            FirstName = "FirstNameTest",
+            LastName = "LastNameTest",
+            ProfilePictureUrl = "imgURL",
+            Bio = "Hello World!",
+            User = new ApplicationUser(),
+            CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"))
+        };
+        List<Profile> _expectedListFriends = new List<Profile>();
+        _expectedListFriends.Add(_exptedfriendProfile);
+
+        Mock<IFriendManagementDL> _mockRepo = new Mock<IFriendManagementDL>();
+        _mockRepo.Setup(repo => repo.GetAllRecommenedFriendByUserID(_exptedfriendProfile.UserId)).Returns(_expectedListFriends);
+        IFriendManagementBL _friendBL = new FriendManagementBL(_mockRepo.Object);
+
+        //Act
+        List<Profile> _actualListFriends = _friendBL.GetAllRecommenedFriendByUserID(_exptedfriendProfile.UserId);
+
+        //Assert
+        Assert.Same(_actualListFriends, _actualListFriends);
+    }
+
+    [Fact]
     public void Should_Get_Friend_Profile_By_FriendID()
     {
         //Arrange
