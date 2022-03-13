@@ -11,34 +11,25 @@ import { FriendService } from '../_services/friend.service';
 })
 export class FriendListComponent implements OnInit {
   profile: Profile;
-  listOfUsers: Friend[]
   listOfFriends: Friend[];
   listOfInComingRequest: Friend[];
   listOfOutComingRequest: Friend[];
+  listRecommendedFriends: Profile[];
+  friendID: string;
 
 
   constructor(private readonly friendService: FriendService,
     private readonly accountService: AccountService) {
-    this.listOfUsers = [];
     this.listOfFriends = [];
   }
 
   ngOnInit(): void {
-    this.getAllUsers();
     this.getAllFriends();
     this.getAllInComingFriends();
     this.getAllOutComingFriends();
+    this.getRecommendedFriends();
     this.accountService.getProfile().subscribe(result => {
       this.profile = result;
-    })
-  }
-
-  getAllUsers() {
-    this.friendService.getAllUsers().subscribe(response => {
-      console.log(response);
-      this.listOfUsers = response;
-    }, error => {
-      console.log(error);
     })
   }
 
@@ -66,5 +57,25 @@ export class FriendListComponent implements OnInit {
     }, error => {
       console.log(error);
     })
+  }
+
+  getRecommendedFriends() {
+    this.friendService.getAllRecommendedFriends().subscribe(response => {
+      this.listRecommendedFriends = response;
+    }, error => {
+      console.log(error);
+    })
+  }
+
+  addFriend(friendID){
+    this.friendService.addFriend(friendID).subscribe(result => console.log(result));
+  }
+
+  acceptFriend(friendID){
+    this.friendService.acceptFriend(friendID).subscribe(result => console.log(result));
+  }
+
+  removeFriend(friendID){
+    this.friendService.removeFriend(friendID).subscribe(result => console.log(result));
   }
 }
