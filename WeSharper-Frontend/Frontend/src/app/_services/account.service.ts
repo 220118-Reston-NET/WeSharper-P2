@@ -60,9 +60,9 @@ export class AccountService {
   }
 
   getProfile() : Observable<Profile>
-    {
-      return this.http.get<Profile>(this.baseUrl + 'User/Profile');
-    }
+  {
+    return this.http.get<Profile>(this.baseUrl + 'User/Profile');
+  }
 
   getPost() : Observable<Post>
   {

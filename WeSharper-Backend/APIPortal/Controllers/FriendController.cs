@@ -140,6 +140,27 @@ namespace WeSharper.APIPortal.Controllers
             }
         }
 
+        // GET: api/Friend/Friends/5/Relationship
+        [Authorize(Roles = "User")]
+        [HttpGet(RouteConfigs.FriendRelationship)]
+        public async Task<IActionResult> GetRelationshipByFriendID(string p_friendID)
+        {
+            var userFromDB = await _userManager.FindByNameAsync(given_name);
+            string p_userID = userFromDB.Id;
+
+            try
+            {
+                string result = _friendBL.GetRelationshipByFriendID(p_userID, p_friendID);
+                Log.Information("Getting Relationship By Friend ID: " + p_friendID);
+                return Ok(new { Results = result });
+            }
+            catch (System.Exception e)
+            {
+                Log.Warning("Route:" + RouteConfigs.FriendRelationship + ": " + e.Message);
+                return Conflict(e.Message);
+            }
+        }
+
         // GET: api/Friend/Friends/5/Posts
         [Authorize(Roles = "User")]
         [HttpGet(RouteConfigs.FriendPosts)]

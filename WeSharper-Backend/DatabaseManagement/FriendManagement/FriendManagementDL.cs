@@ -179,6 +179,45 @@ namespace WeSharper.DatabaseManagement.Implements
                                     }).First();
         }
 
+        public string GetRelationshipByFriendID(string p_userID, string p_friendID)
+        {
+            if (_context.Friends.All(p => p.AcceptedUserId != p_userID))
+            {
+                if (_context.Friends.All(p => p.RequestedUserId != p_userID))
+                    return "NotFriend";
+                if (_context.Friends.All(p => p.AcceptedUserId != p_friendID))
+                    return "NotFriend";
+
+                var relationship2 = _context.Friends.FirstOrDefault(p => p.AcceptedUserId.Equals(p_friendID)
+                                                                    && p.RequestedUserId.Equals(p_userID));
+                if (relationship2 != null)
+                    if (relationship2.IsAccepted)
+                    {
+                        return "Friend";
+                    }
+                    else
+                    {
+                        return "Outcoming";
+                    }
+            }
+
+            if (_context.Friends.All(p => p.RequestedUserId != p_friendID))
+                return "NotFriend";
+
+            var relationship1 = _context.Friends.FirstOrDefault(p => p.AcceptedUserId.Equals(p_userID)
+                                                                    && p.RequestedUserId.Equals(p_friendID));
+            if (relationship1 != null)
+                if (relationship1.IsAccepted)
+                {
+                    return "Friend";
+                }
+                else
+                {
+                    return "Incoming";
+                }
+            return "NotFriend";
+        }
+
         public Friend RemoveFriend(string p_userID, string p_friendID)
         {
             Friend _currentRelationship = _context.Friends.FirstOrDefault(p => p.AcceptedUserId.Equals(p_userID)
