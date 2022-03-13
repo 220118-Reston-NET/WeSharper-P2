@@ -1,6 +1,8 @@
 import { HttpClient, HttpEventType } from '@angular/common/http';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { Profile } from '../_models/profile';
+import { AccountService } from '../_services/account.service';
 
 @Component({
   selector: 'app-setting',
@@ -13,12 +15,15 @@ export class SettingComponent implements OnInit {
   message: string;
   response: {fileURL: ''};
 
+  profile:Profile;
   @Output() onUploadFinished = new EventEmitter();
 
-  constructor(private readonly http: HttpClient) { }
+  constructor(public accountService: AccountService, private readonly http: HttpClient) { }
 
   ngOnInit(): void {
-  
+    this.accountService.getProfile().subscribe(result => {
+      this.profile = result;
+    })
   }
 
   uploadFile = (files) => {
