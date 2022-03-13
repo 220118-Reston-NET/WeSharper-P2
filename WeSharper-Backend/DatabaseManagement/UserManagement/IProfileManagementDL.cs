@@ -24,5 +24,8 @@ namespace WeSharper.DatabaseManagement.Interfaces
         /// <returns></returns>
         Profile UpdateProfile(Profile p_profile);
         Profile UpdateProfilePicture(Profile p_profile);
+
+        ApplicationUser GetUserByUserName(string p_username);
+        ApplicationUser GetUserByUserID(string p_userID);
     }
 }

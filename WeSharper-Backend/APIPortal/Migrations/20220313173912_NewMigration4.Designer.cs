@@ -3,17 +3,19 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WeSharper.Models;
 
 #nullable disable
 
-namespace APIPortal.Migrations
+namespace Models.Migrations
 {
     [DbContext(typeof(WeSharperContext))]
-    partial class WeSharperContextModelSnapshot : ModelSnapshot
+    [Migration("20220313173912_NewMigration4")]
+    partial class NewMigration4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

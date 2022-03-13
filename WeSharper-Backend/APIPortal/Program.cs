@@ -9,7 +9,10 @@ using WeSharper.APIPortal.AuthenticationService.Interfaces;
 using WeSharper.APIPortal.AuthenticationService.Middlewares;
 using WeSharper.APIPortal.BlobService.Implements;
 using WeSharper.APIPortal.BlobService.Interfaces;
+using WeSharper.APIPortal.Helpers;
 using WeSharper.APIPortal.Hubs;
+using WeSharper.APIPortal.Implements;
+using WeSharper.APIPortal.Interfaces;
 using WeSharper.APIPortal.Middleware;
 using WeSharper.BusinessesManagement.Implements;
 using WeSharper.BusinessesManagement.Interfaces;
@@ -24,6 +27,7 @@ Log.Logger = new LoggerConfiguration().WriteTo.File("./logs/server.txt").CreateL
 var key = builder.Configuration["Token:Key"];
 var connectionString = builder.Configuration.GetConnectionString("Reference2DB");
 
+builder.Services.AddSingleton<PresenceTracker>();
 builder.Services.AddSingleton<IAccessTokenManager, AccessTokenManager>();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddDistributedMemoryCache();
@@ -71,7 +75,6 @@ builder.Services.AddScoped<IUserPostManagementDL, UserPostManagementDL>();
 builder.Services.AddScoped<IFriendManagementDL, FriendManagementDL>();
 builder.Services.AddScoped<IGroupManagementDL, GroupManagementDL>();
 builder.Services.AddScoped<IGroupPostManagementDL, GroupPostManagementDL>();
-builder.Services.AddScoped<IMessageManagementDL, MessageManagementDL>();
 
 builder.Services.AddScoped<IProfileManagementBL, ProfileManagementBL>();
 builder.Services.AddScoped<IHobbyManagementBL, HobbyManagementBL>();
@@ -79,8 +82,10 @@ builder.Services.AddScoped<IUserPostManagementBL, UserPostManagementBL>();
 builder.Services.AddScoped<IFriendManagementBL, FriendManagementBL>();
 builder.Services.AddScoped<IGroupManagementBL, GroupManagementBL>();
 builder.Services.AddScoped<IGroupPostManagementBL, GroupPostManagementBL>();
-builder.Services.AddScoped<IMessageManagementBL, MessageManagementBL>();
 
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<LogUserActivity>();
+builder.Services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
 
 builder.Services.AddControllers().AddJsonOptions(x =>
                 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
@@ -112,6 +117,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHub<PresenceHub>("hubs/presence");
 app.MapHub<MessageHub>("hubs/message");
 
 app.Run();

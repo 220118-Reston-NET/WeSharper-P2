@@ -27,6 +27,16 @@ namespace WeSharper.DatabaseManagement.Implements
             return _context.Profiles.ToList();
         }
 
+        public ApplicationUser GetUserByUserID(string p_userID)
+        {
+            return _context.Users.Find(p_userID);
+        }
+
+        public ApplicationUser GetUserByUserName(string p_username)
+        {
+            return _context.Users.SingleOrDefault(p => p.UserName.Equals(p_username));
+        }
+
         public Profile UpdateProfile(Profile p_profile)
         {
             Profile profToUpdate = _context.Profiles.FirstOrDefault(p => p.UserId == p_profile.UserId);
