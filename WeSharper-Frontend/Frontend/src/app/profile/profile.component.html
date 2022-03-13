@@ -12,9 +12,18 @@
                 </div>
 
                 <div class="column2">
-                    <ng-container *ngIf="friendID">
-                        <button style="margin-left: 220px;" type="button" class="btn btn-primary">ADD</button>
+                    <ng-container *ngIf="friendRelationship == 'Friend'">
+                        <button style="margin-left: 220px;" type="button" class="btn btn-primary">Remove Friend</button>
                         <button style="margin-left: 220px;" type="button" class="btn btn-primary">Message</button>
+                    </ng-container>
+                    <ng-container *ngIf="friendRelationship == 'NotFriend'">
+                        <button style="margin-left: 220px;" type="button" class="btn btn-primary">Add Friend</button>
+                    </ng-container>
+                    <ng-container *ngIf="friendRelationship == 'Incoming'">
+                        <button style="margin-left: 220px;" type="button" class="btn btn-primary">Accept Friend</button>
+                    </ng-container>
+                    <ng-container *ngIf="friendRelationship == 'Outcoming'">
+                        <button style="margin-left: 220px;" type="button" class="btn btn-primary">Cancel Request</button>
                     </ng-container>
                 </div>
             </div>
