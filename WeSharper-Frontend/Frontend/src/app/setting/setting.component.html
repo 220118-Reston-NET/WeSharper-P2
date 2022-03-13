@@ -14,7 +14,7 @@
       <h6>Username: {{profile.user.userName}}</h6>
       <h6>Joined at: {{profile.createdAt}}</h6>
 
-      <h6>Update Picture
+      <!-- <h6>Update Picture
         <button type="button" class="btn btn-primary" accept="image/gif, image/jpeg, image/png"
         (click)="fileInput.click()">
         <span>
@@ -22,7 +22,7 @@
         </span>
         <input #fileInput type="file" (change)="uploadFile(file.files)" style="display:none;">
       </button>
-      </h6>
+      </h6> -->
       
 
     </div>
@@ -33,14 +33,6 @@
   <div class=" row container py-4">
     <div>
     <form>
-
-      <div type="button" class="btn btn-primary" accept="image/gif, image/jpeg, image/png" class="mb-3"
-        (click)="fileInput.click()">
-        <label class="form-label">Change Profil Picture</label>
-        <input class="form-control" type="text"/>
-        <input #fileInput type="file" (change)="uploadFile(file.files)" style="display:none;">
-      </div>
-
       <div class="mb-3">
         <label class="form-label">First Name</label>
         <input class="form-control" type="text"/>

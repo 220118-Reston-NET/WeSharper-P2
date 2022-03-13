@@ -200,10 +200,6 @@ namespace WeSharper.DatabaseManagement.Implements
                             return "Incoming";
                         }
                     }
-                    else
-                    {
-                        return "NotFriend";
-                    }
                 }
                 else if (_context.Friends.Any(p => p.RequestedUserId == p_userID))
                 {
@@ -235,7 +231,7 @@ namespace WeSharper.DatabaseManagement.Implements
                     }
                 }
             }
-            else if (_context.Friends.Any(p => p.RequestedUserId == p_userID))
+            if (_context.Friends.Any(p => p.RequestedUserId == p_userID))
             {
                 if (_context.Friends.Any(p => p.AcceptedUserId == p_friendID))
                 {

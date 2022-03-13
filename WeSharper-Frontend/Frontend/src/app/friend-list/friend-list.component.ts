@@ -16,7 +16,7 @@ export class FriendListComponent implements OnInit {
   listOfOutComingRequest: Friend[];
   listRecommendedFriends: Profile[];
   friendID: string;
-
+  friendUserName: string;
 
   constructor(private readonly friendService: FriendService,
     private readonly accountService: AccountService) {

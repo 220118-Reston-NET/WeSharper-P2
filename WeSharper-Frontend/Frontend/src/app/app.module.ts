@@ -25,6 +25,7 @@ import { MessagesComponent } from './messages/messages.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { LoaderInterceptor } from './_interceptors/loader.interceptor';
 import { JwtInterceptor } from './_interceptors/jwt.interceptor';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { JwtInterceptor } from './_interceptors/jwt.interceptor';
     ToastrModule.forRoot({
       positionClass: "toast-bottom-right"
     }),
+    TabsModule.forRoot(),
     NgxSpinnerModule
   ],
   providers: [

@@ -25,7 +25,7 @@ const routes: Routes = [
       { path: 'friends', component: FriendsComponent },
       { path: 'groups', component: GroupsComponent },
       { path: 'setting', component: SettingComponent },
-      { path: 'messages', component: MessagesComponent },
+      // { path: 'messages', component: MessagesComponent },
       { path: '**', redirectTo: 'feeds' }
     ]
   },

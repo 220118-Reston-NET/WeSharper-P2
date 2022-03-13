@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
-import { BehaviorSubject, take } from 'rxjs';
+import { BehaviorSubject} from 'rxjs';
+import { take } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Group } from '../_models/group';
 import { Message } from '../_models/message';
@@ -82,9 +83,5 @@ export class MessageService {
   async sendMessage(username: string, content: string) {
     return this.hubConnection.invoke('SendMessage', {recipientUsername: username, content})
       .catch(error => console.log(error));
-  }
-
-  deleteMessage(id: number) {
-    return this.http.delete(this.baseUrl + 'messages/' + id);
   }
 }

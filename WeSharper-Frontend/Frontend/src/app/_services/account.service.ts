@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment';
 import { Post } from '../_models/post';
 import { Profile } from '../_models/profile';
 import { User } from '../_models/user';
+import { PresenceService } from './presence.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class AccountService {
   private currentUserSource = new ReplaySubject<User>(1);
   currentUser = this.currentUserSource.asObservable();
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router, private presence: PresenceService) { }
 
   login(model: any) {
     return this.http.post(this.baseUrl + 'Authentication/Login', model, {responseType: 'json'}).pipe(
@@ -25,8 +26,9 @@ export class AccountService {
         const user = response;
         if (user) {
           localStorage.setItem('user', JSON.stringify(user));
-          console.log(user.token);
+          // console.log(user.token);
           this.currentUserSource.next(user);
+          this.presence.createHubConnection(user);
         }
       })
     ) 
@@ -38,6 +40,7 @@ export class AccountService {
         if (user) {
           localStorage.setItem('user', JSON.stringify(user));
           this.currentUserSource.next(user);
+          this.presence.createHubConnection(user);
         }
       })
     );
@@ -53,6 +56,7 @@ export class AccountService {
     localStorage.removeItem('user');
     this.router.navigateByUrl('login');
     this.currentUserSource.next(null);
+    this.presence.stopHubConnection();
   }
 
   getDecodeToken(token){
