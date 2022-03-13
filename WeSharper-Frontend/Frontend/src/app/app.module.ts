@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { NavComponent } from './nav/nav.component';
@@ -51,6 +52,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
     NgbModule,
     FontAwesomeModule,
     HttpClientModule,
+    BrowserAnimationsModule,
     FormsModule,
     FontAwesomeModule,
     ReactiveFormsModule,

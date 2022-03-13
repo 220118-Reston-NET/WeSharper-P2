@@ -68,6 +68,10 @@ export class AccountService {
     return this.http.get<Profile>(this.baseUrl + 'User/Profile');
   }
 
+  updateProfile(profile: Profile){
+    return this.http.put<Profile>(this.baseUrl + 'User/Profile', profile);
+  }
+
   getPost() : Observable<Post>
   {
     return this.http.get<Post>(this.baseUrl + 'UserPost/UserPosts');
