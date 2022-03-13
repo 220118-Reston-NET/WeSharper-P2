@@ -3,9 +3,13 @@
   <br>
 
   <div class=" wrapper profile-pic-div">
+    <div class="col-md-2">
+      <img [src]='profile.profilePictureUrl' style="margin-left: -20px; margin-top: -5px; height:9rem; width:10rem;" alt="...">
+  </div>
     <input type="file" #file class="my_file" (change)="uploadFile(file.files)">
   </div>
 
+  
     <div class="set_text">   
       <h6>{{profile.firstName}}</h6>
       <h6>Joined at: {{profile.createdAt}}</h6>
@@ -27,7 +31,7 @@
   <br>
 
   <div class=" row container py-4">
-    <div class="column1">
+    <div>
     <form>
 
       <div type="button" class="btn btn-primary" accept="image/gif, image/jpeg, image/png" class="mb-3"
