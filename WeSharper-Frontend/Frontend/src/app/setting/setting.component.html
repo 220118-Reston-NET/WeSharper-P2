@@ -12,6 +12,7 @@
   
     <div class="set_text">   
       <h6>Username: {{profile.user.userName}}</h6>
+      <!-- <h6>Email: {{profile.user.email}}</h6> -->
       <h6>Joined at: {{profile.createdAt}}</h6>
 
       <!-- <h6>Update Picture
@@ -32,23 +33,23 @@
 
   <div class=" row container py-4">
     <div>
-    <form>
+    <form [formGroup]="profileGroup">
       <div class="mb-3">
         <label class="form-label">First Name</label>
-        <input class="form-control" type="text"/>
+        <input class="form-control" formControlName="userFirstName" type="text" placeholder="{{profile.firstName}}"/>
       </div>
   
       <div class="mb-3">
         <label class="form-label">Last Name</label>
-        <input class="form-control" type="text" />
+        <input class="form-control" formControlName="userLastName" type="text" placeholder="{{profile.lastName}}"/>
       </div>
   
       <div class="mb-3">
         <label class="form-label">Bio</label>
-        <textarea class="form-control" type="text" style="height: 8rem;"></textarea>
+        <textarea class="form-control" formControlName="userBio" type="text" style="height: 8rem;" placeholder="{{profile.bio}}"></textarea>
       </div>
   
-      <div class="mb-3">
+      <!-- <div class="mb-3">
         <label class="form-label">Email Address</label>
         <input class="form-control" type="email"/>
       </div>
@@ -56,10 +57,10 @@
       <div class="mb-3">
         <label class="form-label">Phone Number</label>
         <input class="form-control" type="number" />
-      </div>
+      </div> -->
 
       <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4" >
-        <button type="button" style="padding:0.8rem 8rem;" class="btn btn-info btn-lg">Update</button>
+        <button type="button" (click)="updateProfile(profileGroup)" style="padding:0.8rem 8rem;" class="btn btn-info btn-lg">Update</button>
       </div>
     </form>
   </div>

@@ -1,5 +1,6 @@
 import { HttpClient, HttpEventType } from '@angular/common/http';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import { Profile } from '../_models/profile';
 import { AccountService } from '../_services/account.service';
@@ -14,6 +15,12 @@ export class SettingComponent implements OnInit {
   progress: number;
   message: string;
   response: {fileURL: ''};
+
+  profileGroup = new FormGroup({
+    userFirstName: new FormControl(""),
+    userLastName: new FormControl(""),
+    userBio: new FormControl("")
+  });
 
   profile:Profile;
   @Output() onUploadFinished = new EventEmitter();
@@ -44,5 +51,20 @@ export class SettingComponent implements OnInit {
           this.onUploadFinished.emit(event.body);
         }
       })
+  }
+
+  updateProfile(profileGroup: FormGroup) {
+    let profile:Profile = {
+      bio: profileGroup.get("userBio")?.value,
+      createdAt: this.profile.createdAt,
+      firstName: profileGroup.get("userFirstName")?.value,
+      lastName: profileGroup.get("userLastName")?.value,
+      profileId: this.profile.profileId,
+      profilePictureUrl: this.profile.profilePictureUrl,
+      user: this.profile.user,
+      userId: this.profile.userId
+    }
+
+    this.accountService.updateProfile(profile).subscribe();
   }
 }
