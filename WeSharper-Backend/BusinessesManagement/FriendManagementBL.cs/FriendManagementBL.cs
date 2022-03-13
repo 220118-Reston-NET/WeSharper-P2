@@ -38,14 +38,14 @@ namespace WeSharper.BusinessesManagement.Implements
         {
             return GetAllFriends().FindAll(p => p.AcceptedUserId.Equals(p_userID)
                                             && p.IsAccepted.Equals(false)
-                                            && p.Relationship.Equals("Friend"));
+                                            && p.Relationship != null);
         }
 
         public List<Friend> GetAllOutcomingFriendByUserID(string p_userID)
         {
             return GetAllFriends().FindAll(p => p.RequestedUserId.Equals(p_userID)
                                             && p.IsAccepted.Equals(false)
-                                            && p.Relationship.Equals("Friend"));
+                                            && p.Relationship != null);
         }
 
         public List<Profile> GetAllRecommenedFriendByUserID(string p_userID)
