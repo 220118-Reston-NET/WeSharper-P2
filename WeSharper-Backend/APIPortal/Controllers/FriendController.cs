@@ -100,6 +100,26 @@ namespace WeSharper.APIPortal.Controllers
             }
         }
 
+        // GET: api/Friend/RecommendFriends
+        [Authorize(Roles = "User")]
+        [HttpGet(RouteConfigs.RecommendFriends)]
+        public async Task<IActionResult> GetAllRecommendFriendsByUserID()
+        {
+            var userFromDB = await _userManager.FindByNameAsync(given_name);
+            string p_userID = userFromDB.Id;
+
+            try
+            {
+                Log.Information("Getting all Recommended Friends of UserID: " + p_userID);
+                return Ok(_friendBL.GetAllRecommenedFriendByUserID(p_userID));
+            }
+            catch (System.Exception e)
+            {
+                Log.Warning("Route:" + RouteConfigs.RecommendFriends + ": " + e.Message);
+                return Conflict(e.Message);
+            }
+        }
+
         // GET: api/Friend/Friends/5/Profile
         [Authorize(Roles = "User")]
         [HttpGet(RouteConfigs.FriendProfile)]
