@@ -25,6 +25,17 @@ namespace WeSharper.BusinessesManagement.Implements
         {
             return _repo.GetAllProfiles().FirstOrDefault(p => p.UserId.Equals(userId));
         }
+
+        public ApplicationUser GetUserByUserID(string p_userID)
+        {
+            return _repo.GetUserByUserID(p_userID);
+        }
+
+        public ApplicationUser GetUserByUserName(string p_username)
+        {
+            return _repo.GetUserByUserName(p_username);
+        }
+
         public Profile UpdateProfile(Profile p_profile)
         {
             return _repo.UpdateProfile(p_profile);

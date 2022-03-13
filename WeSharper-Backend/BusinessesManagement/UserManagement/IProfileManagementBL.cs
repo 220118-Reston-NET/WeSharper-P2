@@ -28,5 +28,8 @@ namespace WeSharper.BusinessesManagement.Interfaces
         Profile UpdateProfile(Profile p_profile);
 
         Profile UpdateProfilePicture(Profile p_profile);
+
+        ApplicationUser GetUserByUserName(string p_username);
+        ApplicationUser GetUserByUserID(string p_userID);
     }
 }

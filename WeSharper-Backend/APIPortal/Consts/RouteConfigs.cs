@@ -51,6 +51,6 @@ namespace WeSharper.APIPortal.Consts
         public const string GroupPostCommentReactions = "{p_groupID}/Posts/{p_groupPostID}/Comments/{p_groupPostCommentID}/Reactions";
 
         //MESSAGE
-        public const string CreateMessage = "";
+        public const string DeleteMessage = "{p_messageId}";
     }
 }
