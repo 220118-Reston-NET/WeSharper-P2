@@ -5,5 +5,8 @@ export interface Profile {
     lastName: string,
     profilePictureUrl: string,
     bio: string,
-    createdAt: Date
+    createdAt: Date,
+    user: {
+        userName: string
+    }
 }

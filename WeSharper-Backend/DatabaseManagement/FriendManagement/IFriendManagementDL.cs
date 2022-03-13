@@ -12,5 +12,6 @@ namespace WeSharper.DatabaseManagement.Interfaces
         Friend AcceptFriend(string p_userID, string p_friendID);
         List<Profile> GetAllRecommenedFriendByUserID(string p_userID);
         string GetRelationshipByFriendID(string p_userID, string p_friendID);
+        string GetUserNameForFriendID(string p_friendID);
     }
 }

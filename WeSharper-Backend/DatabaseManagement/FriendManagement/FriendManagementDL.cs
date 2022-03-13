@@ -175,7 +175,7 @@ namespace WeSharper.DatabaseManagement.Implements
                                         LastName = p.LastName,
                                         ProfilePictureUrl = p.ProfilePictureUrl,
                                         Bio = p.Bio,
-                                        CreatedAt = p.CreatedAt
+                                        CreatedAt = p.CreatedAt,
                                     }).First();
         }
 
@@ -265,6 +265,11 @@ namespace WeSharper.DatabaseManagement.Implements
                 }
             }
             return "NotFriend";
+        }
+
+        public string GetUserNameForFriendID(string p_friendID)
+        {
+            return _context.Users.FirstOrDefault(p => p.Id.Equals(p_friendID)).UserName;
         }
 
         public Friend RemoveFriend(string p_userID, string p_friendID)
