@@ -125,13 +125,13 @@ namespace WeSharper.APIPortal.Controllers
         [HttpGet(RouteConfigs.FriendProfile)]
         public async Task<IActionResult> GetFriendProfileByFriendID(string p_friendID)
         {
-            var userFromDB = await _userManager.FindByNameAsync(given_name);
-            string p_userID = userFromDB.Id;
-
             try
             {
+                Profile _result = _friendBL.GetFriendProfileByFriendID(p_friendID);
+                _result.User = new ApplicationUser();
+                _result.User.UserName = _friendBL.GetUserNameForFriendID(p_friendID);
                 Log.Information("Getting Friend Profile By ID: " + p_friendID);
-                return Ok(_friendBL.GetFriendProfileByFriendID(p_friendID));
+                return Ok(_result);
             }
             catch (System.Exception e)
             {

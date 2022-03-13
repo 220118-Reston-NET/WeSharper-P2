@@ -45,6 +45,4 @@ export class ProfileComponent implements OnInit {
   removeFriend(friendID){
     this.friendService.removeFriend(friendID).subscribe(result => console.log(result));
   }
-
-
 }
