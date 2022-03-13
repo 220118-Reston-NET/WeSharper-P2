@@ -30,6 +30,7 @@ namespace WeSharper.APIPortal.Consts
         public const string OutcomingFriends = "OutcomingFriends";
         public const string RecommendFriends = "RecommendFriends";
         public const string FriendProfile = "Friends/{p_friendID}/Profile";
+        public const string FriendRelationship = "Friends/{p_friendID}/Relationship";
         public const string FriendPosts = "Friends/{p_friendID}/Posts";
         public const string AddFriend = "Friends/{p_friendID}/Add";
         public const string RemoveFriend = "Friends/{p_friendID}/Remove";

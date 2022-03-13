@@ -47,4 +47,9 @@ export class FriendService {
   removeFriend(friendID: string){
     return this.http.post(this.baseUrl + `Friend/Friends/${friendID}/Remove`, friendID);
   }
+
+  getFriendProfileByFriendID(friendID: string) : Observable<Profile>
+  {
+    return this.http.get<Profile>(this.baseUrl + `Friend/Friends/${friendID}/Profile`);
+  }
 }

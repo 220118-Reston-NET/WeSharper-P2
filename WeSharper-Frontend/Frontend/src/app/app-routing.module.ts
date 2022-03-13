@@ -20,13 +20,13 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       { path: 'profile', component: ProfileComponent },
+      { path: 'profile/:friendID', component: ProfileComponent },
       { path: 'feeds', component: FeedsComponent },
       { path: 'friends', component: FriendsComponent },
       { path: 'groups', component: GroupsComponent },
       { path: 'setting', component: SettingComponent },
       { path: 'messages', component: MessagesComponent },
-      { path: '**', redirectTo: 'feeds' },
-
+      { path: '**', redirectTo: 'feeds' }
     ]
   },
   { path: '**', redirectTo: '' },

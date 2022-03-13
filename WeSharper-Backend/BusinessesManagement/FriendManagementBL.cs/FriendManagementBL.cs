@@ -63,6 +63,11 @@ namespace WeSharper.BusinessesManagement.Implements
             return _repo.GetFriendProfileByFriendID(p_friendID);
         }
 
+        public string GetRelationshipByFriendID(string p_userID, string p_friendID)
+        {
+            return _repo.GetRelationshipByFriendID(p_userID, p_friendID);
+        }
+
         public Friend RemoveFriend(string p_userID, string p_friendID)
         {
             return _repo.RemoveFriend(p_userID, p_friendID);

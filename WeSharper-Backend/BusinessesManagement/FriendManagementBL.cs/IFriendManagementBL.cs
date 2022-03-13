@@ -14,5 +14,6 @@ namespace WeSharper.BusinessesManagement.Interfaces
         Friend AddFriend(string p_userID, string p_friendID);
         Friend RemoveFriend(string p_userID, string p_friendID);
         Friend AcceptFriend(string p_userID, string p_friendID);
+        string GetRelationshipByFriendID(string p_userID, string p_friendID);
     }
 }
