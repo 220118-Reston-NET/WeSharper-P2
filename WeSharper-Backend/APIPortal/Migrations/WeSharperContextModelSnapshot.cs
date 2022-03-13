@@ -543,6 +543,35 @@ namespace APIPortal.Migrations
                     b.ToTable("Message", (string)null);
                 });
 
+            modelBuilder.Entity("WeSharper.Models.MessageConnection", b =>
+                {
+                    b.Property<string>("ConnectionId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("MessageGroupName")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ConnectionId");
+
+                    b.HasIndex("MessageGroupName");
+
+                    b.ToTable("MessageConnections");
+                });
+
+            modelBuilder.Entity("WeSharper.Models.MessageGroup", b =>
+                {
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Name");
+
+                    b.ToTable("MessageGroups");
+                });
+
             modelBuilder.Entity("WeSharper.Models.Post", b =>
                 {
                     b.Property<string>("PostId")
@@ -971,6 +1000,14 @@ namespace APIPortal.Migrations
                     b.Navigation("SenderUser");
                 });
 
+            modelBuilder.Entity("WeSharper.Models.MessageConnection", b =>
+                {
+                    b.HasOne("WeSharper.Models.MessageGroup", null)
+                        .WithMany("MessageConnections")
+                        .HasForeignKey("MessageGroupName")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("WeSharper.Models.Post", b =>
                 {
                     b.HasOne("WeSharper.Models.ApplicationUser", "User")
@@ -1125,6 +1162,11 @@ namespace APIPortal.Migrations
             modelBuilder.Entity("WeSharper.Models.GroupPostComment", b =>
                 {
                     b.Navigation("GroupPostCommentReacts");
+                });
+
+            modelBuilder.Entity("WeSharper.Models.MessageGroup", b =>
+                {
+                    b.Navigation("MessageConnections");
                 });
 
             modelBuilder.Entity("WeSharper.Models.Post", b =>

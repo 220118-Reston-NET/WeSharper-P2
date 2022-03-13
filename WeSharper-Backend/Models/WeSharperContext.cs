@@ -33,6 +33,8 @@ namespace WeSharper.Models
         public virtual DbSet<Profile> Profiles { get; set; } = null!;
         public virtual DbSet<Reaction> Reactions { get; set; } = null!;
         public virtual DbSet<Userhobby> Userhobbies { get; set; } = null!;
+        public virtual DbSet<MessageGroup> MessageGroups { get; set; } = null!;
+        public virtual DbSet<MessageConnection> MessageConnections { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -41,6 +43,11 @@ namespace WeSharper.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<MessageGroup>()
+                .HasMany(x => x.MessageConnections)
+                .WithOne()
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Friend>(entity =>
             {
