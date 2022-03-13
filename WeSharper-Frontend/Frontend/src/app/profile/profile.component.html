@@ -2,7 +2,7 @@
     <div class="container top-container">
         
         <div class="col-md-2">
-            <img [src]='profile.profilePictureUrl' style="height:9rem; width:9rem;" alt="...">
+            <img [src]='profile.profilePictureUrl ?? "../../assets/profil_img_setting.png"' style="height:9rem; width:9rem;" alt="...">
         </div>
 
         <div class="col-md-10">
@@ -13,17 +13,17 @@
 
                 <div class="column2">
                     <ng-container *ngIf="friendRelationship == 'Friend'">
-                        <button style="margin-left: 220px;" type="button" class="btn btn-primary">Remove Friend</button>
+                        <button (click)="removeFriend(profile.userId)" style="margin-left: 220px;" type="button" class="btn btn-primary">Remove Friend</button>
                         <button style="margin-left: 220px;" type="button" class="btn btn-primary">Message</button>
                     </ng-container>
                     <ng-container *ngIf="friendRelationship == 'NotFriend'">
-                        <button style="margin-left: 220px;" type="button" class="btn btn-primary">Add Friend</button>
+                        <button (click)="addFriend(profile.userId)" style="margin-left: 220px;" type="button" class="btn btn-primary">Add Friend</button>
                     </ng-container>
                     <ng-container *ngIf="friendRelationship == 'Incoming'">
-                        <button style="margin-left: 220px;" type="button" class="btn btn-primary">Accept Friend</button>
+                        <button (click)="acceptFriend(profile.userId)" style="margin-left: 220px;" type="button" class="btn btn-primary">Accept Friend</button>
                     </ng-container>
                     <ng-container *ngIf="friendRelationship == 'Outcoming'">
-                        <button style="margin-left: 220px;" type="button" class="btn btn-primary">Cancel Request</button>
+                        <button (click)="removeFriend(profile.userId)" style="margin-left: 220px;" type="button" class="btn btn-primary">Cancel Request</button>
                     </ng-container>
                 </div>
             </div>

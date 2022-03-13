@@ -34,5 +34,17 @@ export class ProfileComponent implements OnInit {
     }
   }
 
+  addFriend(friendID){
+    this.friendService.addFriend(friendID).subscribe(result => console.log(result));
+  }
+
+  acceptFriend(friendID){
+    this.friendService.acceptFriend(friendID).subscribe(result => console.log(result));
+  }
+
+  removeFriend(friendID){
+    this.friendService.removeFriend(friendID).subscribe(result => console.log(result));
+  }
+
 
 }
