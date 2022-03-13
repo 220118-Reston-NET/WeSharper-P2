@@ -52,4 +52,8 @@ export class FriendService {
   {
     return this.http.get<Profile>(this.baseUrl + `Friend/Friends/${friendID}/Profile`);
   }
+
+  getFriendRelationshipByFriendID(friendID: string) : Observable<any> {
+    return this.http.get<any>(this.baseUrl + `Friend/Friends/${friendID}/Relationship`);
+  }
 }

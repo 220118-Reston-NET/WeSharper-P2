@@ -181,40 +181,89 @@ namespace WeSharper.DatabaseManagement.Implements
 
         public string GetRelationshipByFriendID(string p_userID, string p_friendID)
         {
-            if (_context.Friends.All(p => p.AcceptedUserId != p_userID))
+            if (_context.Friends.Any(p => p.AcceptedUserId == p_userID))
             {
-                if (_context.Friends.All(p => p.RequestedUserId != p_userID))
-                    return "NotFriend";
-                if (_context.Friends.All(p => p.AcceptedUserId != p_friendID))
-                    return "NotFriend";
+                if (_context.Friends.Any(p => p.RequestedUserId == p_friendID))
+                {
+                    var relationship = _context.Friends.FirstOrDefault(p => p.AcceptedUserId.Equals(p_userID)
+                                                                       && p.RequestedUserId.Equals(p_friendID)
+                                                                       && p.Relationship != null);
 
-                var relationship2 = _context.Friends.FirstOrDefault(p => p.AcceptedUserId.Equals(p_friendID)
-                                                                    && p.RequestedUserId.Equals(p_userID));
-                if (relationship2 != null)
-                    if (relationship2.IsAccepted)
+                    if (relationship != null)
                     {
-                        return "Friend";
+                        if (relationship.IsAccepted)
+                        {
+                            return "Friend";
+                        }
+                        else
+                        {
+                            return "Incoming";
+                        }
                     }
                     else
                     {
-                        return "Outcoming";
+                        return "NotFriend";
                     }
-            }
-
-            if (_context.Friends.All(p => p.RequestedUserId != p_friendID))
-                return "NotFriend";
-
-            var relationship1 = _context.Friends.FirstOrDefault(p => p.AcceptedUserId.Equals(p_userID)
-                                                                    && p.RequestedUserId.Equals(p_friendID));
-            if (relationship1 != null)
-                if (relationship1.IsAccepted)
+                }
+                else if (_context.Friends.Any(p => p.RequestedUserId == p_userID))
                 {
-                    return "Friend";
+                    if (_context.Friends.Any(p => p.AcceptedUserId == p_friendID))
+                    {
+                        var relationship = _context.Friends.FirstOrDefault(p => p.RequestedUserId.Equals(p_userID)
+                                                                           && p.AcceptedUserId.Equals(p_friendID)
+                                                                           && p.Relationship != null);
+
+                        if (relationship != null)
+                        {
+                            if (relationship.IsAccepted)
+                            {
+                                return "Friend";
+                            }
+                            else
+                            {
+                                return "Outcoming";
+                            }
+                        }
+                        else
+                        {
+                            return "NotFriend";
+                        }
+                    }
+                    else
+                    {
+                        return "NotFriend";
+                    }
+                }
+            }
+            else if (_context.Friends.Any(p => p.RequestedUserId == p_userID))
+            {
+                if (_context.Friends.Any(p => p.AcceptedUserId == p_friendID))
+                {
+                    var relationship = _context.Friends.FirstOrDefault(p => p.RequestedUserId.Equals(p_userID)
+                                                                       && p.AcceptedUserId.Equals(p_friendID)
+                                                                       && p.Relationship != null);
+
+                    if (relationship != null)
+                    {
+                        if (relationship.IsAccepted)
+                        {
+                            return "Friend";
+                        }
+                        else
+                        {
+                            return "Outcoming";
+                        }
+                    }
+                    else
+                    {
+                        return "NotFriend";
+                    }
                 }
                 else
                 {
-                    return "Incoming";
+                    return "NotFriend";
                 }
+            }
             return "NotFriend";
         }
 

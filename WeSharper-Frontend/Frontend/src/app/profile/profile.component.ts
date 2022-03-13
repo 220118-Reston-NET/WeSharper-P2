@@ -10,8 +10,9 @@ import { FriendService } from '../_services/friend.service';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  profile:Profile;
-  friendID:string | null;
+  profile: Profile;
+  friendID: string | null;
+  friendRelationship: string;
 
   constructor(private router:ActivatedRoute,
               private readonly friendService: FriendService,
@@ -25,8 +26,13 @@ export class ProfileComponent implements OnInit {
       })
     } else {
       this.friendService.getFriendProfileByFriendID(this.friendID).subscribe(result => {
-      this.profile = result;
-    })
+      this.profile = result; 
+      })
+      this.friendService.getFriendRelationshipByFriendID(this.friendID).subscribe(result => {
+        this.friendRelationship = result.results;
+      })
     }
   }
+
+
 }
