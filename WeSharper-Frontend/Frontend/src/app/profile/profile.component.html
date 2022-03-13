@@ -1,20 +1,18 @@
 <div class="container">
     <div class="container top-container">
-        
         <div class="col-md-2">
-            <img [src]='profile.profilePictureUrl ?? "../../assets/profil_img_setting.png"' style="height:9rem; width:9rem;" alt="...">
+            <img [src]='profile.profilePictureUrl || "../../assets/profil_img_setting.png"' style="height:9rem; width:9rem;" alt="...">
         </div>
 
         <div class="col-md-10">
             <div class="row" >
                 <div class="column1">
-                    <h4 style="margin-left: 50px;">{{profile.firstName}} {{profile.lastName}}</h4>
+                    <h4 style="margin-left: 50px;">{{profile.firstName}} {{profile.lastName}} ({{profile.user.userName}})</h4>
                 </div>
 
                 <div class="column2">
                     <ng-container *ngIf="friendRelationship == 'Friend'">
                         <button (click)="removeFriend(profile.userId)" style="margin-left: 220px;" type="button" class="btn btn-primary">Remove Friend</button>
-                        <button style="margin-left: 220px;" type="button" class="btn btn-primary">Message</button>
                     </ng-container>
                     <ng-container *ngIf="friendRelationship == 'NotFriend'">
                         <button (click)="addFriend(profile.userId)" style="margin-left: 220px;" type="button" class="btn btn-primary">Add Friend</button>
@@ -35,9 +33,25 @@
         </div>
         
     </div>
+
+    
     <div *ngIf="!friendID">
         <app-new-post></app-new-post>
+        <app-post></app-post>
     </div>
-    <br>
-    <app-post></app-post>
+
+    <!-- Posts And Message -->
+    <div>
+        <div *ngIf="friendID">
+            <tabset class="member-tabset" #memberTabs>
+                <tab heading='Posts' (selectTab)="onTabActivated($event)">
+                    <app-post></app-post>
+                </tab>
+                <tab heading='Messages' (selectTab)="onTabActivated($event)">
+                    <app-messages [username]="profile.user.userName"></app-messages>
+                </tab>
+            </tabset>
+        </div>
+    </div>
+    
 </div>

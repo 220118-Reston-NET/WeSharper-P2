@@ -1,25 +1,43 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Profile } from '../_models/profile';
 import { AccountService } from '../_services/account.service';
 import { FriendService } from '../_services/friend.service';
+import { TabDirective, TabsetComponent } from 'ngx-bootstrap/tabs';
+import { Message } from '../_models/message';
+import { MessageService } from '../_services/message.service';
+import { User } from '../_models/user';
+import { take } from 'rxjs/operators';
+import { PresenceService } from '../_services/presence.service';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, OnDestroy {
+  @ViewChild('memberTabs', {static: true}) memberTabs: TabsetComponent;
+  activeTab: TabDirective;
   profile: Profile;
+  user: User;
   friendID: string | null;
+  friendUserName: string;
   friendRelationship: string;
+  messages: Message[] = [];
 
-  constructor(private router:ActivatedRoute,
+  constructor(private route: ActivatedRoute,
               private readonly friendService: FriendService,
-              public accountService: AccountService) { }
+              public presence: PresenceService,
+              private messageService: MessageService,
+              private accountService: AccountService,
+              private router: Router) { 
+      this.accountService.currentUser.pipe(take(1)).subscribe(user => this.user = user);
+      this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+  }
 
   ngOnInit(): void {
-    this.friendID = this.router.snapshot.paramMap.get("friendID");
+    this.friendID = this.route.snapshot.paramMap.get("friendID");
+
     if (this.friendID == null){
       this.accountService.getProfile().subscribe(result => {
         this.profile = result;
@@ -32,6 +50,10 @@ export class ProfileComponent implements OnInit {
         this.friendRelationship = result.results;
       })
     }
+
+    this.route.queryParams.subscribe(params => {
+      params.tab ? this.selectTab(params.tab) : this.selectTab(0);
+    })
   }
 
   addFriend(friendID){
@@ -44,5 +66,28 @@ export class ProfileComponent implements OnInit {
 
   removeFriend(friendID){
     this.friendService.removeFriend(friendID).subscribe(result => console.log(result));
+  }
+
+  loadMessages() {
+    this.messageService.getMessageThread(this.profile.user.userName).subscribe(messages => {
+      this.messages = messages;
+    })
+  }
+
+  selectTab(tabId: number) {
+    this.memberTabs.tabs[tabId].active = true;
+  }
+
+  onTabActivated(data: TabDirective) {
+    this.activeTab = data;
+    if (this.activeTab.heading === 'Messages' && this.messages.length === 0) {
+      this.messageService.createHubConnection(this.user, this.profile.user.userName);
+    } else {
+      this.messageService.stopHubConnection();
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.messageService.stopHubConnection();
   }
 }

@@ -5,7 +5,7 @@
         [scrollTop]="scrollMe.scrollHeight"
     >
         <div *ngIf="(messageService.messageThread$ | async)?.length === 0">
-            No messages yet... say hi by using the message box below
+            No messages yet! Please try to say hi to this user to create a conversation...
         </div>
 
         <ul 
