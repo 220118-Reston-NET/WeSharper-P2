@@ -9,6 +9,7 @@ using WeSharper.APIPortal.AuthenticationService.Interfaces;
 using WeSharper.APIPortal.AuthenticationService.Middlewares;
 using WeSharper.APIPortal.BlobService.Implements;
 using WeSharper.APIPortal.BlobService.Interfaces;
+using WeSharper.APIPortal.Hubs;
 using WeSharper.APIPortal.Middleware;
 using WeSharper.BusinessesManagement.Implements;
 using WeSharper.BusinessesManagement.Interfaces;
@@ -53,6 +54,8 @@ builder.Services.AddAuthentication(x =>
     };
 });
 
+
+builder.Services.AddCors();
 builder.Services.AddSignalR();
 
 builder.Services.AddDbContext<WeSharperContext>(options =>
@@ -87,6 +90,11 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+app.UseCors(x => x.AllowAnyHeader()
+    .AllowAnyMethod()
+    .AllowCredentials()
+    .WithOrigins("https://localhost:4200"));
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -104,5 +112,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHub<MessageHub>("hubs/message");
 
 app.Run();
