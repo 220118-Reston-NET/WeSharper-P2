@@ -77,7 +77,24 @@
         <div *ngIf="friendID">
             <tabset class="member-tabset" #memberTabs>
                 <tab heading='Posts' (selectTab)="onTabActivated($event)">
-                    <app-post></app-post>
+                    <div *ngIf="!friendPosts">
+                        <h1 style="text-align: center;">No Posts Available!</h1>
+                    </div>
+                    <div *ngFor="let post of friendPosts">
+                        <div class="text-box" style="margin-bottom: 1rem;">
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <span>Posted at: {{post.createdAt}}</span>
+                                </div>
+                            </div>
+                            <div class="content">
+                                <h4>{{post.postContent}}</h4>
+                                <div *ngIf="post.postPhoto">
+                                    <img [src]="post.postPhoto" style="width: 100%;"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </tab>
                 <tab heading='Messages' (selectTab)="onTabActivated($event)">
                     <app-messages [username]="profile.user.userName"></app-messages>

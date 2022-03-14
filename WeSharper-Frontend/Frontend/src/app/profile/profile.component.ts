@@ -28,6 +28,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   messages: Message[] = [];
 
   userPosts: any[];
+  friendPosts: any[];
   postGroup = new FormGroup({
     postContent: new FormControl("")
   });
@@ -62,13 +63,15 @@ export class ProfileComponent implements OnInit, OnDestroy {
       this.friendService.getFriendRelationshipByFriendID(this.friendID).subscribe(result => {
         this.friendRelationship = result.results;
       })
+
+      this.friendService.getFriendPosts(this.friendID).subscribe(result => {
+        this.friendPosts = result;
+      });
     }
 
     this.route.queryParams.subscribe(params => {
       params.tab ? this.selectTab(params.tab) : this.selectTab(0);
     })
-
-    
   }
 
   addFriend(friendID){
@@ -87,6 +90,12 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.messageService.getMessageThread(this.profile.user.userName).subscribe(messages => {
       this.messages = messages;
     })
+  }
+
+  getFriendPosts(friendID){
+    this.friendService.getFriendPosts(friendID).subscribe(result => {
+      this.friendPosts = result;
+    });
   }
 
   postNewPost(postGroup: FormGroup) {

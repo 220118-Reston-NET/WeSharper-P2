@@ -68,6 +68,21 @@ namespace WeSharper.DatabaseManagement.Implements
                                    where f.AcceptedUserId == p_userID
                                       && f.IsAccepted
                                    select p)
+                                    .Where(p => p.IsDeleted.Equals(false))
+                                    .Select(p => new Post
+                                    {
+                                        PostId = p.PostId,
+                                        UserId = p.UserId,
+                                        PostContent = p.PostContent,
+                                        PostPhoto = p.PostPhoto,
+                                        IsDeleted = p.IsDeleted,
+                                        CreatedAt = p.CreatedAt,
+                                        User = new ApplicationUser
+                                        {
+                                            UserName = p.User.UserName,
+                                            Email = p.User.Email
+                                        }
+                                    })
                                     .ToList();
 
             return _result;
