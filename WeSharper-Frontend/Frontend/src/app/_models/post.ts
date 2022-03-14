@@ -5,7 +5,6 @@ export interface Post{
     postPhoto: string,
     isDeleted: boolean,
     createdAt: Date,
-    user: [],
     postComments: []
     postReacts: []
 }

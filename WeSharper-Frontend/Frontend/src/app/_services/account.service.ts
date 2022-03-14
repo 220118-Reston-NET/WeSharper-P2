@@ -76,5 +76,13 @@ export class AccountService {
   {
     return this.http.get<Post>(this.baseUrl + 'UserPost/UserPosts');
   }
+
+  postNewPost(newPost: Post) {
+    return this.http.post<Post>(this.baseUrl + 'UserPost/UserPosts', newPost);
+  }
+
+  deletePost(postID: string) {
+    return this.http.delete<string>(this.baseUrl + `UserPost/UserPosts/${postID}`);
+  }
 }
 

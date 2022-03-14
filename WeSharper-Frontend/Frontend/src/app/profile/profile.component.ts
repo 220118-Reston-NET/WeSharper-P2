@@ -9,6 +9,8 @@ import { MessageService } from '../_services/message.service';
 import { User } from '../_models/user';
 import { take } from 'rxjs/operators';
 import { PresenceService } from '../_services/presence.service';
+import { Post } from '../_models/post';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-profile',
@@ -24,6 +26,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
   friendUserName: string;
   friendRelationship: string;
   messages: Message[] = [];
+
+  userPosts: any[];
+  postGroup = new FormGroup({
+    postContent: new FormControl("")
+  });
 
   constructor(private route: ActivatedRoute,
               private readonly friendService: FriendService,
@@ -42,6 +49,12 @@ export class ProfileComponent implements OnInit, OnDestroy {
       this.accountService.getProfile().subscribe(result => {
         this.profile = result;
       })
+
+      this.friendService.getUserPosts().subscribe(result => {
+        this.userPosts = result;
+      })
+
+      console.log(this.userPosts);
     } else {
       this.friendService.getFriendProfileByFriendID(this.friendID).subscribe(result => {
       this.profile = result; 
@@ -54,6 +67,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.route.queryParams.subscribe(params => {
       params.tab ? this.selectTab(params.tab) : this.selectTab(0);
     })
+
+    
   }
 
   addFriend(friendID){
@@ -72,6 +87,25 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.messageService.getMessageThread(this.profile.user.userName).subscribe(messages => {
       this.messages = messages;
     })
+  }
+
+  postNewPost(postGroup: FormGroup) {
+    let post:Post = {
+      postContent: postGroup.get("postContent")?.value,
+      createdAt: new Date,
+      isDeleted: false,
+      postComments: [],
+      postReacts: [],
+      postId: "",
+      postPhoto: "",
+      userId: "",
+    }
+
+    this.accountService.postNewPost(post).subscribe();
+  }
+
+  deletePost(postID: string) {
+    this.accountService.deletePost(postID).subscribe();
   }
 
   selectTab(tabId: number) {
