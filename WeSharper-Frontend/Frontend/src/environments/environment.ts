@@ -6,7 +6,7 @@ export const environment = {
   production: true,
   apiUrl: 'https://wesharper.azurewebsites.net/api/',
   hubUrl: 'https://wesharper.azurewebsites.net/hubs/'
-  //apiUrl: 'https://localhost:7133/api/'
+  // apiUrl: 'https://localhost:7133/api/'
 
 };
 
