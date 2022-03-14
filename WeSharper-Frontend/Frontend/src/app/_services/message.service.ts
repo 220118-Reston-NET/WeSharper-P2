@@ -14,6 +14,8 @@ import { SpinnerService } from './spinner.service';
   providedIn: 'root',
 })
 export class MessageService {
+  ApiURL = 'https://wesharper.azurewebsites.net/api/';
+  HubURL = 'https://wesharper.azurewebsites.net/hubs/';
   baseUrl = environment.apiUrl;
   hubUrl = environment.hubUrl;
   private hubConnection: HubConnection;
@@ -28,7 +30,7 @@ export class MessageService {
   createHubConnection(user: User, otherUsername: string) {
     this.spinnerService.loading();
     this.hubConnection = new HubConnectionBuilder()
-      .withUrl(this.hubUrl + 'message?user=' + otherUsername, {
+      .withUrl(this.HubURL + 'message?user=' + otherUsername, {
         accessTokenFactory: () => user.token,
       })
       .withAutomaticReconnect()
@@ -73,11 +75,11 @@ export class MessageService {
   getMessages(pageNumber, pageSize, container) {
     let params = getPaginationHeaders(pageNumber, pageSize);
     params = params.append('Container', container);
-    return getPaginatedResult<Message[]>(this.baseUrl + 'messages', params, this.http);
+    return getPaginatedResult<Message[]>(this.ApiURL + 'messages', params, this.http);
   }
 
   getMessageThread(username: string) {
-    return this.http.get<Message[]>(this.baseUrl + 'messages/thread/' + username);
+    return this.http.get<Message[]>(this.ApiURL + 'messages/thread/' + username);
   }
 
   async sendMessage(username: string, content: string) {

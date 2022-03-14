@@ -9,6 +9,7 @@ import { User } from '../_models/user';
   providedIn: 'root'
 })
 export class PresenceService {
+  HubURL = 'https://wesharper.azurewebsites.net/hubs/';
   hubUrl = environment.hubUrl;
   private hubConnection: HubConnection;
   private onlineUsersSource = new BehaviorSubject<string[]>([]);
@@ -18,7 +19,7 @@ export class PresenceService {
 
   createHubConnection(user: User) {
     this.hubConnection = new HubConnectionBuilder()
-      .withUrl(this.hubUrl + 'presence', {
+      .withUrl(this.HubURL + 'presence', {
         accessTokenFactory: () => user.token
       })
       .withAutomaticReconnect()

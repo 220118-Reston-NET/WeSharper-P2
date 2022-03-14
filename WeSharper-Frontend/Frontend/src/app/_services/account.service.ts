@@ -66,28 +66,28 @@ export class AccountService {
 
   getProfile() : Observable<Profile>
   {
-    return this.http.get<Profile>(this.baseUrl + 'User/Profile');
+    return this.http.get<Profile>(this.ApiURL + 'User/Profile');
   }
 
   updateProfile(profile: Profile){
-    return this.http.put<Profile>(this.baseUrl + 'User/Profile', profile);
+    return this.http.put<Profile>(this.ApiURL + 'User/Profile', profile);
   }
 
   getPost() : Observable<Post>
   {
-    return this.http.get<Post>(this.baseUrl + 'UserPost/UserPosts');
+    return this.http.get<Post>(this.ApiURL + 'UserPost/UserPosts');
   }
 
   getFeeds() : Observable<any> {
-    return this.http.get<any>(this.baseUrl + 'UserPost/Feeds');
+    return this.http.get<any>(this.ApiURL + 'UserPost/Feeds');
   }
 
   postNewPost(newPost: Post) {
-    return this.http.post<Post>(this.baseUrl + 'UserPost/UserPosts', newPost);
+    return this.http.post<Post>(this.ApiURL + 'UserPost/UserPosts', newPost);
   }
 
   deletePost(postID: string) {
-    return this.http.delete<string>(this.baseUrl + `UserPost/UserPosts/${postID}`);
+    return this.http.delete<string>(this.ApiURL + `UserPost/UserPosts/${postID}`);
   }
 }
 

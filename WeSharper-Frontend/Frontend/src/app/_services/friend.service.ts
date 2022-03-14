@@ -11,6 +11,7 @@ import { User } from '../_models/user';
   providedIn: 'root'
 })
 export class FriendService {
+  ApiURL = 'https://wesharper.azurewebsites.net/api/';
   baseUrl = environment.apiUrl;
   friends: Friend[] = [];
   user: User;
@@ -18,51 +19,51 @@ export class FriendService {
   constructor(private http: HttpClient) { }
 
   getAllUsers(): Observable<Friend[]> {
-    return this.http.get<Friend[]>(this.baseUrl + 'Friend/AllFriends');
+    return this.http.get<Friend[]>(this.ApiURL + 'Friend/AllFriends');
   }
 
   getAllFriends(): Observable<Friend[]> {
-    return this.http.get<Friend[]>(this.baseUrl + 'Friend/Friends');
+    return this.http.get<Friend[]>(this.ApiURL + 'Friend/Friends');
   }
 
   getAllOutComingFriends(): Observable<Friend[]> {
-    return this.http.get<Friend[]>(this.baseUrl + 'Friend/OutcomingFriends');
+    return this.http.get<Friend[]>(this.ApiURL + 'Friend/OutcomingFriends');
   }
 
   getAllInComingFriends(): Observable<Friend[]> {
-    return this.http.get<Friend[]>(this.baseUrl + 'Friend/IncomingFriends');
+    return this.http.get<Friend[]>(this.ApiURL + 'Friend/IncomingFriends');
   }
 
   getAllRecommendedFriends(): Observable<Profile[]> {
-    return this.http.get<Profile[]>(this.baseUrl + 'Friend/RecommendFriends');
+    return this.http.get<Profile[]>(this.ApiURL + 'Friend/RecommendFriends');
   }
 
   addFriend(friendID: string) {
-    return this.http.post(this.baseUrl + `Friend/Friends/${friendID}/Add`, friendID);
+    return this.http.post(this.ApiURL + `Friend/Friends/${friendID}/Add`, friendID);
   }
 
   acceptFriend(friendID: string){
-    return this.http.post(this.baseUrl + `Friend/Friends/${friendID}/Accept`, friendID);
+    return this.http.post(this.ApiURL + `Friend/Friends/${friendID}/Accept`, friendID);
   }
 
   removeFriend(friendID: string){
-    return this.http.post(this.baseUrl + `Friend/Friends/${friendID}/Remove`, friendID);
+    return this.http.post(this.ApiURL + `Friend/Friends/${friendID}/Remove`, friendID);
   }
 
   getFriendProfileByFriendID(friendID: string) : Observable<Profile>
   {
-    return this.http.get<Profile>(this.baseUrl + `Friend/Friends/${friendID}/Profile`);
+    return this.http.get<Profile>(this.ApiURL + `Friend/Friends/${friendID}/Profile`);
   }
 
   getFriendRelationshipByFriendID(friendID: string) : Observable<any> {
-    return this.http.get<any>(this.baseUrl + `Friend/Friends/${friendID}/Relationship`);
+    return this.http.get<any>(this.ApiURL + `Friend/Friends/${friendID}/Relationship`);
   }
 
   getUserPosts() : Observable<any> {
-    return this.http.get<any>(this.baseUrl + 'UserPost/UserPosts');
+    return this.http.get<any>(this.ApiURL + 'UserPost/UserPosts');
   }
 
   getFriendPosts(friendID: string) : Observable<any> {
-    return this.http.get<any>(this.baseUrl + `Friend/Friends/${friendID}/Posts`);
+    return this.http.get<any>(this.ApiURL + `Friend/Friends/${friendID}/Posts`);
   }
 }
