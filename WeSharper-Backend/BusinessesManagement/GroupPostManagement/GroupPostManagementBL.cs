@@ -13,69 +13,71 @@ namespace WeSharper.BusinessesManagement.Implements
             _repo = repo;
         }
 
-        public GroupPostComment AddNewGroupPostComment(GroupPostComment p_groupPostComment)
+        public async Task<GroupPostComment> AddNewGroupPostComment(GroupPostComment p_groupPostComment)
         {
             p_groupPostComment.GroupPostCommentId = Guid.NewGuid().ToString();
             p_groupPostComment.CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"));
             p_groupPostComment.IsDeleted = false;
 
-            return _repo.AddNewGroupPostComment(p_groupPostComment);
+            return await _repo.AddNewGroupPostComment(p_groupPostComment);
         }
 
-        public GroupPost DeleteGroupPost(GroupPost p_groupPost)
+        public async Task<GroupPost> DeleteGroupPost(GroupPost p_groupPost)
         {
-            return _repo.DeleteGroupPost(p_groupPost);
+            return await _repo.DeleteGroupPost(p_groupPost);
         }
 
-        public GroupPostComment DeleteGroupPostComment(GroupPostComment p_groupPostComment)
+        public async Task<GroupPostComment> DeleteGroupPostComment(GroupPostComment p_groupPostComment)
         {
-            return _repo.DeleteGroupPostComment(p_groupPostComment);
+            return await _repo.DeleteGroupPostComment(p_groupPostComment);
         }
 
-        public GroupPost GetAllGroupPostByGroupPostID(string p_groupPostID)
+        public async Task<GroupPost> GetAllGroupPostByGroupPostID(string p_groupPostID)
         {
-            return GetGroupPosts().FirstOrDefault(p => p.GroupPostId.Equals(p_groupPostID));
+            List<GroupPost> _result = await GetGroupPosts();
+            return _result.FirstOrDefault(p => p.GroupPostId.Equals(p_groupPostID));
         }
 
-        public List<GroupPost> GetGroupPosts()
+        public async Task<List<GroupPost>> GetGroupPosts()
         {
-            return _repo.GetGroupPosts();
+            return await _repo.GetGroupPosts();
         }
 
-        public List<GroupPost> GetGroupPostsByGroupID(string p_groupID)
+        public async Task<List<GroupPost>> GetGroupPostsByGroupID(string p_groupID)
         {
-            return GetGroupPosts().FindAll(p => p.GroupId.Equals(p_groupID));
+            List<GroupPost> _result = await GetGroupPosts();
+            return _result.FindAll(p => p.GroupId.Equals(p_groupID));
         }
 
-        public GroupPost PostNewPostToGroup(GroupPost p_groupPost)
+        public async Task<GroupPost> PostNewPostToGroup(GroupPost p_groupPost)
         {
             p_groupPost.GroupPostId = Guid.NewGuid().ToString();
             p_groupPost.CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"));
             p_groupPost.IsDeleted = false;
 
-            return _repo.PostNewPostToGroup(p_groupPost);
+            return await _repo.PostNewPostToGroup(p_groupPost);
         }
 
-        public GroupPostReact ReactGroupPost(GroupPostReact p_groupPostReact)
+        public async Task<GroupPostReact> ReactGroupPost(GroupPostReact p_groupPostReact)
         {
             p_groupPostReact.GroupPostReactId = Guid.NewGuid().ToString();
-            return _repo.ReactGroupPost(p_groupPostReact);
+            return await _repo.ReactGroupPost(p_groupPostReact);
         }
 
-        public GroupPostCommentReact ReactGroupPostComment(GroupPostCommentReact p_groupPostCommentReact)
+        public async Task<GroupPostCommentReact> ReactGroupPostComment(GroupPostCommentReact p_groupPostCommentReact)
         {
             p_groupPostCommentReact.GroupPostCommentReactId = Guid.NewGuid().ToString();
-            return _repo.ReactGroupPostComment(p_groupPostCommentReact);
+            return await _repo.ReactGroupPostComment(p_groupPostCommentReact);
         }
 
-        public GroupPost UpdateGroupPost(GroupPost p_groupPost)
+        public async Task<GroupPost> UpdateGroupPost(GroupPost p_groupPost)
         {
-            return _repo.UpdateGroupPost(p_groupPost);
+            return await _repo.UpdateGroupPost(p_groupPost);
         }
 
-        public GroupPostComment UpdateGroupPostComment(GroupPostComment p_groupPostComment)
+        public async Task<GroupPostComment> UpdateGroupPostComment(GroupPostComment p_groupPostComment)
         {
-            return _repo.UpdateGroupPostComment(p_groupPostComment);
+            return await _repo.UpdateGroupPostComment(p_groupPostComment);
         }
     }
 }

@@ -6,13 +6,14 @@ using WeSharper.Models;
 using WeSharper.BusinessesManagement.Interfaces;
 using WeSharper.DatabaseManagement.Interfaces;
 using WeSharper.BusinessesManagement.Implements;
+using System.Threading.Tasks;
 
 namespace WeSharper.Test;
 
 public class ProfileManagementBLTest
 {
     [Fact]
-    public void Should_Update_A_Profile()
+    public async Task Should_Update_A_Profile()
     {
         //Arrange
         Profile profile1 = new Profile()
@@ -27,11 +28,11 @@ public class ProfileManagementBLTest
         };
 
         Mock<IProfileManagementDL> _mockRepo = new Mock<IProfileManagementDL>();
-        _mockRepo.Setup(repo => repo.UpdateProfile(profile1)).Returns(profile1);
+        _mockRepo.Setup(repo => repo.UpdateProfile(profile1)).ReturnsAsync(profile1);
         IProfileManagementBL profileBL = new ProfileManagementBL(_mockRepo.Object);
 
         //Act
-        Profile actualProfile = profileBL.UpdateProfile(profile1);
+        Profile actualProfile = await profileBL.UpdateProfile(profile1);
 
         //Assert
         Assert.Same(profile1, actualProfile);
@@ -40,7 +41,7 @@ public class ProfileManagementBLTest
     }
 
     [Fact]
-    public void Should_Get_All_Profiles()
+    public async Task Should_Get_All_Profiles()
     {
         //Arrange
         Profile profile1 = new Profile()
@@ -58,18 +59,18 @@ public class ProfileManagementBLTest
         _expectedListOfProfiles.Add(profile1);
 
         Mock<IProfileManagementDL> _mockRepo = new Mock<IProfileManagementDL>();
-        _mockRepo.Setup(repo => repo.GetAllProfiles()).Returns(_expectedListOfProfiles);
+        _mockRepo.Setup(repo => repo.GetAllProfiles()).ReturnsAsync(_expectedListOfProfiles);
         IProfileManagementBL profileBL = new ProfileManagementBL(_mockRepo.Object);
 
         //act
-        List<Profile> _actualListOfProfiles = profileBL.GetAllProfiles();
+        List<Profile> _actualListOfProfiles = await profileBL.GetAllProfiles();
 
         //Assert
         Assert.Same(_expectedListOfProfiles, _actualListOfProfiles);
     }
 
     [Fact]
-    public void Should_Get_A_New_Profile()
+    public async Task Should_Get_A_New_Profile()
     {
         //Arrange
         Profile _expectedProfile = new Profile()
@@ -86,12 +87,12 @@ public class ProfileManagementBLTest
 
 
         Mock<IProfileManagementDL> _mockRepo = new Mock<IProfileManagementDL>();
-        _mockRepo.Setup(repo => repo.AddNewProfile(_expectedProfile)).Returns(_expectedProfile);
+        _mockRepo.Setup(repo => repo.AddNewProfile(_expectedProfile)).ReturnsAsync(_expectedProfile);
         IProfileManagementBL _profileBL = new ProfileManagementBL(_mockRepo.Object);
 
         //Act
         Profile _actualProfile = new Profile();
-        _actualProfile = _profileBL.AddNewProfile(_expectedProfile);
+        _actualProfile = await _profileBL.AddNewProfile(_expectedProfile);
 
         //Assert
         Assert.Same(_expectedProfile, _actualProfile);

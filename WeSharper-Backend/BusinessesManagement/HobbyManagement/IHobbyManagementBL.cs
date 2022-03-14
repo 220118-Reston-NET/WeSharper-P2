@@ -1,14 +1,14 @@
-using WeSharper.Models;
+// using WeSharper.Models;
 
-namespace WeSharper.BusinessesManagement.Interfaces
-{
-    public interface IHobbyManagementBL
-    {
-        Hobby AddNewHobby(Hobby h_hobby);
-        List<Hobby> GetAllHobbies();
-        Hobby UpdateHobby(Hobby h_hobby);
-        Hobby DeleteHobby(Hobby h_hobby);
-        bool ValidHobbyName(string h_hobby);
-        bool CheckDuplicateHobby(string hobbyName);
-    }
-}
+// namespace WeSharper.BusinessesManagement.Interfaces
+// {
+//     public interface IHobbyManagementBL
+//     {
+//         Task<Hobby> AddNewHobby(Hobby h_hobby);
+//         Task<List<Hobby>> GetAllHobbies();
+//         Task<Hobby> UpdateHobby(Hobby h_hobby);
+//         Task<Hobby> DeleteHobby(Hobby h_hobby);
+//         Task<bool> ValidHobbyName(string h_hobby);
+//         Task<bool> CheckDuplicateHobby(string hobbyName);
+//     }
+// }

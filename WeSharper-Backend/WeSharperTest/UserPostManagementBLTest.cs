@@ -6,13 +6,14 @@ using WeSharper.Models;
 using WeSharper.BusinessesManagement.Interfaces;
 using WeSharper.DatabaseManagement.Interfaces;
 using WeSharper.BusinessesManagement.Implements;
+using System.Threading.Tasks;
 
 namespace WeSharper.Test;
 
 public class UserPostManagementBLTest
 {
     [Fact]
-    public void Should_Get_All_User_Posts()
+    public async Task Should_Get_All_User_Posts()
     {
         //Arrange
         Post post1 = new Post()
@@ -29,18 +30,18 @@ public class UserPostManagementBLTest
         _expectedListUserPost.Add(post1);
 
         Mock<IUserPostManagementDL> _mockRepo = new Mock<IUserPostManagementDL>();
-        _mockRepo.Setup(repo => repo.GetUserPosts()).Returns(_expectedListUserPost);
+        _mockRepo.Setup(repo => repo.GetUserPosts()).ReturnsAsync(_expectedListUserPost);
         IUserPostManagementBL _userPostBL = new UserPostManagementBL(_mockRepo.Object);
 
         //Act
-        List<Post> _actualListUserPost = _userPostBL.GetUserPosts();
+        List<Post> _actualListUserPost = await _userPostBL.GetUserPosts();
 
         //Assert
         Assert.Same(_expectedListUserPost, _actualListUserPost);
     }
 
     [Fact]
-    public void Should_Get_A_User_Post()
+    public async Task Should_Get_A_User_Post()
     {
         //Arrange
         Post _expectedUserPost = new Post()
@@ -56,18 +57,18 @@ public class UserPostManagementBLTest
         _expectedListUserPost.Add(_expectedUserPost);
 
         Mock<IUserPostManagementDL> _mockRepo = new Mock<IUserPostManagementDL>();
-        _mockRepo.Setup(repo => repo.GetUserPosts()).Returns(_expectedListUserPost);
+        _mockRepo.Setup(repo => repo.GetUserPosts()).ReturnsAsync(_expectedListUserPost);
         IUserPostManagementBL _userPostBL = new UserPostManagementBL(_mockRepo.Object);
 
         //Act
-        Post _actualUserPost = _userPostBL.GetUserPost(_expectedUserPost.PostId);
+        Post _actualUserPost = await _userPostBL.GetUserPost(_expectedUserPost.PostId);
 
         //Assert
         Assert.Same(_expectedUserPost, _actualUserPost);
     }
 
     [Fact]
-    public void Should_Get_All_User_Posts_By_UserID()
+    public async Task Should_Get_All_User_Posts_By_UserID()
     {
         //Arrange
         Post _post1 = new Post()
@@ -93,18 +94,18 @@ public class UserPostManagementBLTest
         _expectedListUserPost.Add(_post1);
 
         Mock<IUserPostManagementDL> _mockRepo = new Mock<IUserPostManagementDL>();
-        _mockRepo.Setup(repo => repo.GetUserPosts()).Returns(_expectedListUserPost);
+        _mockRepo.Setup(repo => repo.GetUserPosts()).ReturnsAsync(_expectedListUserPost);
         IUserPostManagementBL _userPostBL = new UserPostManagementBL(_mockRepo.Object);
 
         //Act
-        List<Post> _actualListUserPost = _userPostBL.GetUserPostsByUserID(_post1.UserId);
+        List<Post> _actualListUserPost = await _userPostBL.GetUserPostsByUserID(_post1.UserId);
 
         //Assert
         Assert.Equal(_expectedListUserPost.Count, _actualListUserPost.Count);
     }
 
     [Fact]
-    public void Should_Update_User_Post()
+    public async Task Should_Update_User_Post()
     {
         //Arrange
         Post _expectedUpdatedPost = new Post()
@@ -120,18 +121,18 @@ public class UserPostManagementBLTest
         };
 
         Mock<IUserPostManagementDL> _mockRepo = new Mock<IUserPostManagementDL>();
-        _mockRepo.Setup(repo => repo.UpdateUserPost(_expectedUpdatedPost)).Returns(_expectedUpdatedPost);
+        _mockRepo.Setup(repo => repo.UpdateUserPost(_expectedUpdatedPost)).ReturnsAsync(_expectedUpdatedPost);
         IUserPostManagementBL _userPostBL = new UserPostManagementBL(_mockRepo.Object);
 
         //Act
-        Post _actualUpdatedPost = _userPostBL.UpdateUserPost(_expectedUpdatedPost);
+        Post _actualUpdatedPost = await _userPostBL.UpdateUserPost(_expectedUpdatedPost);
 
         //Assert
         Assert.Same(_expectedUpdatedPost, _actualUpdatedPost);
     }
 
     [Fact]
-    public void Should_Delete_User_Post()
+    public async Task Should_Delete_User_Post()
     {
         //Arrange
         Post _expectedDeletedPost = new Post()
@@ -147,18 +148,18 @@ public class UserPostManagementBLTest
         };
 
         Mock<IUserPostManagementDL> _mockRepo = new Mock<IUserPostManagementDL>();
-        _mockRepo.Setup(repo => repo.DeleteUserPost(_expectedDeletedPost)).Returns(_expectedDeletedPost);
+        _mockRepo.Setup(repo => repo.DeleteUserPost(_expectedDeletedPost)).ReturnsAsync(_expectedDeletedPost);
         IUserPostManagementBL _userPostBL = new UserPostManagementBL(_mockRepo.Object);
 
         //Act
-        Post _actualUpdatedPost = _userPostBL.DeleteUserPost(_expectedDeletedPost);
+        Post _actualUpdatedPost = await _userPostBL.DeleteUserPost(_expectedDeletedPost);
 
         //Assert
         Assert.Same(_expectedDeletedPost, _actualUpdatedPost);
     }
 
     [Fact]
-    public void Should_Add_New_User_Post()
+    public async Task Should_Add_New_User_Post()
     {
         //Arrange
         Post _expectedNewPost = new Post()
@@ -174,18 +175,18 @@ public class UserPostManagementBLTest
         };
 
         Mock<IUserPostManagementDL> _mockRepo = new Mock<IUserPostManagementDL>();
-        _mockRepo.Setup(repo => repo.AddNewUserPost(_expectedNewPost)).Returns(_expectedNewPost);
+        _mockRepo.Setup(repo => repo.AddNewUserPost(_expectedNewPost)).ReturnsAsync(_expectedNewPost);
         IUserPostManagementBL _userPostBL = new UserPostManagementBL(_mockRepo.Object);
 
         //Act
-        Post _actualNewPost = _userPostBL.AddNewUserPost(_expectedNewPost);
+        Post _actualNewPost = await _userPostBL.AddNewUserPost(_expectedNewPost);
 
         //Assert
         Assert.Same(_expectedNewPost, _actualNewPost);
     }
 
     [Fact]
-    public void Should_Get_All_User_Feeds()
+    public async Task Should_Get_All_User_Feeds()
     {
         //Arrange
         Post post1 = new Post()
@@ -201,18 +202,18 @@ public class UserPostManagementBLTest
         _expectedListUserFeed.Add(post1);
 
         Mock<IUserPostManagementDL> _mockRepo = new Mock<IUserPostManagementDL>();
-        _mockRepo.Setup(repo => repo.GetFeedsByUserID(post1.UserId)).Returns(_expectedListUserFeed);
+        _mockRepo.Setup(repo => repo.GetFeedsByUserID(post1.UserId)).ReturnsAsync(_expectedListUserFeed);
         IUserPostManagementBL _userPostBL = new UserPostManagementBL(_mockRepo.Object);
 
         //Act
-        List<Post> _actualListUserFeed = _userPostBL.GetFeedsByUserID(post1.UserId);
+        List<Post> _actualListUserFeed = await _userPostBL.GetFeedsByUserID(post1.UserId);
 
         //Assert
         Assert.Same(_expectedListUserFeed, _actualListUserFeed);
     }
 
     [Fact]
-    public void Should_Get_All_User_Post_Comments()
+    public async Task Should_Get_All_User_Post_Comments()
     {
         //Arrange
         PostComment postComment = new PostComment()
@@ -228,18 +229,18 @@ public class UserPostManagementBLTest
         _expectedListUserPostComment.Add(postComment);
 
         Mock<IUserPostManagementDL> _mockRepo = new Mock<IUserPostManagementDL>();
-        _mockRepo.Setup(repo => repo.GetPostCommentsByPostID(postComment.PostId)).Returns(_expectedListUserPostComment);
+        _mockRepo.Setup(repo => repo.GetPostCommentsByPostID(postComment.PostId)).ReturnsAsync(_expectedListUserPostComment);
         IUserPostManagementBL _userPostBL = new UserPostManagementBL(_mockRepo.Object);
 
         //Act
-        List<PostComment> _actualListUserPostComment = _userPostBL.GetPostCommentsByPostID(postComment.PostId);
+        List<PostComment> _actualListUserPostComment = await _userPostBL.GetPostCommentsByPostID(postComment.PostId);
 
         //Assert
         Assert.Same(_expectedListUserPostComment, _actualListUserPostComment);
     }
 
     [Fact]
-    public void Should_Add_New_User_Post_Comment()
+    public async Task Should_Add_New_User_Post_Comment()
     {
         //Arrange
         PostComment _expectednewPostComment = new PostComment()
@@ -255,18 +256,18 @@ public class UserPostManagementBLTest
         };
 
         Mock<IUserPostManagementDL> _mockRepo = new Mock<IUserPostManagementDL>();
-        _mockRepo.Setup(repo => repo.AddNewUserPostComment(_expectednewPostComment)).Returns(_expectednewPostComment);
+        _mockRepo.Setup(repo => repo.AddNewUserPostComment(_expectednewPostComment)).ReturnsAsync(_expectednewPostComment);
         IUserPostManagementBL _userPostBL = new UserPostManagementBL(_mockRepo.Object);
 
         //Act
-        PostComment _actualUserPostComment = _userPostBL.AddNewUserPostComment(_expectednewPostComment);
+        PostComment _actualUserPostComment = await _userPostBL.AddNewUserPostComment(_expectednewPostComment);
 
         //Assert
         Assert.Same(_expectednewPostComment, _actualUserPostComment);
     }
 
     [Fact]
-    public void Should_Update_User_Post_Comment()
+    public async Task Should_Update_User_Post_Comment()
     {
         //Arrange
         PostComment _expectedUserPostComment = new PostComment()
@@ -280,18 +281,18 @@ public class UserPostManagementBLTest
         };
 
         Mock<IUserPostManagementDL> _mockRepo = new Mock<IUserPostManagementDL>();
-        _mockRepo.Setup(repo => repo.UpdateUserPostComment(_expectedUserPostComment)).Returns(_expectedUserPostComment);
+        _mockRepo.Setup(repo => repo.UpdateUserPostComment(_expectedUserPostComment)).ReturnsAsync(_expectedUserPostComment);
         IUserPostManagementBL _userPostBL = new UserPostManagementBL(_mockRepo.Object);
 
         //Act
-        PostComment _actualUserPostComment = _userPostBL.UpdateUserPostComment(_expectedUserPostComment);
+        PostComment _actualUserPostComment = await _userPostBL.UpdateUserPostComment(_expectedUserPostComment);
 
         //Assert
         Assert.Same(_expectedUserPostComment, _actualUserPostComment);
     }
 
     [Fact]
-    public void Should_Delete_User_Post_Comment()
+    public async Task Should_Delete_User_Post_Comment()
     {
         //Arrange
         PostComment _expectedUserPostComment = new PostComment()
@@ -305,18 +306,18 @@ public class UserPostManagementBLTest
         };
 
         Mock<IUserPostManagementDL> _mockRepo = new Mock<IUserPostManagementDL>();
-        _mockRepo.Setup(repo => repo.DeleteUserPostComment(_expectedUserPostComment)).Returns(_expectedUserPostComment);
+        _mockRepo.Setup(repo => repo.DeleteUserPostComment(_expectedUserPostComment)).ReturnsAsync(_expectedUserPostComment);
         IUserPostManagementBL _userPostBL = new UserPostManagementBL(_mockRepo.Object);
 
         //Act
-        PostComment _actualUserPostComment = _userPostBL.DeleteUserPostComment(_expectedUserPostComment);
+        PostComment _actualUserPostComment = await _userPostBL.DeleteUserPostComment(_expectedUserPostComment);
 
         //Assert
         Assert.Same(_expectedUserPostComment, _actualUserPostComment);
     }
 
     [Fact]
-    public void Should_Get_All_User_Post_React()
+    public async Task Should_Get_All_User_Post_React()
     {
         //Arrange
         PostReact _react1 = new PostReact()
@@ -330,18 +331,18 @@ public class UserPostManagementBLTest
         _expectedListUserPostReact.Add(_react1);
 
         Mock<IUserPostManagementDL> _mockRepo = new Mock<IUserPostManagementDL>();
-        _mockRepo.Setup(repo => repo.GetPostReactionsByPostID(_react1.PostId)).Returns(_expectedListUserPostReact);
+        _mockRepo.Setup(repo => repo.GetPostReactionsByPostID(_react1.PostId)).ReturnsAsync(_expectedListUserPostReact);
         IUserPostManagementBL _userPostBL = new UserPostManagementBL(_mockRepo.Object);
 
         //Act
-        List<PostReact> _actualListUserPostReact = _userPostBL.GetPostReactionsByPostID(_react1.PostId);
+        List<PostReact> _actualListUserPostReact = await _userPostBL.GetPostReactionsByPostID(_react1.PostId);
 
         //Assert
         Assert.Same(_expectedListUserPostReact, _actualListUserPostReact);
     }
 
     [Fact]
-    public void Should_React_To_User_Post()
+    public async Task Should_React_To_User_Post()
     {
         //Arrange
         PostReact _expectedUserPostReact = new PostReact()
@@ -356,18 +357,18 @@ public class UserPostManagementBLTest
         };
 
         Mock<IUserPostManagementDL> _mockRepo = new Mock<IUserPostManagementDL>();
-        _mockRepo.Setup(repo => repo.ReactUserPost(_expectedUserPostReact)).Returns(_expectedUserPostReact);
+        _mockRepo.Setup(repo => repo.ReactUserPost(_expectedUserPostReact)).ReturnsAsync(_expectedUserPostReact);
         IUserPostManagementBL _userPostBL = new UserPostManagementBL(_mockRepo.Object);
 
         //Act
-        PostReact _actualListUserPostReact = _userPostBL.ReactUserPost(_expectedUserPostReact);
+        PostReact _actualListUserPostReact = await _userPostBL.ReactUserPost(_expectedUserPostReact);
 
         //Assert
         Assert.Same(_expectedUserPostReact, _actualListUserPostReact);
     }
 
     [Fact]
-    public void Should_Get_All_User_Post_Comment_React()
+    public async Task Should_Get_All_User_Post_Comment_React()
     {
         //Arrange
         PostCommentReact _commentReact = new PostCommentReact()
@@ -384,18 +385,18 @@ public class UserPostManagementBLTest
         _expectedListUserPostCommentReact.Add(_commentReact);
 
         Mock<IUserPostManagementDL> _mockRepo = new Mock<IUserPostManagementDL>();
-        _mockRepo.Setup(repo => repo.GetPostCommentReactionsByCommentID(_commentReact.CommentId)).Returns(_expectedListUserPostCommentReact);
+        _mockRepo.Setup(repo => repo.GetPostCommentReactionsByCommentID(_commentReact.CommentId)).ReturnsAsync(_expectedListUserPostCommentReact);
         IUserPostManagementBL _userPostBL = new UserPostManagementBL(_mockRepo.Object);
 
         //Act
-        List<PostCommentReact> _actualListUserPostReact = _userPostBL.GetPostCommentReactionsByCommentID(_commentReact.CommentId);
+        List<PostCommentReact> _actualListUserPostReact = await _userPostBL.GetPostCommentReactionsByCommentID(_commentReact.CommentId);
 
         //Assert
         Assert.Same(_expectedListUserPostCommentReact, _actualListUserPostReact);
     }
 
     [Fact]
-    public void Should_React_To_User_Post_Comment()
+    public async Task Should_React_To_User_Post_Comment()
     {
         //Arrange
         PostCommentReact _expectedUserPostCommentReact = new PostCommentReact()
@@ -407,11 +408,11 @@ public class UserPostManagementBLTest
         };
 
         Mock<IUserPostManagementDL> _mockRepo = new Mock<IUserPostManagementDL>();
-        _mockRepo.Setup(repo => repo.ReactUserPostComment(_expectedUserPostCommentReact)).Returns(_expectedUserPostCommentReact);
+        _mockRepo.Setup(repo => repo.ReactUserPostComment(_expectedUserPostCommentReact)).ReturnsAsync(_expectedUserPostCommentReact);
         IUserPostManagementBL _userPostBL = new UserPostManagementBL(_mockRepo.Object);
 
         //Act
-        PostCommentReact _actualListUserPostReact = _userPostBL.ReactUserPostComment(_expectedUserPostCommentReact);
+        PostCommentReact _actualListUserPostReact = await _userPostBL.ReactUserPostComment(_expectedUserPostCommentReact);
 
         //Assert
         Assert.Same(_expectedUserPostCommentReact, _actualListUserPostReact);

@@ -127,9 +127,9 @@ namespace WeSharper.APIPortal.Controllers
         {
             try
             {
-                Profile _result = _friendBL.GetFriendProfileByFriendID(p_friendID);
+                Profile _result = await _friendBL.GetFriendProfileByFriendID(p_friendID);
                 _result.User = new ApplicationUser();
-                _result.User.UserName = _friendBL.GetUserNameForFriendID(p_friendID);
+                _result.User.UserName = await _friendBL.GetUserNameForFriendID(p_friendID);
                 Log.Information("Getting Friend Profile By ID: " + p_friendID);
                 return Ok(_result);
             }
@@ -150,7 +150,7 @@ namespace WeSharper.APIPortal.Controllers
 
             try
             {
-                string result = _friendBL.GetRelationshipByFriendID(p_userID, p_friendID);
+                string result = await _friendBL.GetRelationshipByFriendID(p_userID, p_friendID);
                 Log.Information("Getting Relationship By Friend ID: " + p_friendID);
                 return Ok(new { Results = result });
             }

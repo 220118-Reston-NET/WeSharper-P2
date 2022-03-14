@@ -13,26 +13,26 @@ namespace WeSharper.DatabaseManagement.Implements
             _context = context;
         }
 
-        public Hobby AddNewHobby(Hobby h_hobby)
+        public async Task<Hobby> AddNewHobby(Hobby h_hobby)
         {
-            _context.Hobbies.Add(h_hobby);
-            _context.SaveChanges();
+            await _context.Hobbies.AddAsync(h_hobby);
+            await _context.SaveChangesAsync();
 
             return h_hobby;
         }
 
-        public List<Hobby> GetAllHobbies()
+        public async Task<List<Hobby>> GetAllHobbies()
         {
-            return _context.Hobbies.ToList();
+            return await _context.Hobbies.ToListAsync();
         }
 
-        public Hobby UpdateHobby(Hobby h_hobby)
+        public async Task<Hobby> UpdateHobby(Hobby h_hobby)
         {
-            Hobby hobbyToUpdate = _context.Hobbies.FirstOrDefault(h => h.HobbyId.ToLower() == h_hobby.HobbyId.ToLower());
+            Hobby hobbyToUpdate = await _context.Hobbies.FirstOrDefaultAsync(h => h.HobbyId.ToLower() == h_hobby.HobbyId.ToLower());
             if (hobbyToUpdate != null)
             {
                 hobbyToUpdate.HobbyName = h_hobby.HobbyName.ToLower();
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
             else
             {
@@ -41,13 +41,13 @@ namespace WeSharper.DatabaseManagement.Implements
             return h_hobby;
         }
 
-        public Hobby DeleteHobby(Hobby h_hobby)
+        public async Task<Hobby> DeleteHobby(Hobby h_hobby)
         {
-            Hobby hobbyToRemove = _context.Hobbies.FirstOrDefault(h => h.HobbyId.ToLower() == h_hobby.HobbyId.ToLower());
+            Hobby hobbyToRemove = await _context.Hobbies.FirstOrDefaultAsync(h => h.HobbyId.ToLower() == h_hobby.HobbyId.ToLower());
             if (hobbyToRemove != null)
             {
                 _context.Hobbies.Remove(hobbyToRemove);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
             else
             {

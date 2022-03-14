@@ -9,12 +9,12 @@ namespace WeSharper.BusinessesManagement.Interfaces
         /// </summary>
         /// <param name="g_group"></param>
         /// <returns></returns>
-        Group AddNewGroup(Group g_group);
+        Task<Group> AddNewGroup(Group g_group);
         /// <summary>
         /// returns the list of ALL of the groups
         /// </summary>
         /// <returns></returns>
-        List<Group> GetAllGroups();
+        Task<List<Group>> GetAllGroups();
         /*
         /// <summary>
         /// gets group info from the group's name
@@ -28,28 +28,28 @@ namespace WeSharper.BusinessesManagement.Interfaces
         /// </summary>
         /// <param name="g_group"></param>
         /// <returns></returns>
-        Group UpdateGroupInformation(Group g_group, string userId);
+        Task<Group> UpdateGroupInformation(Group g_group, string userId);
         /// <summary>
         /// deletes the group
         /// </summary>
         /// <param name="userId"></param>
         /// <param name="groupId"></param>
         /// <returns></returns>
-        Group DeleteGroup(string userId, string groupId);
-        public Group CheckGroupManager(string groupId, string userId);
-        public Group CheckGroupId(string groupId);
+        Task<Group> DeleteGroup(string userId, string groupId);
+        Task<Group> CheckGroupManager(string groupId, string userId);
+        Task<Group> CheckGroupId(string groupId);
 
 
         // Group User
         //GroupUser SendNewGroupUserRequest(GroupUser g_groupUser);
-        List<GroupUser> GetAllGroupUsers();
-        List<GroupUser> GetApprovedUsersInGroup(string groupId);
-        
-        List<GroupUser> GetGroupUnapprovedJoinRequests(string groupId);
-/*        GroupUser UpdateGroupUser(GroupUser g_groupUser);
-        GroupUser BanGroupUser(GroupUser g_groupUser);
-        GroupUser UnbanGroupUser(GroupUser g_groupUser);
-        GroupUser DeleteGroupUser(GroupUser g_groupUser); */
-        bool CheckValidGroupUser(string groupId, string userId); 
+        Task<List<GroupUser>> GetAllGroupUsers();
+        Task<List<GroupUser>> GetApprovedUsersInGroup(string groupId);
+
+        Task<List<GroupUser>> GetGroupUnapprovedJoinRequests(string groupId);
+        /*        GroupUser UpdateGroupUser(GroupUser g_groupUser);
+                GroupUser BanGroupUser(GroupUser g_groupUser);
+                GroupUser UnbanGroupUser(GroupUser g_groupUser);
+                GroupUser DeleteGroupUser(GroupUser g_groupUser); */
+        Task<bool> CheckValidGroupUser(string groupId, string userId);
     }
 }
