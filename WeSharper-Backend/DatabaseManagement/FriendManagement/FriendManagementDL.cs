@@ -159,7 +159,7 @@ namespace WeSharper.DatabaseManagement.Implements
                                                         ReactId = pr.ReactId
                                                     }).ToList()
                                 })
-                                .Where(p => p.UserId.Equals(p_friendID))
+                                .Where(p => p.UserId.Equals(p_friendID) && p.IsDeleted.Equals(false))
                                 .ToList();
 
             return _result;

@@ -62,8 +62,7 @@ export class FriendService {
     return this.http.get<any>(this.baseUrl + 'UserPost/UserPosts');
   }
 
-  //TODO
-  getFriendPosts(friendID: string) : Observable<Post> {
-    return this.http.get<Post>(this.baseUrl);
+  getFriendPosts(friendID: string) : Observable<any> {
+    return this.http.get<any>(this.baseUrl + `Friend/Friends/${friendID}/Posts`);
   }
 }
