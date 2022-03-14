@@ -42,11 +42,11 @@ namespace APIPortal.Controllers
         // GET: api/GroupPost
         [Authorize(Roles = "User")]
         [HttpGet(RouteConfigs.GroupPosts)]
-        public IActionResult GetAllGroupPostsByGroupID(string p_groupID)
+        public async Task<IActionResult> GetAllGroupPostsByGroupID(string p_groupID)
         {
             try
             {
-                var _result = _groupPBL.GetGroupPostsByGroupID(p_groupID);
+                var _result = await _groupPBL.GetGroupPostsByGroupID(p_groupID);
                 Log.Information("Route: " + RouteConfigs.GroupPosts);
                 Log.Information("Get All Posts For Group ID: " + p_groupID);
 
@@ -93,7 +93,7 @@ namespace APIPortal.Controllers
             {
                 p_groupPost.GroupId = p_groupID;
                 p_groupPost.UserId = p_userID;
-                var _result = _groupPBL.PostNewPostToGroup(p_groupPost);
+                var _result = await _groupPBL.PostNewPostToGroup(p_groupPost);
                 Log.Information("Route: " + RouteConfigs.GroupPosts);
                 Log.Information("Posted a new post to groupID: " + p_groupID);
 
@@ -119,7 +119,7 @@ namespace APIPortal.Controllers
             {
                 p_groupPost.GroupId = p_groupID;
                 p_groupPost.UserId = p_userID;
-                var _result = _groupPBL.UpdateGroupPost(p_groupPost);
+                var _result = await _groupPBL.UpdateGroupPost(p_groupPost);
                 Log.Information("Route: " + RouteConfigs.GroupPost);
                 Log.Information("Updated Group Post: " + p_groupPost);
 
@@ -150,7 +150,7 @@ namespace APIPortal.Controllers
                     UserId = p_userID
                 };
 
-                var _result = _groupPBL.DeleteGroupPost(_deletedPost);
+                var _result = await _groupPBL.DeleteGroupPost(_deletedPost);
                 Log.Information("Route: " + RouteConfigs.GroupPost);
                 Log.Information("Deleted Group PostID: " + p_groupPostID);
 
@@ -184,7 +184,7 @@ namespace APIPortal.Controllers
                     UserId = p_userID,
                     GroupPostComment1 = p_groupPostComment
                 };
-                var result = _groupPBL.AddNewGroupPostComment(_newPostComment);
+                var result = await _groupPBL.AddNewGroupPostComment(_newPostComment);
                 Log.Information("Route: " + RouteConfigs.GroupPostComments);
                 Log.Information("Posted new group post comment to GroupPostID: " + p_groupPostID);
 
@@ -217,7 +217,7 @@ namespace APIPortal.Controllers
                     UserId = p_userID,
                     GroupPostComment1 = p_groupPostComment
                 };
-                var result = _groupPBL.UpdateGroupPostComment(_updatePostComment);
+                var result = await _groupPBL.UpdateGroupPostComment(_updatePostComment);
                 Log.Information("Route: " + RouteConfigs.GroupPostComment);
                 Log.Information("Updated group post comment!");
 
@@ -249,7 +249,7 @@ namespace APIPortal.Controllers
                     GroupPostId = p_groupPostID,
                     UserId = p_userID
                 };
-                var result = _groupPBL.DeleteGroupPostComment(_deletedPostComment);
+                var result = await _groupPBL.DeleteGroupPostComment(_deletedPostComment);
                 Log.Information("Route: " + RouteConfigs.GroupPostComment);
                 Log.Information("Deleted group post comment!");
 
@@ -284,7 +284,7 @@ namespace APIPortal.Controllers
                     UserId = p_userID,
                     ReactId = p_reactID
                 };
-                var result = _groupPBL.ReactGroupPost(_postReaction);
+                var result = await _groupPBL.ReactGroupPost(_postReaction);
                 Log.Information("Route: " + RouteConfigs.GroupPostReactions);
                 Log.Information("Reacted group post!");
 
@@ -319,7 +319,7 @@ namespace APIPortal.Controllers
                     UserId = p_userID,
                     ReactId = p_reactID
                 };
-                var result = _groupPBL.ReactGroupPostComment(_postCommentReaction);
+                var result = await _groupPBL.ReactGroupPostComment(_postCommentReaction);
                 Log.Information("Route: " + RouteConfigs.GroupPostCommentReactions);
                 Log.Information("Reacted group post comment!");
 

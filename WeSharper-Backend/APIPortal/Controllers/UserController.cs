@@ -60,7 +60,7 @@ namespace WeSharper.APIPortal.Controllers
             try
             {
                 Log.Information("Getting profile information");
-                return Ok(_profileBL.GetAProfile(p_userID));
+                return Ok(await _profileBL.GetAProfile(p_userID));
             }
             catch (System.Exception e)
             {
@@ -86,7 +86,7 @@ namespace WeSharper.APIPortal.Controllers
                     LastName = p_profile.LastName,
                     Bio = p_profile.Bio
                 };
-                _profileBL.UpdateProfile(_updatedProfile);
+                await _profileBL.UpdateProfile(_updatedProfile);
                 Log.Information("Profile successfully updated for " + p_profile.FirstName + " " + p_profile.LastName);
                 return Ok("Profile Updated");
             }
@@ -119,7 +119,7 @@ namespace WeSharper.APIPortal.Controllers
                         UserId = p_userID,
                         ProfilePictureUrl = fileURL
                     };
-                    _profileBL.UpdateProfilePicture(_updatedProfile);
+                    await _profileBL.UpdateProfilePicture(_updatedProfile);
                     Log.Information("Upload Profile Picture successfully!" + fileURL);
                     return Ok(new { fileURL });
                 }

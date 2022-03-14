@@ -49,7 +49,7 @@ namespace APIPortal.Controllers
 
             try
             {
-                var result = _userPBL.GetFeedsByUserID(p_userID);
+                var result = await _userPBL.GetFeedsByUserID(p_userID);
                 Log.Information("Route: " + RouteConfigs.Feeds);
                 Log.Information("Get all new feeds for user!");
 
@@ -77,7 +77,7 @@ namespace APIPortal.Controllers
 
             try
             {
-                var result = _userPBL.GetUserPostsByUserID(p_userID);
+                var result = await _userPBL.GetUserPostsByUserID(p_userID);
                 Log.Information("Route: " + RouteConfigs.UserPosts);
                 Log.Information("Get all user posts!");
 
@@ -130,7 +130,7 @@ namespace APIPortal.Controllers
                     PostContent = p_post.PostContent,
                     PostPhoto = p_post.PostPhoto
                 };
-                var result = _userPBL.AddNewUserPost(_newPost);
+                var result = await _userPBL.AddNewUserPost(_newPost);
                 Log.Information("Route: " + RouteConfigs.UserPosts);
                 Log.Information("Added new user post!");
 
@@ -162,7 +162,7 @@ namespace APIPortal.Controllers
                     PostContent = p_post.PostContent,
                     PostPhoto = p_post.PostPhoto
                 };
-                var result = _userPBL.UpdateUserPost(_updatedPost);
+                var result = await _userPBL.UpdateUserPost(_updatedPost);
                 Log.Information("Route: " + RouteConfigs.UserPost);
                 Log.Information("Update user post!");
 
@@ -192,7 +192,7 @@ namespace APIPortal.Controllers
                     PostId = p_postID,
                     UserId = p_userID
                 };
-                var result = _userPBL.DeleteUserPost(_deletedPost);
+                var result = await _userPBL.DeleteUserPost(_deletedPost);
                 Log.Information("Route: " + RouteConfigs.UserPost);
                 Log.Information("Deleted user post!");
 
@@ -226,7 +226,7 @@ namespace APIPortal.Controllers
                     UserId = p_userID,
                     PostComment1 = p_comment
                 };
-                var result = _userPBL.AddNewUserPostComment(_newPostComment);
+                var result = await _userPBL.AddNewUserPostComment(_newPostComment);
                 Log.Information("Route: " + RouteConfigs.UserPostComments);
                 Log.Information("Posted new user post comment!");
 
@@ -258,7 +258,7 @@ namespace APIPortal.Controllers
                     CommentId = p_postCommentID,
                     PostComment1 = p_comment
                 };
-                var result = _userPBL.UpdateUserPostComment(_updatePostComment);
+                var result = await _userPBL.UpdateUserPostComment(_updatePostComment);
                 Log.Information("Route: " + RouteConfigs.UserPostComment);
                 Log.Information("Updated user post comment!");
 
@@ -289,7 +289,7 @@ namespace APIPortal.Controllers
                     UserId = p_userID,
                     CommentId = p_postCommentID
                 };
-                var result = _userPBL.DeleteUserPostComment(_deletedPostComment);
+                var result = await _userPBL.DeleteUserPostComment(_deletedPostComment);
                 Log.Information("Route: " + RouteConfigs.UserPostComment);
                 Log.Information("Deleted user post comment!");
 
@@ -323,7 +323,7 @@ namespace APIPortal.Controllers
                     UserId = p_userID,
                     ReactId = p_reactID
                 };
-                var result = _userPBL.ReactUserPost(_postReaction);
+                var result = await _userPBL.ReactUserPost(_postReaction);
                 Log.Information("Route: " + RouteConfigs.UserPostReactions);
                 Log.Information("Reacted user post!");
 
@@ -357,7 +357,7 @@ namespace APIPortal.Controllers
                     UserId = p_userID,
                     ReactId = p_reactID
                 };
-                var result = _userPBL.ReactUserPostComment(_postCommentReaction);
+                var result = await _userPBL.ReactUserPostComment(_postCommentReaction);
                 Log.Information("Route: " + RouteConfigs.UserPostCommentReactions);
                 Log.Information("Reacted user post comment!");
 

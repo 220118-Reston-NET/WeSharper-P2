@@ -11,7 +11,8 @@ import { User } from '../_models/user';
   providedIn: 'root'
 })
 export class FriendService {
-  ApiURL = 'https://wesharper.azurewebsites.net/api/';
+  // ApiURL = 'https://wesharper.azurewebsites.net/api/';
+  ApiURL = environment.apiUrl;
   baseUrl = environment.apiUrl;
   friends: Friend[] = [];
   user: User;

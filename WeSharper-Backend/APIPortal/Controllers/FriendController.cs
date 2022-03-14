@@ -51,7 +51,7 @@ namespace WeSharper.APIPortal.Controllers
             try
             {
                 Log.Information("Getting All Friends of UserID: " + p_userID);
-                return Ok(_friendBL.GetAllFriendByUserID(p_userID));
+                return Ok(await _friendBL.GetAllFriendByUserID(p_userID));
             }
             catch (System.Exception e)
             {
@@ -71,7 +71,7 @@ namespace WeSharper.APIPortal.Controllers
             try
             {
                 Log.Information("Getting all Incoming Request Friends of UserID: " + p_userID);
-                return Ok(_friendBL.GetAllIncomingFriendByUserID(p_userID));
+                return Ok(await _friendBL.GetAllIncomingFriendByUserID(p_userID));
             }
             catch (System.Exception e)
             {
@@ -91,7 +91,7 @@ namespace WeSharper.APIPortal.Controllers
             try
             {
                 Log.Information("Getting all Outcoming Request Friends of UserID: " + p_userID);
-                return Ok(_friendBL.GetAllOutcomingFriendByUserID(p_userID));
+                return Ok(await _friendBL.GetAllOutcomingFriendByUserID(p_userID));
             }
             catch (System.Exception e)
             {
@@ -111,7 +111,7 @@ namespace WeSharper.APIPortal.Controllers
             try
             {
                 Log.Information("Getting all Recommended Friends of UserID: " + p_userID);
-                return Ok(_friendBL.GetAllRecommenedFriendByUserID(p_userID));
+                return Ok(await _friendBL.GetAllRecommenedFriendByUserID(p_userID));
             }
             catch (System.Exception e)
             {
@@ -172,7 +172,7 @@ namespace WeSharper.APIPortal.Controllers
             try
             {
                 Log.Information("Getting Friend Profile By ID: " + p_friendID);
-                return Ok(_friendBL.GetFriendPostsByFriendID(p_friendID));
+                return Ok(await _friendBL.GetFriendPostsByFriendID(p_friendID));
             }
             catch (System.Exception e)
             {
@@ -192,7 +192,7 @@ namespace WeSharper.APIPortal.Controllers
             try
             {
                 Log.Information("Add Friend By FriendID: " + p_friendID);
-                return Ok(_friendBL.AddFriend(p_userID, p_friendID));
+                return Ok(await _friendBL.AddFriend(p_userID, p_friendID));
             }
             catch (System.Exception e)
             {
@@ -212,7 +212,7 @@ namespace WeSharper.APIPortal.Controllers
             try
             {
                 Log.Information("Remove Friend By FriendID: " + p_friendID);
-                return Ok(_friendBL.RemoveFriend(p_userID, p_friendID));
+                return Ok(await _friendBL.RemoveFriend(p_userID, p_friendID));
             }
             catch (System.Exception e)
             {
@@ -232,7 +232,7 @@ namespace WeSharper.APIPortal.Controllers
             try
             {
                 Log.Information("Accept Friend By FriendID: " + p_friendID);
-                return Ok(_friendBL.AcceptFriend(p_userID, p_friendID));
+                return Ok(await _friendBL.AcceptFriend(p_userID, p_friendID));
             }
             catch (System.Exception e)
             {

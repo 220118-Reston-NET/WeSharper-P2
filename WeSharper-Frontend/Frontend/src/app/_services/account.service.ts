@@ -14,7 +14,8 @@ import { PresenceService } from './presence.service';
 })
 
 export class AccountService {
-  ApiURL = 'https://wesharper.azurewebsites.net/api/';
+  // ApiURL = 'https://wesharper.azurewebsites.net/api/';
+  ApiURL = environment.apiUrl;
   baseUrl = environment.apiUrl;
   private currentUserSource = new ReplaySubject<User>(1);
   currentUser = this.currentUserSource.asObservable();
