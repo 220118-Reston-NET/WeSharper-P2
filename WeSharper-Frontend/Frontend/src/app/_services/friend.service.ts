@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Friend } from '../_models/friend';
+import { Post } from '../_models/post';
 import { Profile } from '../_models/profile';
 import { User } from '../_models/user';
 
@@ -55,5 +56,14 @@ export class FriendService {
 
   getFriendRelationshipByFriendID(friendID: string) : Observable<any> {
     return this.http.get<any>(this.baseUrl + `Friend/Friends/${friendID}/Relationship`);
+  }
+
+  getUserPosts() : Observable<any> {
+    return this.http.get<any>(this.baseUrl + 'UserPost/UserPosts');
+  }
+
+  //TODO
+  getFriendPosts(friendID: string) : Observable<Post> {
+    return this.http.get<Post>(this.baseUrl);
   }
 }

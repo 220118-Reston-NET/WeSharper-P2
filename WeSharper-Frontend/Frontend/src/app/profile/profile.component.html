@@ -26,8 +26,8 @@
                 </div>
             </div>
             
-            <h5 style="margin-left: 50px;" >About Me</h5>
-            <p style="margin-top: 10px; margin-left: 50px;">{{profile.bio}}</p>
+            <h5 style="margin-left: 50px;" >About Me: {{profile.bio}}</h5>
+            <!-- <p style="margin-top: 10px; margin-left: 50px;">{{profile.bio}}</p> -->
             <p style="margin-top: 10px; margin-left: 50px;">Joined at: {{profile.createdAt}}</p>
 
         </div>
@@ -36,8 +36,37 @@
 
     
     <div *ngIf="!friendID">
-        <app-new-post></app-new-post>
-        <app-post></app-post>
+        <!-- <app-new-post></app-new-post> -->
+        <form [formGroup]="postGroup">
+            <div class="row">
+                <div  class="col-md-10" style="margin-bottom: 1rem; padding-left: 1rem;">
+                    <textarea formControlName="postContent" rows="4" style="width: 100%; border-radius: 5px; border-width: 3px;"></textarea>
+                </div>
+                <div class="col-md-2" style="margin-bottom: 1rem;">
+                    <button type="button" (click)="postNewPost(postGroup)" class="btn btn-primary" style="width: 90%;">Post</button>
+                </div>
+            </div>
+        </form>
+
+        <div *ngFor="let post of userPosts">
+            <div class="text-box" style="margin-bottom: 1rem;">
+                <div class="row">
+                    <div class="col-md-10">
+                        <span style="margin-left: 12px;">Posted at: {{post.createdAt}}</span>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" (click)="deletePost(post.postId)" class="btn btn-primary">Delete</button>
+                    </div>
+                </div>
+                <div class="content">
+                    <h4>{{post.postContent}}</h4>
+                    <div *ngIf="post.postPhoto">
+                        <img [src]="post.postPhoto" style="width: 100%;"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <app-post></app-post> -->
     </div>
 
     <!-- Posts And Message -->
