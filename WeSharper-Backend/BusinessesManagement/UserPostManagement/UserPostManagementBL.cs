@@ -68,7 +68,7 @@ namespace WeSharper.BusinessesManagement.Implements
 
         public List<Post> GetUserPosts()
         {
-            return _repo.GetUserPosts().FindAll(p => p.IsDeleted != true);
+            return _repo.GetUserPosts();
         }
 
         public List<Post> GetUserPostsByUserID(string p_userID)
