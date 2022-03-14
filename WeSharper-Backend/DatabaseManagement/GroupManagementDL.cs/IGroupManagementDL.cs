@@ -9,24 +9,24 @@ namespace WeSharper.DatabaseManagement.Interfaces
         /// </summary>
         /// <param name="g_group"></param>
         /// <returns></returns>
-        Group AddGroup(Group g_group);
+        Task<Group> AddGroup(Group g_group);
         /// <summary>
         /// Retrieves all of the Groups in a list format
         /// </summary>
         /// <returns></returns>
-        List<Group> GetAllGroups(); 
+        Task<List<Group>> GetAllGroups();
         /// <summary>
         /// Updates the information of the Group in the database
         /// </summary>
         /// <param name="g_group"></param>
         /// <returns></returns>
-        Group UpdateGroup(Group g_group, string userId);
+        Task<Group> UpdateGroup(Group g_group, string userId);
         /// <summary>
         /// Deletes a Group in the database. Only manager can disable group
         /// </summary>
         /// <param name="g_group"></param>
         /// <returns></returns>
-        Group DeleteGroup(string groupId, string groupManagerId);
+        Task<Group> DeleteGroup(string groupId, string groupManagerId);
 
         // group user
 
@@ -35,13 +35,13 @@ namespace WeSharper.DatabaseManagement.Interfaces
         /// </summary>
         /// <param name="g_groupUser"></param>
         /// <returns></returns>
-        
-        GroupUser SendNewGroupUserRequest(GroupUser g_groupUser);
-        List<GroupUser> GetAllGroupUsers();
-        List<GroupUser> GetGroupApprovedUsersInGroup(string groupId);
-        GroupUser UpdateGroupUser(GroupUser g_groupUser);
-        GroupUser BanGroupUser(GroupUser g_groupUser);
-        GroupUser UnbanGroupUser(GroupUser g_groupUser);
-        GroupUser DeleteGroupUser(GroupUser g_groupUser); 
+
+        Task<GroupUser> SendNewGroupUserRequest(GroupUser g_groupUser);
+        Task<List<GroupUser>> GetAllGroupUsers();
+        Task<List<GroupUser>> GetGroupApprovedUsersInGroup(string groupId);
+        Task<GroupUser> UpdateGroupUser(GroupUser g_groupUser);
+        Task<GroupUser> BanGroupUser(GroupUser g_groupUser);
+        Task<GroupUser> UnbanGroupUser(GroupUser g_groupUser);
+        Task<GroupUser> DeleteGroupUser(GroupUser g_groupUser);
     }
 }

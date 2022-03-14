@@ -95,11 +95,11 @@ namespace APIPortal.Controllers
         //GET: api/UserPost/UserPosts/5
         [Authorize(Roles = "User")]
         [HttpGet(RouteConfigs.UserPost)]
-        public IActionResult GetUserPost(string p_postID)
+        public async Task<IActionResult> GetUserPost(string p_postID)
         {
             try
             {
-                Post userPost = _userPBL.GetUserPost(p_postID);
+                Post userPost = await _userPBL.GetUserPost(p_postID);
                 Log.Information("Route: " + RouteConfigs.UserPost);
                 Log.Information("Get user post!");
 

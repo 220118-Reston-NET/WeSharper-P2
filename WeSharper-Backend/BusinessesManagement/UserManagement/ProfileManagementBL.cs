@@ -13,37 +13,38 @@ namespace WeSharper.BusinessesManagement.Implements
             _repo = repo;
         }
 
-        public Profile AddNewProfile(Profile p_profile)
+        public async Task<Profile> AddNewProfile(Profile p_profile)
         {
-            return _repo.AddNewProfile(p_profile);
+            return await _repo.AddNewProfile(p_profile);
         }
-        public List<Profile> GetAllProfiles()
+        public async Task<List<Profile>> GetAllProfiles()
         {
-            return _repo.GetAllProfiles();
+            return await _repo.GetAllProfiles();
         }
-        public Profile GetAProfile(string userId)
+        public async Task<Profile> GetAProfile(string userId)
         {
-            return _repo.GetAllProfiles().FirstOrDefault(p => p.UserId.Equals(userId));
-        }
-
-        public ApplicationUser GetUserByUserID(string p_userID)
-        {
-            return _repo.GetUserByUserID(p_userID);
+            List<Profile> _result = await _repo.GetAllProfiles();
+            return _result.FirstOrDefault(p => p.UserId.Equals(userId));
         }
 
-        public ApplicationUser GetUserByUserName(string p_username)
+        public async Task<ApplicationUser> GetUserByUserID(string p_userID)
         {
-            return _repo.GetUserByUserName(p_username);
+            return await _repo.GetUserByUserID(p_userID);
         }
 
-        public Profile UpdateProfile(Profile p_profile)
+        public async Task<ApplicationUser> GetUserByUserName(string p_username)
         {
-            return _repo.UpdateProfile(p_profile);
+            return await _repo.GetUserByUserName(p_username);
         }
 
-        public Profile UpdateProfilePicture(Profile p_profile)
+        public async Task<Profile> UpdateProfile(Profile p_profile)
         {
-            return _repo.UpdateProfilePicture(p_profile);
+            return await _repo.UpdateProfile(p_profile);
+        }
+
+        public async Task<Profile> UpdateProfilePicture(Profile p_profile)
+        {
+            return await _repo.UpdateProfilePicture(p_profile);
         }
     }
 }

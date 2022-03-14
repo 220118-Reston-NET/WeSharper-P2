@@ -13,25 +13,25 @@ namespace WeSharper.DatabaseManagement.Implements
             _context = context;
         }
 
-        public Post AddNewUserPost(Post p_post)
+        public async Task<Post> AddNewUserPost(Post p_post)
         {
-            _context.Add(p_post);
-            _context.SaveChanges();
+            await _context.AddAsync(p_post);
+            await _context.SaveChangesAsync();
 
             return p_post;
         }
 
-        public PostComment AddNewUserPostComment(PostComment p_userPostComment)
+        public async Task<PostComment> AddNewUserPostComment(PostComment p_userPostComment)
         {
-            _context.Add(p_userPostComment);
-            _context.SaveChanges();
+            await _context.AddAsync(p_userPostComment);
+            await _context.SaveChangesAsync();
 
             return p_userPostComment;
         }
 
-        public Post DeleteUserPost(Post p_post)
+        public async Task<Post> DeleteUserPost(Post p_post)
         {
-            Post _deletedPost = _context.Posts.FirstOrDefault(p => p.PostId.Equals(p_post.PostId));
+            Post _deletedPost = await _context.Posts.FirstOrDefaultAsync(p => p.PostId.Equals(p_post.PostId));
             if (_deletedPost != null)
             {
                 _deletedPost.IsDeleted = true;
@@ -41,9 +41,9 @@ namespace WeSharper.DatabaseManagement.Implements
             return _deletedPost;
         }
 
-        public PostComment DeleteUserPostComment(PostComment p_deletedPostComment)
+        public async Task<PostComment> DeleteUserPostComment(PostComment p_deletedPostComment)
         {
-            PostComment _deletedPostComment = _context.PostComments.FirstOrDefault(p => p.CommentId.Equals(p_deletedPostComment.CommentId));
+            PostComment _deletedPostComment = await _context.PostComments.FirstOrDefaultAsync(p => p.CommentId.Equals(p_deletedPostComment.CommentId));
             if (_deletedPostComment != null)
             {
                 _deletedPostComment.IsDeleted = true;
@@ -53,14 +53,14 @@ namespace WeSharper.DatabaseManagement.Implements
             return p_deletedPostComment;
         }
 
-        public List<Post> GetFeedsByUserID(string p_userID)
+        public async Task<List<Post>> GetFeedsByUserID(string p_userID)
         {
-            List<Post> _result = (from p in _context.Posts
-                                  join f in _context.Friends
-                                  on p.UserId equals f.AcceptedUserId
-                                  where f.RequestedUserId == p_userID
-                                    && f.IsAccepted
-                                  select p)
+            List<Post> _result = await (from p in _context.Posts
+                                        join f in _context.Friends
+                                        on p.UserId equals f.AcceptedUserId
+                                        where f.RequestedUserId == p_userID
+                                          && f.IsAccepted
+                                        select p)
                                   .Union
                                   (from p in _context.Posts
                                    join f in _context.Friends
@@ -84,29 +84,29 @@ namespace WeSharper.DatabaseManagement.Implements
                                         }
                                     })
                                     .OrderByDescending(p => p.CreatedAt)
-                                    .ToList();
+                                    .ToListAsync();
 
             return _result;
         }
 
-        public List<PostCommentReact> GetPostCommentReactionsByCommentID(string p_postCommentID)
+        public async Task<List<PostCommentReact>> GetPostCommentReactionsByCommentID(string p_postCommentID)
         {
-            return _context.PostCommentReacts.Where(p => p.CommentId.Equals(p_postCommentID)).ToList();
+            return await _context.PostCommentReacts.Where(p => p.CommentId.Equals(p_postCommentID)).ToListAsync();
         }
 
-        public List<PostComment> GetPostCommentsByPostID(string p_postID)
+        public async Task<List<PostComment>> GetPostCommentsByPostID(string p_postID)
         {
-            return _context.PostComments.Where(p => p.PostId.Equals(p_postID)).ToList();
+            return await _context.PostComments.Where(p => p.PostId.Equals(p_postID)).ToListAsync();
         }
 
-        public List<PostReact> GetPostReactionsByPostID(string p_postID)
+        public async Task<List<PostReact>> GetPostReactionsByPostID(string p_postID)
         {
-            return _context.PostReacts.Where(p => p.PostId.Equals(p_postID)).ToList();
+            return await _context.PostReacts.Where(p => p.PostId.Equals(p_postID)).ToListAsync();
         }
 
-        public List<Post> GetUserPosts()
+        public async Task<List<Post>> GetUserPosts()
         {
-            var _result = _context.Posts
+            var _result = await _context.Posts
                                 .Select(p => new Post
                                 {
                                     PostId = p.PostId,
@@ -141,65 +141,65 @@ namespace WeSharper.DatabaseManagement.Implements
                                 })
                                 .Where(p => p.IsDeleted.Equals(false))
                                 .OrderByDescending(p => p.CreatedAt)
-                                .ToList();
+                                .ToListAsync();
 
             return _result;
         }
 
-        public PostReact ReactUserPost(PostReact p_postReaction)
+        public async Task<PostReact> ReactUserPost(PostReact p_postReaction)
         {
-            PostReact _postReact = _context.PostReacts.FirstOrDefault(p => p.PostId.Equals(p_postReaction.PostId));
+            PostReact _postReact = await _context.PostReacts.FirstOrDefaultAsync(p => p.PostId.Equals(p_postReaction.PostId));
             if (_postReact != null)
             {
                 _postReact.ReactId = p_postReaction.ReactId;
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
             else
             {
-                _context.Add(p_postReaction);
-                _context.SaveChanges();
+                await _context.AddAsync(p_postReaction);
+                await _context.SaveChangesAsync();
             }
 
             return p_postReaction;
         }
 
-        public PostCommentReact ReactUserPostComment(PostCommentReact p_postCommentReaction)
+        public async Task<PostCommentReact> ReactUserPostComment(PostCommentReact p_postCommentReaction)
         {
-            PostCommentReact _postCommentReact = _context.PostCommentReacts.FirstOrDefault(p => p.PostCommentReactId.Equals(p_postCommentReaction.PostCommentReactId));
+            PostCommentReact _postCommentReact = await _context.PostCommentReacts.FirstOrDefaultAsync(p => p.PostCommentReactId.Equals(p_postCommentReaction.PostCommentReactId));
             if (_postCommentReact != null)
             {
                 _postCommentReact.ReactId = p_postCommentReaction.ReactId;
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
             else
             {
-                _context.Add(p_postCommentReaction);
-                _context.SaveChanges();
+                await _context.AddAsync(p_postCommentReaction);
+                await _context.SaveChangesAsync();
             }
 
             return p_postCommentReaction;
         }
 
-        public Post UpdateUserPost(Post p_post)
+        public async Task<Post> UpdateUserPost(Post p_post)
         {
-            Post _updatedPost = _context.Posts.FirstOrDefault(p => p.PostId.Equals(p_post.PostId));
+            Post _updatedPost = await _context.Posts.FirstOrDefaultAsync(p => p.PostId.Equals(p_post.PostId));
             if (_updatedPost != null)
             {
                 _updatedPost.PostContent = p_post.PostContent;
                 _updatedPost.PostPhoto = p_post.PostPhoto;
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
 
             return _updatedPost;
         }
 
-        public PostComment UpdateUserPostComment(PostComment p_updatePostComment)
+        public async Task<PostComment> UpdateUserPostComment(PostComment p_updatePostComment)
         {
-            PostComment _updatedPostComment = _context.PostComments.FirstOrDefault(p => p.CommentId.Equals(p_updatePostComment.CommentId));
+            PostComment _updatedPostComment = await _context.PostComments.FirstOrDefaultAsync(p => p.CommentId.Equals(p_updatePostComment.CommentId));
             if (_updatedPostComment != null)
             {
                 _updatedPostComment.PostComment1 = p_updatePostComment.PostComment1;
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
 
             return p_updatePostComment;

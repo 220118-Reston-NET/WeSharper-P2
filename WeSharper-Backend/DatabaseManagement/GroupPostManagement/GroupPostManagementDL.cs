@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using WeSharper.DatabaseManagement.Interfaces;
 using WeSharper.Models;
 
@@ -12,41 +13,41 @@ namespace WeSharper.DatabaseManagement.Implements
             _context = context;
         }
 
-        public GroupPostComment AddNewGroupPostComment(GroupPostComment p_groupPostComment)
+        public async Task<GroupPostComment> AddNewGroupPostComment(GroupPostComment p_groupPostComment)
         {
-            _context.Add(p_groupPostComment);
-            _context.SaveChanges();
+            await _context.AddAsync(p_groupPostComment);
+            await _context.SaveChangesAsync();
 
             return p_groupPostComment;
         }
 
-        public GroupPost DeleteGroupPost(GroupPost p_groupPost)
+        public async Task<GroupPost> DeleteGroupPost(GroupPost p_groupPost)
         {
-            var _deletedPost = _context.GroupPosts.FirstOrDefault(p => p.GroupPostId.Equals(p_groupPost.GroupPostId));
+            var _deletedPost = await _context.GroupPosts.FirstOrDefaultAsync(p => p.GroupPostId.Equals(p_groupPost.GroupPostId));
             if (_deletedPost != null)
             {
                 _deletedPost.IsDeleted = true;
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
 
             return _deletedPost;
         }
 
-        public GroupPostComment DeleteGroupPostComment(GroupPostComment p_groupPostComment)
+        public async Task<GroupPostComment> DeleteGroupPostComment(GroupPostComment p_groupPostComment)
         {
-            var _deletedPostComment = _context.GroupPostComments.FirstOrDefault(p => p.GroupPostCommentId.Equals(p_groupPostComment.GroupPostCommentId));
+            var _deletedPostComment = await _context.GroupPostComments.FirstOrDefaultAsync(p => p.GroupPostCommentId.Equals(p_groupPostComment.GroupPostCommentId));
             if (_deletedPostComment != null)
             {
                 _deletedPostComment.IsDeleted = true;
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
 
             return _deletedPostComment;
         }
 
-        public List<GroupPost> GetGroupPosts()
+        public async Task<List<GroupPost>> GetGroupPosts()
         {
-            var _result = _context.GroupPosts
+            var _result = await _context.GroupPosts
                                 .Select(p => new GroupPost
                                 {
                                     GroupPostId = p.GroupPostId,
@@ -79,12 +80,12 @@ namespace WeSharper.DatabaseManagement.Implements
                                                         ReactId = pr.ReactId
                                                     }).ToList()
                                 })
-                                .ToList();
+                                .ToListAsync();
 
             return _result;
         }
 
-        public GroupPost PostNewPostToGroup(GroupPost p_groupPost)
+        public async Task<GroupPost> PostNewPostToGroup(GroupPost p_groupPost)
         {
             _context.Add(p_groupPost);
             _context.SaveChanges();
@@ -92,60 +93,60 @@ namespace WeSharper.DatabaseManagement.Implements
             return p_groupPost;
         }
 
-        public GroupPostReact ReactGroupPost(GroupPostReact p_groupPostReact)
+        public async Task<GroupPostReact> ReactGroupPost(GroupPostReact p_groupPostReact)
         {
-            GroupPostReact _postReact = _context.GroupPostReacts.FirstOrDefault(p => p.GroupPostId.Equals(p_groupPostReact.GroupPostId));
+            GroupPostReact _postReact = await _context.GroupPostReacts.FirstOrDefaultAsync(p => p.GroupPostId.Equals(p_groupPostReact.GroupPostId));
             if (_postReact != null)
             {
                 _postReact.ReactId = p_groupPostReact.ReactId;
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
             else
             {
-                _context.Add(p_groupPostReact);
-                _context.SaveChanges();
+                await _context.AddAsync(p_groupPostReact);
+                await _context.SaveChangesAsync();
             }
 
             return p_groupPostReact;
         }
 
-        public GroupPostCommentReact ReactGroupPostComment(GroupPostCommentReact p_groupPostCommentReact)
+        public async Task<GroupPostCommentReact> ReactGroupPostComment(GroupPostCommentReact p_groupPostCommentReact)
         {
-            GroupPostCommentReact _postReact = _context.GroupPostCommentReacts.FirstOrDefault(p => p.GroupPostCommentId.Equals(p_groupPostCommentReact.GroupPostCommentId));
+            GroupPostCommentReact _postReact = await _context.GroupPostCommentReacts.FirstOrDefaultAsync(p => p.GroupPostCommentId.Equals(p_groupPostCommentReact.GroupPostCommentId));
             if (_postReact != null)
             {
                 _postReact.ReactId = p_groupPostCommentReact.ReactId;
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
             else
             {
-                _context.Add(p_groupPostCommentReact);
-                _context.SaveChanges();
+                await _context.AddAsync(p_groupPostCommentReact);
+                await _context.SaveChangesAsync();
             }
 
             return p_groupPostCommentReact;
         }
 
-        public GroupPost UpdateGroupPost(GroupPost p_groupPost)
+        public async Task<GroupPost> UpdateGroupPost(GroupPost p_groupPost)
         {
-            var _updatedPost = _context.GroupPosts.FirstOrDefault(p => p.GroupPostId.Equals(p_groupPost.GroupPostId));
+            var _updatedPost = await _context.GroupPosts.FirstOrDefaultAsync(p => p.GroupPostId.Equals(p_groupPost.GroupPostId));
             if (_updatedPost != null)
             {
                 _updatedPost.PostContent = p_groupPost.PostContent;
                 _updatedPost.PostPhoto = p_groupPost.PostPhoto;
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
 
             return p_groupPost;
         }
 
-        public GroupPostComment UpdateGroupPostComment(GroupPostComment p_groupPostComment)
+        public async Task<GroupPostComment> UpdateGroupPostComment(GroupPostComment p_groupPostComment)
         {
-            var _updatedPostComment = _context.GroupPostComments.FirstOrDefault(p => p.GroupPostCommentId.Equals(p_groupPostComment.GroupPostCommentId));
+            var _updatedPostComment = await _context.GroupPostComments.FirstOrDefaultAsync(p => p.GroupPostCommentId.Equals(p_groupPostComment.GroupPostCommentId));
             if (_updatedPostComment != null)
             {
                 _updatedPostComment.GroupPostComment1 = p_groupPostComment.GroupPostComment1;
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
 
             return _updatedPostComment;

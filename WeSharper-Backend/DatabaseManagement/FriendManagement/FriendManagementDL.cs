@@ -13,22 +13,22 @@ namespace WeSharper.DatabaseManagement.Implements
             _context = context;
         }
 
-        public Friend AcceptFriend(string p_userID, string p_friendID)
+        public async Task<Friend> AcceptFriend(string p_userID, string p_friendID)
         {
-            Friend _currentRelationship = _context.Friends.FirstOrDefault(p => p.AcceptedUserId.Equals(p_userID)
+            Friend _currentRelationship = await _context.Friends.FirstOrDefaultAsync(p => p.AcceptedUserId.Equals(p_userID)
                                                                                 && p.RequestedUserId.Equals(p_friendID));
             if (_currentRelationship != null)
             {
                 _currentRelationship.IsAccepted = true;
                 _currentRelationship.CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"));
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
             return _currentRelationship;
         }
 
-        public Friend AddFriend(string p_userID, string p_friendID)
+        public async Task<Friend> AddFriend(string p_userID, string p_friendID)
         {
-            Friend _currentRelationship = _context.Friends.FirstOrDefault(p => p.AcceptedUserId.Equals(p_userID)
+            Friend _currentRelationship = await _context.Friends.FirstOrDefaultAsync(p => p.AcceptedUserId.Equals(p_userID)
                                                                                 && p.RequestedUserId.Equals(p_friendID)
                                                                             || p.AcceptedUserId.Equals(p_friendID)
                                                                                 && p.RequestedUserId.Equals(p_userID));
@@ -38,7 +38,7 @@ namespace WeSharper.DatabaseManagement.Implements
                 _currentRelationship.AcceptedUserId = p_friendID;
                 _currentRelationship.Relationship = "Friend";
                 _currentRelationship.CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"));
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
             else
             {
@@ -51,8 +51,8 @@ namespace WeSharper.DatabaseManagement.Implements
                     Relationship = "Friend",
                     CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"))
                 };
-                _context.Add(_newFriendShip);
-                _context.SaveChanges();
+                await _context.AddAsync(_newFriendShip);
+                await _context.SaveChangesAsync();
 
                 return _newFriendShip;
             }
@@ -60,10 +60,10 @@ namespace WeSharper.DatabaseManagement.Implements
             return _currentRelationship;
         }
 
-        public List<Friend> GetAllFriends()
+        public async Task<List<Friend>> GetAllFriends()
         {
             List<Friend> _listOfAllRelationship = new List<Friend>();
-            _listOfAllRelationship = _context.Friends
+            _listOfAllRelationship = await _context.Friends
                                         .Select(f => new Friend
                                         {
                                             RelationshipId = f.RelationshipId,
@@ -92,26 +92,26 @@ namespace WeSharper.DatabaseManagement.Implements
                                                                 ProfilePictureUrl = p.ProfilePictureUrl
                                                             }).ToList()
                                             },
-                                        }).ToList();
+                                        }).ToListAsync();
 
             return _listOfAllRelationship;
         }
 
-        public List<Profile> GetAllRecommenedFriendByUserID(string p_userID)
+        public async Task<List<Profile>> GetAllRecommenedFriendByUserID(string p_userID)
         {
-            List<Profile> _listAllProfiles = _context.Profiles.Where(p => p.UserId != p_userID).ToList();
+            List<Profile> _listAllProfiles = await _context.Profiles.Where(p => p.UserId != p_userID).ToListAsync();
 
             List<Profile> _result = new List<Profile>();
 
             //Get List Of Friends, IncomingFriends and OutcomingFriends
-            List<Friend> _listOfFriends = _context.Friends.Where(p => p.AcceptedUserId.Equals(p_userID) && p.IsAccepted
+            List<Friend> _listOfFriends = await _context.Friends.Where(p => p.AcceptedUserId.Equals(p_userID) && p.IsAccepted
                                                                 || p.RequestedUserId.Equals(p_userID) && p.IsAccepted
                                                                 || p.AcceptedUserId.Equals(p_userID)
                                                                     && p.IsAccepted.Equals(false)
                                                                     && p.Relationship.Equals("Friend")
                                                                 || p.RequestedUserId.Equals(p_userID)
                                                                     && p.IsAccepted.Equals(false)
-                                                                    && p.Relationship.Equals("Friend")).ToList();
+                                                                    && p.Relationship.Equals("Friend")).ToListAsync();
 
             foreach (var item in _listAllProfiles)
             {
@@ -124,9 +124,9 @@ namespace WeSharper.DatabaseManagement.Implements
             return _result;
         }
 
-        public List<Post> GetFriendPostsByFriendID(string p_friendID)
+        public async Task<List<Post>> GetFriendPostsByFriendID(string p_friendID)
         {
-            var _result = _context.Posts
+            var _result = await _context.Posts
                                 .Select(p => new Post
                                 {
                                     PostId = p.PostId,
@@ -161,14 +161,14 @@ namespace WeSharper.DatabaseManagement.Implements
                                 })
                                 .Where(p => p.UserId.Equals(p_friendID) && p.IsDeleted.Equals(false))
                                 .OrderByDescending(p => p.CreatedAt)
-                                .ToList();
+                                .ToListAsync();
 
             return _result;
         }
 
-        public Profile GetFriendProfileByFriendID(string p_friendID)
+        public async Task<Profile> GetFriendProfileByFriendID(string p_friendID)
         {
-            return _context.Profiles.Where(p => p.UserId.Equals(p_friendID))
+            return await _context.Profiles.Where(p => p.UserId.Equals(p_friendID))
                                     .Select(p => new Profile
                                     {
                                         UserId = p.UserId,
@@ -177,10 +177,10 @@ namespace WeSharper.DatabaseManagement.Implements
                                         ProfilePictureUrl = p.ProfilePictureUrl,
                                         Bio = p.Bio,
                                         CreatedAt = p.CreatedAt,
-                                    }).First();
+                                    }).FirstAsync();
         }
 
-        public string GetRelationshipByFriendID(string p_userID, string p_friendID)
+        public async Task<string> GetRelationshipByFriendID(string p_userID, string p_friendID)
         {
             if (_context.Friends.Any(p => p.AcceptedUserId == p_userID))
             {
@@ -206,7 +206,7 @@ namespace WeSharper.DatabaseManagement.Implements
                 {
                     if (_context.Friends.Any(p => p.AcceptedUserId == p_friendID))
                     {
-                        var relationship = _context.Friends.FirstOrDefault(p => p.RequestedUserId.Equals(p_userID)
+                        var relationship = await _context.Friends.FirstOrDefaultAsync(p => p.RequestedUserId.Equals(p_userID)
                                                                            && p.AcceptedUserId.Equals(p_friendID)
                                                                            && p.Relationship != null);
 
@@ -236,7 +236,7 @@ namespace WeSharper.DatabaseManagement.Implements
             {
                 if (_context.Friends.Any(p => p.AcceptedUserId == p_friendID))
                 {
-                    var relationship = _context.Friends.FirstOrDefault(p => p.RequestedUserId.Equals(p_userID)
+                    var relationship = await _context.Friends.FirstOrDefaultAsync(p => p.RequestedUserId.Equals(p_userID)
                                                                        && p.AcceptedUserId.Equals(p_friendID)
                                                                        && p.Relationship != null);
 
@@ -264,14 +264,15 @@ namespace WeSharper.DatabaseManagement.Implements
             return "NotFriend";
         }
 
-        public string GetUserNameForFriendID(string p_friendID)
+        public async Task<string> GetUserNameForFriendID(string p_friendID)
         {
-            return _context.Users.FirstOrDefault(p => p.Id.Equals(p_friendID)).UserName;
+            var user = await _context.Users.FirstOrDefaultAsync(p => p.Id.Equals(p_friendID));
+            return user.UserName;
         }
 
-        public Friend RemoveFriend(string p_userID, string p_friendID)
+        public async Task<Friend> RemoveFriend(string p_userID, string p_friendID)
         {
-            Friend _currentRelationship = _context.Friends.FirstOrDefault(p => p.AcceptedUserId.Equals(p_userID)
+            Friend _currentRelationship = await _context.Friends.FirstOrDefaultAsync(p => p.AcceptedUserId.Equals(p_userID)
                                                                                 && p.RequestedUserId.Equals(p_friendID)
                                                                             || p.AcceptedUserId.Equals(p_friendID)
                                                                                 && p.RequestedUserId.Equals(p_userID));
@@ -280,7 +281,7 @@ namespace WeSharper.DatabaseManagement.Implements
                 _currentRelationship.IsAccepted = false;
                 _currentRelationship.Relationship = null;
                 _currentRelationship.CreatedAt = null;
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
 
             return _currentRelationship;

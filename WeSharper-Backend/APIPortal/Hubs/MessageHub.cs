@@ -61,8 +61,8 @@ namespace WeSharper.APIPortal.Hubs
             if (username == createMessage.RecipientUsername.ToLower())
                 throw new HubException("You cannot send messages to yourself");
 
-            var sender = _profileBL.GetUserByUserName(username);
-            var recipient = _profileBL.GetUserByUserName(createMessage.RecipientUsername);
+            var sender = await _profileBL.GetUserByUserName(username);
+            var recipient = await _profileBL.GetUserByUserName(createMessage.RecipientUsername);
 
             if (recipient == null) throw new HubException("Not found user");
 

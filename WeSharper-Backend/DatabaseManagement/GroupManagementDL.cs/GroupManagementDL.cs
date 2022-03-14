@@ -13,38 +13,39 @@ namespace WeSharper.DatabaseManagement.Implements
             _context = context;
         }
 
-        public Group AddGroup(Group g_group)
+        public async Task<Group> AddGroup(Group g_group)
         {
-            Group newGroup = new Group(){
+            Group newGroup = new Group()
+            {
                 GroupId = Guid.NewGuid().ToString(),
                 GroupManagerId = g_group.GroupManagerId,
                 GroupName = g_group.GroupName,
                 GroupPicture = g_group.GroupPicture,
                 Description = g_group.Description,
-                
+
             };
-            _context.Groups.Add(newGroup);
-            _context.SaveChanges();
+            await _context.Groups.AddAsync(newGroup);
+            await _context.SaveChangesAsync();
 
             return newGroup;
         }
 
-        public List<Group> GetAllGroups()
+        public async Task<List<Group>> GetAllGroups()
         {
-            return _context.Groups.ToList();
+            return await _context.Groups.ToListAsync();
         }
 
 
-        public Group UpdateGroup(Group g_group, string userId)
+        public async Task<Group> UpdateGroup(Group g_group, string userId)
         {
-            Group groupToUpdate = _context.Groups.Where(g => g.GroupId == g_group.GroupId).FirstOrDefault();
+            Group groupToUpdate = await _context.Groups.Where(g => g.GroupId == g_group.GroupId).FirstOrDefaultAsync();
             if (groupToUpdate != null)
             {
-                if(groupToUpdate.GroupManagerId == userId)
+                if (groupToUpdate.GroupManagerId == userId)
                 {
-                    if(g_group.GroupManagerId != null)
+                    if (g_group.GroupManagerId != null)
                         groupToUpdate.GroupManagerId = g_group.GroupManagerId;
-                    if(g_group.GroupName != null)
+                    if (g_group.GroupName != null)
                         groupToUpdate.GroupName = g_group.GroupName;
                     groupToUpdate.GroupPicture = g_group.GroupPicture;
                     groupToUpdate.Description = g_group.Description;
@@ -54,24 +55,25 @@ namespace WeSharper.DatabaseManagement.Implements
                     throw new Exception("User does not have perms to update");
                 }
 
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
                 return groupToUpdate;
             }
             else
             {
                 throw new Exception("No groups found with that manager");
             }
-            
+
         }
 
-        public Group DeleteGroup(string groupId, string groupManagerId)
+        public async Task<Group> DeleteGroup(string groupId, string groupManagerId)
         {
-            Group groupToRemove = _context.Groups.Where(g => (g.GroupId == groupId)  ).FirstOrDefault();
+            Group groupToRemove = await _context.Groups.Where(g => (g.GroupId == groupId)).FirstOrDefaultAsync();
             if (groupToRemove != null)
             {
-                if(groupToRemove.GroupManagerId == groupManagerId){
+                if (groupToRemove.GroupManagerId == groupManagerId)
+                {
                     groupToRemove.IsActivated = false;
-                    _context.SaveChanges();
+                    await _context.SaveChangesAsync();
                     return groupToRemove;
                 }
                 else
@@ -88,61 +90,61 @@ namespace WeSharper.DatabaseManagement.Implements
 
 
 
-        public GroupUser SendNewGroupUserRequest(GroupUser g_groupUser)
-        {   
-            g_groupUser.User = _context.Users.FirstOrDefault(u => (u.Id == g_groupUser.UserId));
-            g_groupUser.Group = _context.Groups.FirstOrDefault(g => (g.GroupId == g_groupUser.GroupId));
-            _context.GroupUsers.Add(g_groupUser);
-            _context.SaveChanges();
+        public async Task<GroupUser> SendNewGroupUserRequest(GroupUser g_groupUser)
+        {
+            g_groupUser.User = await _context.Users.FirstOrDefaultAsync(u => (u.Id == g_groupUser.UserId));
+            g_groupUser.Group = await _context.Groups.FirstOrDefaultAsync(g => (g.GroupId == g_groupUser.GroupId));
+            await _context.GroupUsers.AddAsync(g_groupUser);
+            await _context.SaveChangesAsync();
             return g_groupUser;
         }
-        
 
-        public List<GroupUser> GetAllGroupUsers()
+
+        public async Task<List<GroupUser>> GetAllGroupUsers()
         {
-            return _context.GroupUsers.ToList();
+            return await _context.GroupUsers.ToListAsync();
         }
-        public List<GroupUser> GetGroupApprovedUsersInGroup(string groupId)
-        { 
-            return _context.GroupUsers.Where(g => (g.GroupId == groupId) && (g.IsApproved == true ) && (g.IsBanned == false)).ToList();
+        public async Task<List<GroupUser>> GetGroupApprovedUsersInGroup(string groupId)
+        {
+            return await _context.GroupUsers.Where(g => (g.GroupId == groupId) && (g.IsApproved == true) && (g.IsBanned == false)).ToListAsync();
         }
 
-        public GroupUser UpdateGroupUser(GroupUser g_groupUser)
+        public async Task<GroupUser> UpdateGroupUser(GroupUser g_groupUser)
         {
             try
             {
-                GroupUser groupUserToUpdate= _context.GroupUsers.FirstOrDefault(g => (g.UserId == g_groupUser.UserId) && (g.GroupId == g_groupUser.GroupId) );
+                GroupUser groupUserToUpdate = await _context.GroupUsers.FirstOrDefaultAsync(g => (g.UserId == g_groupUser.UserId) && (g.GroupId == g_groupUser.GroupId));
 
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
                 return groupUserToUpdate;
             }
-            catch(System.Exception exe)
+            catch (System.Exception exe)
             {
                 throw new Exception("User could not be found in the group");
-            }  
+            }
         }
-        public GroupUser BanGroupUser(GroupUser g_groupUser)
+        public async Task<GroupUser> BanGroupUser(GroupUser g_groupUser)
         {
-            GroupUser groupUser = _context.GroupUsers.FirstOrDefault(g => (g.UserId == g_groupUser.UserId) && (g.GroupId == g_groupUser.GroupId));
+            GroupUser groupUser = await _context.GroupUsers.FirstOrDefaultAsync(g => (g.UserId == g_groupUser.UserId) && (g.GroupId == g_groupUser.GroupId));
             groupUser.IsBanned = true;
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return groupUser;
         }
-        public GroupUser UnbanGroupUser(GroupUser g_groupUser)
+        public async Task<GroupUser> UnbanGroupUser(GroupUser g_groupUser)
         {
-            GroupUser groupUser = _context.GroupUsers.FirstOrDefault(g => (g.UserId == g_groupUser.UserId) && (g.GroupId == g_groupUser.GroupId));
+            GroupUser groupUser = await _context.GroupUsers.FirstOrDefaultAsync(g => (g.UserId == g_groupUser.UserId) && (g.GroupId == g_groupUser.GroupId));
             groupUser.IsBanned = false;
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return groupUser;
         }
-        public GroupUser DeleteGroupUser(GroupUser g_groupUser)
+        public async Task<GroupUser> DeleteGroupUser(GroupUser g_groupUser)
         {
-            GroupUser groupUserToRemove = _context.GroupUsers.FirstOrDefault(g => (g.UserId == g_groupUser.UserId) && (g.GroupId == g_groupUser.GroupId));
+            GroupUser groupUserToRemove = await _context.GroupUsers.FirstOrDefaultAsync(g => (g.UserId == g_groupUser.UserId) && (g.GroupId == g_groupUser.GroupId));
             Console.WriteLine("crymaru");
-            _context.Remove(groupUserToRemove); 
+            _context.Remove(groupUserToRemove);
             return groupUserToRemove;
-        } 
+        }
 
-        
+
     }
 }

@@ -13,39 +13,39 @@ namespace WeSharper.DatabaseManagement.Implements
             _context = context;
         }
 
-        public Profile AddNewProfile(Profile p_profile)
+        public async Task<Profile> AddNewProfile(Profile p_profile)
         {
             p_profile.CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"));
-            _context.Profiles.Add(p_profile);
-            _context.SaveChanges();
+            await _context.Profiles.AddAsync(p_profile);
+            await _context.SaveChangesAsync();
 
             return p_profile;
         }
 
-        public List<Profile> GetAllProfiles()
+        public async Task<List<Profile>> GetAllProfiles()
         {
-            return _context.Profiles.ToList();
+            return await _context.Profiles.ToListAsync();
         }
 
-        public ApplicationUser GetUserByUserID(string p_userID)
+        public async Task<ApplicationUser> GetUserByUserID(string p_userID)
         {
-            return _context.Users.Find(p_userID);
+            return await _context.Users.FindAsync(p_userID);
         }
 
-        public ApplicationUser GetUserByUserName(string p_username)
+        public async Task<ApplicationUser> GetUserByUserName(string p_username)
         {
-            return _context.Users.SingleOrDefault(p => p.UserName.Equals(p_username));
+            return await _context.Users.SingleOrDefaultAsync(p => p.UserName.Equals(p_username));
         }
 
-        public Profile UpdateProfile(Profile p_profile)
+        public async Task<Profile> UpdateProfile(Profile p_profile)
         {
-            Profile profToUpdate = _context.Profiles.FirstOrDefault(p => p.UserId == p_profile.UserId);
+            Profile profToUpdate = await _context.Profiles.FirstOrDefaultAsync(p => p.UserId == p_profile.UserId);
             if (profToUpdate != null)
             {
                 profToUpdate.FirstName = p_profile.FirstName;
                 profToUpdate.LastName = p_profile.LastName;
                 profToUpdate.Bio = p_profile.Bio;
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
             else
             {
@@ -54,13 +54,13 @@ namespace WeSharper.DatabaseManagement.Implements
             return p_profile;
         }
 
-        public Profile UpdateProfilePicture(Profile p_profile)
+        public async Task<Profile> UpdateProfilePicture(Profile p_profile)
         {
-            Profile _profile = _context.Profiles.FirstOrDefault(p => p.UserId == p_profile.UserId);
+            Profile _profile = await _context.Profiles.FirstOrDefaultAsync(p => p.UserId == p_profile.UserId);
             if (_profile != null)
             {
                 _profile.ProfilePictureUrl = p_profile.ProfilePictureUrl;
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
             else
             {

@@ -6,13 +6,14 @@ using WeSharper.Models;
 using WeSharper.BusinessesManagement.Interfaces;
 using WeSharper.DatabaseManagement.Interfaces;
 using WeSharper.BusinessesManagement.Implements;
+using System.Threading.Tasks;
 
 namespace WeSharper.Test;
 
 public class GroupPostManagementBLTest
 {
     [Fact]
-    public void Should_Get_All_Group_Posts_By_GroupID()
+    public async Task Should_Get_All_Group_Posts_By_GroupID()
     {
         //Arrange
         GroupPost _groupPost = new GroupPost()
@@ -30,18 +31,18 @@ public class GroupPostManagementBLTest
         _expectedListGroupPost.Add(_groupPost);
 
         Mock<IGroupPostManagementDL> _mockRepo = new Mock<IGroupPostManagementDL>();
-        _mockRepo.Setup(repo => repo.GetGroupPosts()).Returns(_expectedListGroupPost);
+        _mockRepo.Setup(repo => repo.GetGroupPosts()).ReturnsAsync(_expectedListGroupPost);
         IGroupPostManagementBL _groupPostBL = new GroupPostManagementBL(_mockRepo.Object);
 
         //Act
-        List<GroupPost> _actualListGroupPost = _groupPostBL.GetGroupPostsByGroupID(_groupPost.GroupId);
+        List<GroupPost> _actualListGroupPost = await _groupPostBL.GetGroupPostsByGroupID(_groupPost.GroupId);
 
         //Assert
         Assert.Equal(_expectedListGroupPost.Count, _actualListGroupPost.Count);
     }
 
     [Fact]
-    public void Should_Get_Group_Posts_By_GroupPostID()
+    public async Task Should_Get_Group_Posts_By_GroupPostID()
     {
         //Arrange
         GroupPost _expectedGroupPost = new GroupPost()
@@ -58,18 +59,18 @@ public class GroupPostManagementBLTest
         _listGroupPost.Add(_expectedGroupPost);
 
         Mock<IGroupPostManagementDL> _mockRepo = new Mock<IGroupPostManagementDL>();
-        _mockRepo.Setup(repo => repo.GetGroupPosts()).Returns(_listGroupPost);
+        _mockRepo.Setup(repo => repo.GetGroupPosts()).ReturnsAsync(_listGroupPost);
         IGroupPostManagementBL _groupPostBL = new GroupPostManagementBL(_mockRepo.Object);
 
         //Act
-        GroupPost _actualGroupPost = _groupPostBL.GetAllGroupPostByGroupPostID(_expectedGroupPost.GroupPostId);
+        GroupPost _actualGroupPost = await _groupPostBL.GetAllGroupPostByGroupPostID(_expectedGroupPost.GroupPostId);
 
         //Assert
         Assert.Same(_expectedGroupPost, _actualGroupPost);
     }
 
     [Fact]
-    public void Should_Post_New_Group_Post_To_Group()
+    public async Task Should_Post_New_Group_Post_To_Group()
     {
         //Arrange
         GroupPost _expectedGroupPost = new GroupPost()
@@ -84,18 +85,18 @@ public class GroupPostManagementBLTest
         };
 
         Mock<IGroupPostManagementDL> _mockRepo = new Mock<IGroupPostManagementDL>();
-        _mockRepo.Setup(repo => repo.PostNewPostToGroup(_expectedGroupPost)).Returns(_expectedGroupPost);
+        _mockRepo.Setup(repo => repo.PostNewPostToGroup(_expectedGroupPost)).ReturnsAsync(_expectedGroupPost);
         IGroupPostManagementBL _groupPostBL = new GroupPostManagementBL(_mockRepo.Object);
 
         //Act
-        GroupPost _actualGroupPost = _groupPostBL.PostNewPostToGroup(_expectedGroupPost);
+        GroupPost _actualGroupPost = await _groupPostBL.PostNewPostToGroup(_expectedGroupPost);
 
         //Assert
         Assert.Same(_expectedGroupPost, _actualGroupPost);
     }
 
     [Fact]
-    public void Should_Update_Group_Post()
+    public async Task Should_Update_Group_Post()
     {
         //Arrange
         GroupPost _expectedGroupPost = new GroupPost()
@@ -111,18 +112,18 @@ public class GroupPostManagementBLTest
         };
 
         Mock<IGroupPostManagementDL> _mockRepo = new Mock<IGroupPostManagementDL>();
-        _mockRepo.Setup(repo => repo.UpdateGroupPost(_expectedGroupPost)).Returns(_expectedGroupPost);
+        _mockRepo.Setup(repo => repo.UpdateGroupPost(_expectedGroupPost)).ReturnsAsync(_expectedGroupPost);
         IGroupPostManagementBL _groupPostBL = new GroupPostManagementBL(_mockRepo.Object);
 
         //Act
-        GroupPost _actualGroupPost = _groupPostBL.UpdateGroupPost(_expectedGroupPost);
+        GroupPost _actualGroupPost = await _groupPostBL.UpdateGroupPost(_expectedGroupPost);
 
         //Assert
         Assert.Same(_expectedGroupPost, _actualGroupPost);
     }
 
     [Fact]
-    public void Should_Delete_Group_Post()
+    public async Task Should_Delete_Group_Post()
     {
         //Arrange
         GroupPost _expectedGroupPost = new GroupPost()
@@ -137,18 +138,18 @@ public class GroupPostManagementBLTest
         };
 
         Mock<IGroupPostManagementDL> _mockRepo = new Mock<IGroupPostManagementDL>();
-        _mockRepo.Setup(repo => repo.DeleteGroupPost(_expectedGroupPost)).Returns(_expectedGroupPost);
+        _mockRepo.Setup(repo => repo.DeleteGroupPost(_expectedGroupPost)).ReturnsAsync(_expectedGroupPost);
         IGroupPostManagementBL _groupPostBL = new GroupPostManagementBL(_mockRepo.Object);
 
         //Act
-        GroupPost _actualGroupPost = _groupPostBL.DeleteGroupPost(_expectedGroupPost);
+        GroupPost _actualGroupPost = await _groupPostBL.DeleteGroupPost(_expectedGroupPost);
 
         //Assert
         Assert.Same(_expectedGroupPost, _actualGroupPost);
     }
 
     [Fact]
-    public void Should_Add_New_Group_Post_Comment()
+    public async Task Should_Add_New_Group_Post_Comment()
     {
         //Arrange
         GroupPostComment _expectedGroupPostComment = new GroupPostComment()
@@ -166,18 +167,18 @@ public class GroupPostManagementBLTest
         };
 
         Mock<IGroupPostManagementDL> _mockRepo = new Mock<IGroupPostManagementDL>();
-        _mockRepo.Setup(repo => repo.AddNewGroupPostComment(_expectedGroupPostComment)).Returns(_expectedGroupPostComment);
+        _mockRepo.Setup(repo => repo.AddNewGroupPostComment(_expectedGroupPostComment)).ReturnsAsync(_expectedGroupPostComment);
         IGroupPostManagementBL _groupPostBL = new GroupPostManagementBL(_mockRepo.Object);
 
         //Act
-        GroupPostComment _actualGroupPost = _groupPostBL.AddNewGroupPostComment(_expectedGroupPostComment);
+        GroupPostComment _actualGroupPost = await _groupPostBL.AddNewGroupPostComment(_expectedGroupPostComment);
 
         //Assert
         Assert.Same(_expectedGroupPostComment, _actualGroupPost);
     }
 
     [Fact]
-    public void Should_Update_Group_Post_Comment()
+    public async Task Should_Update_Group_Post_Comment()
     {
         //Arrange
         GroupPostComment _expectedGroupPostComment = new GroupPostComment()
@@ -192,18 +193,18 @@ public class GroupPostManagementBLTest
         };
 
         Mock<IGroupPostManagementDL> _mockRepo = new Mock<IGroupPostManagementDL>();
-        _mockRepo.Setup(repo => repo.UpdateGroupPostComment(_expectedGroupPostComment)).Returns(_expectedGroupPostComment);
+        _mockRepo.Setup(repo => repo.UpdateGroupPostComment(_expectedGroupPostComment)).ReturnsAsync(_expectedGroupPostComment);
         IGroupPostManagementBL _groupPostBL = new GroupPostManagementBL(_mockRepo.Object);
 
         //Act
-        GroupPostComment _actualGroupPost = _groupPostBL.UpdateGroupPostComment(_expectedGroupPostComment);
+        GroupPostComment _actualGroupPost = await _groupPostBL.UpdateGroupPostComment(_expectedGroupPostComment);
 
         //Assert
         Assert.Same(_expectedGroupPostComment, _actualGroupPost);
     }
 
     [Fact]
-    public void Should_Delete_Group_Post_Comment()
+    public async Task Should_Delete_Group_Post_Comment()
     {
         //Arrange
         GroupPostComment _expectedGroupPostComment = new GroupPostComment()
@@ -218,18 +219,18 @@ public class GroupPostManagementBLTest
         };
 
         Mock<IGroupPostManagementDL> _mockRepo = new Mock<IGroupPostManagementDL>();
-        _mockRepo.Setup(repo => repo.DeleteGroupPostComment(_expectedGroupPostComment)).Returns(_expectedGroupPostComment);
+        _mockRepo.Setup(repo => repo.DeleteGroupPostComment(_expectedGroupPostComment)).ReturnsAsync(_expectedGroupPostComment);
         IGroupPostManagementBL _groupPostBL = new GroupPostManagementBL(_mockRepo.Object);
 
         //Act
-        GroupPostComment _actualGroupPost = _groupPostBL.DeleteGroupPostComment(_expectedGroupPostComment);
+        GroupPostComment _actualGroupPost = await _groupPostBL.DeleteGroupPostComment(_expectedGroupPostComment);
 
         //Assert
         Assert.Same(_expectedGroupPostComment, _actualGroupPost);
     }
 
     [Fact]
-    public void Should_React_To_Group_Post()
+    public async Task Should_React_To_Group_Post()
     {
         //Arrange
         GroupPostReact _expectedGroupPostReact = new GroupPostReact()
@@ -246,18 +247,18 @@ public class GroupPostManagementBLTest
         };
 
         Mock<IGroupPostManagementDL> _mockRepo = new Mock<IGroupPostManagementDL>();
-        _mockRepo.Setup(repo => repo.ReactGroupPost(_expectedGroupPostReact)).Returns(_expectedGroupPostReact);
+        _mockRepo.Setup(repo => repo.ReactGroupPost(_expectedGroupPostReact)).ReturnsAsync(_expectedGroupPostReact);
         IGroupPostManagementBL _groupPostBL = new GroupPostManagementBL(_mockRepo.Object);
 
         //Act
-        GroupPostReact _actualGroupPost = _groupPostBL.ReactGroupPost(_expectedGroupPostReact);
+        GroupPostReact _actualGroupPost = await _groupPostBL.ReactGroupPost(_expectedGroupPostReact);
 
         //Assert
         Assert.Same(_expectedGroupPostReact, _actualGroupPost);
     }
 
     [Fact]
-    public void Should_React_To_Group_Post_Comment()
+    public async Task Should_React_To_Group_Post_Comment()
     {
         //Arrange
         GroupPostCommentReact _expectedGroupPostCommentReact = new GroupPostCommentReact()
@@ -274,11 +275,11 @@ public class GroupPostManagementBLTest
         };
 
         Mock<IGroupPostManagementDL> _mockRepo = new Mock<IGroupPostManagementDL>();
-        _mockRepo.Setup(repo => repo.ReactGroupPostComment(_expectedGroupPostCommentReact)).Returns(_expectedGroupPostCommentReact);
+        _mockRepo.Setup(repo => repo.ReactGroupPostComment(_expectedGroupPostCommentReact)).ReturnsAsync(_expectedGroupPostCommentReact);
         IGroupPostManagementBL _groupPostBL = new GroupPostManagementBL(_mockRepo.Object);
 
         //Act
-        GroupPostCommentReact _actualGroupPostComment = _groupPostBL.ReactGroupPostComment(_expectedGroupPostCommentReact);
+        GroupPostCommentReact _actualGroupPostComment = await _groupPostBL.ReactGroupPostComment(_expectedGroupPostCommentReact);
 
         //Assert
         Assert.Same(_expectedGroupPostCommentReact, _actualGroupPostComment);
