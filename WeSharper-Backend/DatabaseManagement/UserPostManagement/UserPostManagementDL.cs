@@ -123,6 +123,7 @@ namespace WeSharper.DatabaseManagement.Implements
                                                         ReactId = pr.ReactId
                                                     }).ToList()
                                 })
+                                .Where(p => p.IsDeleted.Equals(false))
                                 .ToList();
 
             return _result;

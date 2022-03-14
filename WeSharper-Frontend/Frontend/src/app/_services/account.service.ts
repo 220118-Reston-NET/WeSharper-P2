@@ -77,6 +77,10 @@ export class AccountService {
     return this.http.get<Post>(this.baseUrl + 'UserPost/UserPosts');
   }
 
+  getFeeds() : Observable<any> {
+    return this.http.get<any>(this.baseUrl + 'UserPost/Feeds');
+  }
+
   postNewPost(newPost: Post) {
     return this.http.post<Post>(this.baseUrl + 'UserPost/UserPosts', newPost);
   }

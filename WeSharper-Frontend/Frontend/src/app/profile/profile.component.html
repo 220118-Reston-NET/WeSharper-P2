@@ -48,6 +48,9 @@
             </div>
         </form>
 
+        <div *ngIf="!userPosts">
+            <h1 style="text-align: center;">No Posts Available!</h1>
+        </div>
         <div *ngFor="let post of userPosts">
             <div class="text-box" style="margin-bottom: 1rem;">
                 <div class="row">

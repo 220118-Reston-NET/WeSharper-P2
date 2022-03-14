@@ -1,4 +1,4 @@
-<div class="row">
+<!-- <div class="row">
     <div class="column1">
         <app-profile-user></app-profile-user>
     </div>
@@ -6,117 +6,21 @@
     <div class="column2">
         <app-new-post></app-new-post>
     </div>
+</div> -->
+
+<div *ngIf="!feedPosts">
+    <h1 style="text-align: center;">No Posts Available!</h1>
 </div>
-
-<div class=
-"contianer feed-box">
-    <div class="container">
-        <h3>@Tuan</h3>
-        <div class="container">
-            <div class="container text-box">
-                <span>03/03/2022</span>
-                <div class="container text-title">
-                    <div class="container">
-                        <p>hello world</p>
-                    </div>
-                </div>
-                <div class="container">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Et, consequatur alias tempora accusantium natus ab magnam, autem, commodi provident distinctio pariatur nemo voluptatibus atque temporibus fugiat dolorem tenetur soluta deleniti?</p>
-                    <img src="..." class="rounded mx-auto d-block" alt="...">
-                </div>
-            </div>
-            <fa-icon [icon]="faHeart"></fa-icon><span> 2002 likes</span>
-            <br><span>We#er comments...</span>
-            <br><span>We#er comments...</span>
-            <br><span>We#er comments...</span>
+<div *ngFor="let post of feedPosts">
+    <div class="text-box" style="margin-bottom: 1rem;">
+        <div class="row">
+            <span>Posted at: {{post.createdAt}}</span>
         </div>
-    
+        <div class="content">
+            <h4>{{post.postContent}}</h4>
+            <div *ngIf="post.postPhoto">
+                <img [src]="post.postPhoto" style="width: 100%;"/>
+            </div>
+        </div>
     </div>
-    <div class="container">
-        <h3>@Jasmine</h3>
-        <div class="container">
-            <div class="container text-box">
-                <span>03/03/2022</span>
-                <div class="container text-title">
-                    <div class="container">
-                        <p>hello world</p>
-                    </div>
-                </div>
-                <div class="container">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Et, consequatur alias tempora accusantium natus ab magnam, autem, commodi provident distinctio pariatur nemo voluptatibus atque temporibus fugiat dolorem tenetur soluta deleniti?</p>
-                    <img src="..." class="rounded mx-auto d-block" alt="...">
-                </div>
-            </div>
-            <fa-icon [icon]="faHeart"></fa-icon><span> 2002 likes</span>
-            <br><span>We#er comments...</span>
-            <br><span>We#er comments...</span>
-            <br><span>We#er comments...</span>
-        </div>
-    
-    </div>
-    <div class="container">
-        <h3>@Nabintou</h3>
-        <div class="container">
-            <div class="container text-box">
-                <span>03/03/2022</span>
-                <div class="container text-title">
-                    <div class="container">
-                        <p>hello world</p>
-                    </div>
-                </div>
-                <div class="container">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Et, consequatur alias tempora accusantium natus ab magnam, autem, commodi provident distinctio pariatur nemo voluptatibus atque temporibus fugiat dolorem tenetur soluta deleniti?</p>
-                    <img src="..." class="rounded mx-auto d-block" alt="...">
-                </div>
-            </div>
-            <fa-icon [icon]="faHeart"></fa-icon><span> 2002 likes</span>
-            <br><span>We#er comments...</span>
-            <br><span>We#er comments...</span>
-            <br><span>We#er comments...</span>
-        </div>
-    
-    </div>
-    <div class="container">
-        <h3>@Mattew</h3>
-        <div class="container">
-            <div class="container text-box">
-                <span>03/03/2022</span>
-                <div class="container text-title">
-                    <div class="container">
-                        <p>hello world</p>
-                    </div>
-                </div>
-                <div class="container">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Et, consequatur alias tempora accusantium natus ab magnam, autem, commodi provident distinctio pariatur nemo voluptatibus atque temporibus fugiat dolorem tenetur soluta deleniti?</p>
-                    <img src="..." class="rounded mx-auto d-block" alt="...">
-                </div>
-            </div>
-            <fa-icon [icon]="faHeart"></fa-icon><span> 2002 likes</span>
-            <br><span>We#er comments...</span>
-            <br><span>We#er comments...</span>
-            <br><span>We#er comments...</span>
-        </div>
-    <div class="container">
-        <h3>@Hyunsoo</h3>
-        <div class="container">
-            <div class="container text-box">
-                <span>03/03/2022</span>
-                <div class="container text-title">
-                    <div class="container">
-                        <p>hello world</p>
-                    </div>
-                </div>
-                <div class="container">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Et, consequatur alias tempora accusantium natus ab magnam, autem, commodi provident distinctio pariatur nemo voluptatibus atque temporibus fugiat dolorem tenetur soluta deleniti?</p>
-                    <img src="..." class="rounded mx-auto d-block" alt="...">
-                </div>
-            </div>
-            <fa-icon [icon]="faHeart"></fa-icon><span> 2002 likes</span>
-            <br><span>We#er comments...</span>
-            <br><span>We#er comments...</span>
-            <br><span>We#er comments...</span>
-        </div>
-    
-    </div>
-
 </div>
