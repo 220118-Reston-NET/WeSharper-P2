@@ -3,9 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: true,
-  apiUrl: 'https://wesharper.azurewebsites.net/api/',
-  hubUrl: 'https://wesharper.azurewebsites.net/hubs/'
+  production: false,
+  apiUrl: 'https://localhost:5001/api/',
+  hubUrl: 'https://localhost:5001/hubs/'
   // apiUrl: 'https://localhost:7133/api/'
 
 };

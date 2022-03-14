@@ -14,8 +14,10 @@ import { SpinnerService } from './spinner.service';
   providedIn: 'root',
 })
 export class MessageService {
-  ApiURL = 'https://wesharper.azurewebsites.net/api/';
-  HubURL = 'https://wesharper.azurewebsites.net/hubs/';
+  // ApiURL = 'https://wesharper.azurewebsites.net/api/';
+  ApiURL = environment.apiUrl;
+  // HubURL = 'https://wesharper.azurewebsites.net/hubs/';
+  HubURL = environment.hubUrl;
   baseUrl = environment.apiUrl;
   hubUrl = environment.hubUrl;
   private hubConnection: HubConnection;

@@ -11,7 +11,8 @@ import { AccountService } from '../_services/account.service';
   styleUrls: ['./setting.component.css']
 })
 export class SettingComponent implements OnInit {
-  ApiURL = 'https://wesharper.azurewebsites.net/api/';
+  // ApiURL = 'https://wesharper.azurewebsites.net/api/';
+  ApiURL = environment.apiUrl;
   baseUrl = environment.apiUrl;
   progress: number;
   message: string;

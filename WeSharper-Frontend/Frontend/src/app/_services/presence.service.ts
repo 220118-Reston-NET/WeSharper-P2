@@ -11,7 +11,8 @@ import { User } from '../_models/user';
   providedIn: 'root'
 })
 export class PresenceService {
-  HubURL = 'https://wesharper.azurewebsites.net/hubs/';
+  // HubURL = 'https://wesharper.azurewebsites.net/hubs/';
+  HubURL = environment.hubUrl;
   hubUrl = environment.hubUrl;
   private hubConnection: HubConnection;
   private onlineUsersSource = new BehaviorSubject<string[]>([]);
