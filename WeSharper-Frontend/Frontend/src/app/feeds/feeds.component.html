@@ -13,8 +13,9 @@
 </div>
 <div *ngFor="let post of feedPosts">
     <div class="text-box" style="margin-bottom: 1rem;">
-        <div class="row">
-            <span>Posted at: {{post.createdAt}}</span>
+        <div class="float:left;">
+            <span style="color:blue; font-weight: bold;">@{{post.user.userName}} </span>
+            <span>posted at: {{post.createdAt}}</span>
         </div>
         <div class="content">
             <h4>{{post.postContent}}</h4>

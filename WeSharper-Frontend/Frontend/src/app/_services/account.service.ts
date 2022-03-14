@@ -14,6 +14,7 @@ import { PresenceService } from './presence.service';
 })
 
 export class AccountService {
+  ApiURL = 'https://wesharper.azurewebsites.net/api/';
   baseUrl = environment.apiUrl;
   private currentUserSource = new ReplaySubject<User>(1);
   currentUser = this.currentUserSource.asObservable();
@@ -21,7 +22,7 @@ export class AccountService {
   constructor(private http: HttpClient, private router: Router, private presence: PresenceService) { }
 
   login(model: any) {
-    return this.http.post(this.baseUrl + 'Authentication/Login', model, {responseType: 'json'}).pipe(
+    return this.http.post(this.ApiURL + 'Authentication/Login', model, {responseType: 'json'}).pipe(
       map((response: User) => {
         const user = response;
         if (user) {
@@ -35,7 +36,7 @@ export class AccountService {
   }
 
   register(model: any) {
-    return this.http.post(this.baseUrl + 'Authentication/Register', model, {responseType: 'json'}).pipe(
+    return this.http.post(this.ApiURL + 'Authentication/Register', model, {responseType: 'json'}).pipe(
       map((user: User) => {
         if (user) {
           localStorage.setItem('user', JSON.stringify(user));
