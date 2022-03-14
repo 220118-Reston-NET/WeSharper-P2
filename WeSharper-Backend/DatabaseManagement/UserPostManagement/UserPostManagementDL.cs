@@ -83,7 +83,7 @@ namespace WeSharper.DatabaseManagement.Implements
                                             Email = p.User.Email
                                         }
                                     })
-                                    .OrderBy(p => p.CreatedAt)
+                                    .OrderByDescending(p => p.CreatedAt)
                                     .ToList();
 
             return _result;
@@ -140,7 +140,7 @@ namespace WeSharper.DatabaseManagement.Implements
                                                     }).ToList()
                                 })
                                 .Where(p => p.IsDeleted.Equals(false))
-                                .OrderBy(p => p.CreatedAt)
+                                .OrderByDescending(p => p.CreatedAt)
                                 .ToList();
 
             return _result;

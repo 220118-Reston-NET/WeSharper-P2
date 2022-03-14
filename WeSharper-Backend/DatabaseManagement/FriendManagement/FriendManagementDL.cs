@@ -160,7 +160,7 @@ namespace WeSharper.DatabaseManagement.Implements
                                                     }).ToList()
                                 })
                                 .Where(p => p.UserId.Equals(p_friendID) && p.IsDeleted.Equals(false))
-                                .OrderBy(p => p.CreatedAt)
+                                .OrderByDescending(p => p.CreatedAt)
                                 .ToList();
 
             return _result;
