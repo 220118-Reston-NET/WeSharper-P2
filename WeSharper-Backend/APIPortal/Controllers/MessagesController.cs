@@ -44,6 +44,7 @@ namespace APIPortal.Controllers
             _unitOfWork = unitOfWork;
         }
 
+        [Authorize(Roles = "User")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MessageDTO>>> GetMessagesForUser([FromQuery] MessageParams messageParams)
         {
@@ -57,6 +58,7 @@ namespace APIPortal.Controllers
             return messages;
         }
 
+        [Authorize(Roles = "User")]
         [HttpDelete(RouteConfigs.DeleteMessage)]
         public async Task<ActionResult> DeleteMessage(string p_messageId)
         {
