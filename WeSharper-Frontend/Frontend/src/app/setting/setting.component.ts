@@ -11,6 +11,7 @@ import { AccountService } from '../_services/account.service';
   styleUrls: ['./setting.component.css']
 })
 export class SettingComponent implements OnInit {
+  ApiURL = 'https://wesharper.azurewebsites.net/api/';
   baseUrl = environment.apiUrl;
   progress: number;
   message: string;
@@ -42,7 +43,7 @@ export class SettingComponent implements OnInit {
     const formData = new FormData();
     formData.append('file', fileToUpload, fileToUpload.name);
 
-    this.http.post(this.baseUrl + 'User/ProfilePicture', formData, {reportProgress: true, observe: 'events'})
+    this.http.post(this.ApiURL + 'User/ProfilePicture', formData, {reportProgress: true, observe: 'events'})
       .subscribe(event => {
         if (event.type === HttpEventType.UploadProgress) {
           this.progress = Math.round(100 * event.loaded / event.total);
