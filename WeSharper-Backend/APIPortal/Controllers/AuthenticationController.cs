@@ -75,7 +75,7 @@ namespace WeSharper.APIPortal.Controllers
             {
                 var userFromDB = await _userManager.FindByNameAsync(_identity.UserName);
 
-                _profileBL.AddNewProfile(new Profile()
+                await _profileBL.AddNewProfile(new Profile()
                 {
                     ProfileId = Guid.NewGuid().ToString(),
                     UserId = userFromDB.Id,
@@ -88,7 +88,14 @@ namespace WeSharper.APIPortal.Controllers
 
                 Log.Warning("Route: " + RouteConfigs.Register);
                 Log.Information("Register Sucees " + _identity.UserName);
-                return Ok(new { Result = "Register Success!" });
+                var roles = await _userManager.GetRolesAsync(userFromDB);
+                return Ok(new
+                {
+                    Result = result,
+                    Username = userFromDB.UserName,
+                    Email = userFromDB.Email,
+                    Token = _accessTokenManager.GenerateToken(userFromDB, roles)
+                });
             }
             else
             {

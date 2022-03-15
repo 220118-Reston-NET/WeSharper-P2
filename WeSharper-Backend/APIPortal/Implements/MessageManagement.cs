@@ -30,6 +30,8 @@ namespace WeSharper.APIPortal.Implements
 
         public void AddMessage(Message p_message)
         {
+            p_message.MessageId = Guid.NewGuid().ToString();
+            p_message.MessageSent = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"));
             _context.Messages.Add(p_message);
         }
 

@@ -70,10 +70,11 @@ namespace WeSharper.APIPortal.Hubs
             {
                 SenderUser = sender,
                 RecipientUser = recipient,
-                SenderUserId = sender.UserName,
-                RecipientUserId = recipient.UserName,
+                SenderUsername = sender.UserName,
+                RecipientUsername = recipient.UserName,
                 Content = createMessage.Content
             };
+            Console.WriteLine(message.RecipientUserId);
 
             var groupName = GetGroupName(sender.UserName, recipient.UserName);
 
@@ -81,7 +82,7 @@ namespace WeSharper.APIPortal.Hubs
 
             if (group.MessageConnections.Any(x => x.Username == recipient.UserName))
             {
-                message.DateRead = DateTime.UtcNow;
+                message.DateRead = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"));
             }
             else
             {
@@ -89,7 +90,7 @@ namespace WeSharper.APIPortal.Hubs
                 if (connections != null)
                 {
                     await _presenceHub.Clients.Clients(connections).SendAsync("NewMessageReceived",
-                        new { username = sender.UserName, knownAs = sender.UserName });
+                        new { username = sender.UserName, userId = sender.Id });
                 }
             }
 

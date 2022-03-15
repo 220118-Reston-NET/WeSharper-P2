@@ -313,9 +313,9 @@ namespace WeSharper.Models
 
                 entity.Property(e => e.Content).IsUnicode(false);
 
-                entity.Property(e => e.DateRead).HasColumnType("smalldatetime");
+                entity.Property(e => e.DateRead).HasColumnType("datetime2");
 
-                entity.Property(e => e.MessageSent).HasColumnType("smalldatetime");
+                entity.Property(e => e.MessageSent).HasColumnType("datetime2");
 
                 entity.Property(e => e.RecipientUserId)
                     .HasMaxLength(450)
