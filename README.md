@@ -1,7 +1,7 @@
 # We#er(WeSharper) - Project 2 - Revature 
 
 # Introduction
-The social media app is a web application for connecting and communicating with friends. When users register for the app, users will specify their interests and hobbies. The app will be recommended to users based on their interests where they can connect with others of similar interests. You can create a group where you can invite your friend to join. You also can have the real time chat with your friends and share some good news with your friends and family members.
+WeSharper is a web based social media application for connecting and communicating with your friends. The app will recommend new friends for you to add and connect with. Users are able to post text with image updates to a feed viewable to all friends. You also can have the real time chat and share some good news with your friends!
 
 # Table of Contents
 - [We#er(WeSharper) - Project 2 - Revature](#weerwesharper---project-2---revature)
@@ -13,7 +13,14 @@ The social media app is a web application for connecting and communicating with 
   - [Frontend](#frontend)
   - [Others](#others)
 - [Getting started](#getting-started)
+  - [Register](#register)
+  - [Login](#login)
+  - [Edit Profile](#edit-profile)
+  - [Create a Post](#create-a-post)
+  - [Add friend](#add-friend)
+  - [RealTime Chat with friends](#realtime-chat-with-friends)
 - [Changelog](#changelog)
+  - [v1.0.0](#v100)
 - [Contributors](#contributors)
 - [Contributing & Issues](#contributing--issues)
 - [License](#license)
@@ -26,12 +33,13 @@ The social media app is a web application for connecting and communicating with 
 - Post New Post(Text, Image, Text & Image)
 - Delete Your Post
 - See Your Posts
-- See List of Friends(Friends, Requested Friends, Friend Requests, Recommened)
+- See List of Friends(Friends, Requested Friends, Friend Requests, Recommended)
 - Accept/Remove/Cancel/Add Friend
 - See Your Friend Profile
 - See Your Friend Posts
 - See New Feeds(Friends's Posts)
-- Realtime chat With your Friend
+- Realtime message chat With your friends
+- Receive notification when you receive a new message
 
 # Technologies
 ## Backend
@@ -58,6 +66,7 @@ The social media app is a web application for connecting and communicating with 
 - [HTML](https://www.w3schools.com/html/)
 - [CSS](https://www.w3schools.com/css/)
 - [Bootstrap](https://getbootstrap.com)
+- [FontAwesome](https://fontawesome.com/)
 - [JSON](https://www.json.org/json-en.html)
   
 ## Others
@@ -70,10 +79,36 @@ The social media app is a web application for connecting and communicating with 
 - [Moqups](https://moqups.com)
 
 # Getting started
+## Register
+> To join our application you will first register by filling out the registration form.
+![screenshot](assests/RegisterPage.png)
 
+## Login
+> Input your username and password to login.
+![screenshot](assests/LoginPage.png) 
+
+## Edit Profile
+> Go to "Settings" to edit your profile and add a profile photo.
+![screenshot](assests/EditProfile.png)
+
+## Create a Post
+> Go to "Profile" to create a new post with text and image.
+![screenshot](assests/EditProfile.png)
+
+## Add friend
+> Go to "Friends" to add/accept/delete your friendslist as well as view your friend's profile.
+![screenshot](assests/AddFriend.png)
+
+## RealTime Chat with friends
+> Go to your friend's profile and click on "Messages" to chat with your friend in realtime!
+![screenshot](assests/Chat.png)
+<h2>
+
+  To experience our application for yourself, along with more features not listed above, please visit: [https://wesharperweb.azurewebsites.net/](https://wesharperweb.azurewebsites.net/)
 
 # Changelog
-N/A
+## v1.0.0
+- Release
 
 # Contributors
 - [Jasmine Tseng](https://github.com/JasmineTseng7)
@@ -83,7 +118,7 @@ N/A
 - [Tuan Anh Nguyen](https://github.com/kirasn)
   
 # Contributing & Issues
-We made this project for the course, so if you want to have more features or have issue with the installation, please contact us by [opening an issue](https://github.com/220118-Reston-NET/WeSharper-P2/issues) and tell us what you got. 
+We made this project for the course, so if you would like to suggest more features or have issue with the installation, please contact us by [opening an issue](https://github.com/220118-Reston-NET/WeSharper-P2/issues) to leave your feedback!
 
 We appreciate every contributions or ideas to make the app better.
 
