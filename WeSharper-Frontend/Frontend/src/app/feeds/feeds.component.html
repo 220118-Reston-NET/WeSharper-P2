@@ -19,7 +19,7 @@
         </div>
         <div class="content ">
             <h4>{{post.postContent}}</h4>
-            <div *ngIf="post.postPhoto">
+            <div *ngIf="post.postPhoto" style="display: flex; justify-content: center">
                 <img [src]="post.postPhoto" style="width: 70%;"/>
             </div>
         </div>
