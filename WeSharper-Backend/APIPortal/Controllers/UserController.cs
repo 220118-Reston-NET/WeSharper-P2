@@ -88,7 +88,7 @@ namespace WeSharper.APIPortal.Controllers
                 };
                 await _profileBL.UpdateProfile(_updatedProfile);
                 Log.Information("Profile successfully updated for " + p_profile.FirstName + " " + p_profile.LastName);
-                return Ok("Profile Updated");
+                return Ok(new { Results = "Profile Updated" });
             }
             catch (System.Exception e)
             {
