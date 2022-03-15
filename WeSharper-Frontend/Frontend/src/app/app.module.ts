@@ -27,6 +27,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { LoaderInterceptor } from './_interceptors/loader.interceptor';
 import { JwtInterceptor } from './_interceptors/jwt.interceptor';
 import { TabsModule } from 'ngx-bootstrap/tabs';
+import { SharedModule } from './_modules/shared.module';
 
 @NgModule({
   declarations: [
@@ -54,12 +55,9 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
     HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
-    FontAwesomeModule,
     ReactiveFormsModule,
-    ToastrModule.forRoot({
-      positionClass: "toast-bottom-right"
-    }),
-    TabsModule.forRoot(),
+    FontAwesomeModule,
+    SharedModule,
     NgxSpinnerModule
   ],
   providers: [

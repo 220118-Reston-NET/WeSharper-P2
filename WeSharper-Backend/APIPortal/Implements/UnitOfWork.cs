@@ -15,7 +15,7 @@ namespace WeSharper.APIPortal.Implements
             _mapper = mapper;
         }
 
-        public IMessageManagement MessageManagement => throw new NotImplementedException();
+        public IMessageManagement MessageManagement => new MessageManagement(_context, _mapper);
 
         public async Task<bool> Complete()
         {

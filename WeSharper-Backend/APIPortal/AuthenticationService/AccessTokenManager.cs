@@ -24,7 +24,8 @@ namespace WeSharper.APIPortal.AuthenticationService.Implements
         public string GenerateToken(ApplicationUser user, IList<string> roles)
         {
             var claims = new List<Claim> {
-                new Claim(JwtRegisteredClaimNames.GivenName, user.UserName),
+                new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName),
+                new Claim(JwtRegisteredClaimNames.NameId, user.Id),
                 new Claim(JwtRegisteredClaimNames.Email, user.Email)
             };
 

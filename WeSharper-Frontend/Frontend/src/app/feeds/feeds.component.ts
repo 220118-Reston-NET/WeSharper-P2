@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { faHeart } from '@fortawesome/free-regular-svg-icons';
 import { AccountService } from '../_services/account.service';
 
 @Component({
@@ -17,8 +16,4 @@ export class FeedsComponent implements OnInit {
       this.feedPosts = result;
     })
   }
-
-  faHeart = faHeart;
-
-
 }

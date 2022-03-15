@@ -9,6 +9,11 @@
     border-color: rgba(53, 51, 51, 0.479);
 }
 
+.is-online {
+  animation: fa-blink 1.5s linear infinite;
+  color: rgb(1, 189, 42);
+}
+
 .img_profil{
     width: 10rem;
     height: 10rem;

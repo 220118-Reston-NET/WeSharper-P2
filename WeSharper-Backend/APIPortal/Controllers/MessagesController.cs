@@ -39,7 +39,7 @@ namespace APIPortal.Controllers
 
             var token = _httpContextAccessor.HttpContext.Request.Headers["authorization"].Single().Split(" ").Last();
             var tokenHandler = new JwtSecurityTokenHandler();
-            given_name = tokenHandler.ReadJwtToken(token).Payload["given_name"].ToString();
+            given_name = tokenHandler.ReadJwtToken(token).Payload["unique_name"].ToString();
             _mapper = mapper;
             _unitOfWork = unitOfWork;
         }

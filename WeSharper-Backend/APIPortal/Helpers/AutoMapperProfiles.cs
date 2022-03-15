@@ -11,6 +11,11 @@ namespace WeSharper.APIPortal.Helpers
         public AutoMapperProfiles()
         {
             CreateMap<MessageDTO, Message>();
+            CreateMap<Message, MessageDTO>()
+                .ForMember(dest => dest.SenderPhotoUrl, opt => opt.MapFrom(src =>
+                    src.SenderUser.Profiles.FirstOrDefault(x => x.UserId.Equals(src.SenderUserId)).ProfilePictureUrl))
+                .ForMember(dest => dest.RecipientPhotoUrl, opt => opt.MapFrom(src =>
+                    src.RecipientUser.Profiles.FirstOrDefault(x => x.UserId.Equals(src.SenderUserId)).ProfilePictureUrl));
         }
     }
 }
