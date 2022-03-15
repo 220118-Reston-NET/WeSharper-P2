@@ -11,6 +11,8 @@ import { take } from 'rxjs/operators';
 import { PresenceService } from '../_services/presence.service';
 import { Post } from '../_models/post';
 import { FormControl, FormGroup } from '@angular/forms';
+import { environment } from 'src/environments/environment';
+import { HttpClient, HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-profile',
@@ -19,6 +21,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 })
 export class ProfileComponent implements OnInit, OnDestroy {
   @ViewChild('memberTabs', {static: true}) memberTabs: TabsetComponent;
+  ApiURL = environment.apiUrl;
   activeTab: TabDirective;
   profile: Profile;
   user: User;
@@ -38,7 +41,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
               public presence: PresenceService,
               private messageService: MessageService,
               private accountService: AccountService,
-              private router: Router) { 
+              private router: Router,
+              private readonly http: HttpClient) { 
       this.accountService.currentUser.pipe(take(1)).subscribe(user => this.user = user);
       this.router.routeReuseStrategy.shouldReuseRoute = () => false;
   }
@@ -98,6 +102,30 @@ export class ProfileComponent implements OnInit, OnDestroy {
     });
   }
 
+  postPhotoUrl = "";
+
+  onFileSelected(e: { target: { files: Blob[]; }; }) {
+    if (e.target.files) {
+      var reader = new FileReader();
+      reader.readAsDataURL(e.target.files[0]);
+      reader.onload = (event: any) => {
+        this.postPhotoUrl = event.target.result;
+      }
+    } else {
+      return;
+    }
+
+
+    let fileToUpload = <File>e.target.files[0];
+    const formData = new FormData();
+    formData.append('file', fileToUpload, fileToUpload.name);
+
+    this.http.post<any>(this.ApiURL + 'User/ProfilePicture', formData)
+    .subscribe(data => {
+      this.postPhotoUrl = data.fileURL;
+    })
+  }
+
   postNewPost(postGroup: FormGroup) {
     let post:Post = {
       postContent: postGroup.get("postContent")?.value,
@@ -106,7 +134,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
       postComments: [],
       postReacts: [],
       postId: "",
-      postPhoto: "",
+      postPhoto: this.postPhotoUrl,
       userId: "",
     }
 
