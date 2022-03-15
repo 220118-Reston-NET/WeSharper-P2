@@ -1,36 +1,33 @@
-<nav class="navbar navbar navbar-expand-md navbar-dark fixed-top bg-primary">
-    <div class="container ">
-        <ul class="navbar-nav " me-auto >
-                <img src="../../assets/logo.png" alt="logo" class="logo"> <span>We#er</span>       
-                <ng-container *ngIf="(accountService.currentUser | async) as user">
-                    <li class="nav-item">
-                        <a class="nav-link" routerLink="/profile" routerLinkActive="active">Profile</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" routerLink="/feeds" routerLinkActive="active">Feeds</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" routerLink="/friends" routerLinkActive="active">Friends</a>
-                    </li>                
-                    <!-- <li class="nav-item">
-                        <a class="nav-link" routerLink="/groups" routerLinkActive="active">Groups</a>
-                    </li>                 -->
-                    <!-- <li class="nav-item">
-                        <a class="nav-link" routerLink="/messages" routerLinkActive="active">Messages</a>
-                    </li>                 -->
-                </ng-container>
-                <div class="container username-logout" *ngIf="(accountService.currentUser | async) as user"> 
-                    <li class="nav-item">
-                        <a class="nav-link">Welcome {{user.username}}</a>
-                    </li>            
-                    <li class="nav-item">
-                        <a class="nav-link" routerLink="/setting" routerLinkActive="active">Setting</a>
-                    </li>
+<div class="container">
+
+    <nav class="navbar navbar navbar-expand-md navbar-dark fixed-top bg-primary">
+        <div class="container ">
+            <ul class="navbar-nav " >
+                    <img src="../../assets/logo.png" alt="logo" class="logo"> <span>We#er</span>       
+                    <ng-container *ngIf="(accountService.currentUser | async) as user">
                         <li class="nav-item">
-                            <a class="nav-link" (click)="logout()">Logout</a>
-                        </li>           
-                    </div>
-                </ul>
-        </div>
- 
-</nav>
+                            <a class="nav-link" routerLink="/profile" routerLinkActive="active">Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/feeds" routerLinkActive="active">Feeds</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/friends" routerLinkActive="active">Friends</a>
+                        </li>                
+                    </ng-container>
+                    <div class="container username-logout" *ngIf="(accountService.currentUser | async) as user"> 
+                        <li class="nav-item">
+                            <a class="nav-link">Welcome {{user.username}}</a>
+                        </li>            
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/setting" routerLinkActive="active">Setting</a>
+                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link" (click)="logout()">Logout</a>
+                            </li>           
+                        </div>
+                    </ul>
+            </div>
+     
+    </nav>
+</div>

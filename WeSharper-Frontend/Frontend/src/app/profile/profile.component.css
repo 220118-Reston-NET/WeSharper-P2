@@ -1,3 +1,6 @@
+.postFormContainer {
+  width: 80%;
+}
 .top-container{
     display: flex;
     margin-bottom: 3rem;
@@ -36,6 +39,7 @@ button{
 .btn{
     color: #fff;
     font-weight: bold;
+
 }
 
 
