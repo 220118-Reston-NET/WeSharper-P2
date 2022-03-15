@@ -1,57 +1,66 @@
 <div class="container">
     <div class="container top-container">
         <div class="col-md-2">
-            <img [src]='profile.profilePictureUrl || "../../assets/profil_img_setting.png"' style="height:9rem; width:9rem;" alt="...">
+            <img [src]='profile.profilePictureUrl || "../../assets/profil_img_setting.png"'
+                style="height:9rem; width:9rem;" alt="...">
         </div>
 
         <div class="col-md-10 mt-4">
-            <div class="row" >
+            <div class="row">
                 <div class="column1">
-                    <h4 style="margin-left: 50px;">{{profile.firstName}} {{profile.lastName}} ({{profile.user.userName}})</h4>
+                    <h4 style="margin-left: 50px;">{{profile.firstName}} {{profile.lastName}}
+                        ({{profile.user.userName}})</h4>
                 </div>
 
                 <div class="column2">
                     <ng-container *ngIf="friendRelationship == 'Friend'">
-                        <button (click)="removeFriend(profile.userId)" style="margin-left: 220px;" type="button" class="btn btn-primary">Remove Friend</button>
+                        <button (click)="removeFriend(profile.userId)" style="margin-left: 220px;" type="button"
+                            class="btn btn-primary">Remove Friend</button>
                     </ng-container>
                     <ng-container *ngIf="friendRelationship == 'NotFriend'">
-                        <button (click)="addFriend(profile.userId)" style="margin-left: 220px;" type="button" class="btn btn-primary">Add Friend</button>
+                        <button (click)="addFriend(profile.userId)" style="margin-left: 220px;" type="button"
+                            class="btn btn-primary">Add Friend</button>
                     </ng-container>
                     <ng-container *ngIf="friendRelationship == 'Incoming'">
-                        <button (click)="acceptFriend(profile.userId)" style="margin-left: 220px;" type="button" class="btn btn-primary">Accept Friend</button>
+                        <button (click)="acceptFriend(profile.userId)" style="margin-left: 220px;" type="button"
+                            class="btn btn-primary">Accept Friend</button>
                     </ng-container>
                     <ng-container *ngIf="friendRelationship == 'Outcoming'">
-                        <button (click)="removeFriend(profile.userId)" style="margin-left: 220px;" type="button" class="btn btn-primary">Cancel Request</button>
+                        <button (click)="removeFriend(profile.userId)" style="margin-left: 220px;" type="button"
+                            class="btn btn-primary">Cancel Request</button>
                     </ng-container>
                 </div>
             </div>
-            
-            <h5 style="margin-left: 50px;" >About Me: {{profile.bio}}</h5>
+
+            <h5 style="margin-left: 50px;">About Me: {{profile.bio}}</h5>
             <p style="margin-top: 10px; margin-left: 50px;">Joined at: {{profile.createdAt}}</p>
         </div>
-        
+
     </div>
 
-    
+
     <div *ngIf="!friendID" class="postFormContainer ">
         <!-- <app-new-post></app-new-post> -->
         <form [formGroup]="postGroup">
             <div class="row">
-                <div  class="col-md-10" style="margin-bottom: 1rem; padding-left: 1rem;">
-                    <textarea formControlName="postContent" rows="4" style="width: 100%; border-radius: 5px; border-width: 3px;"></textarea>
+                <div class="col-md-10" style="margin-bottom: 1rem; padding-left: 1rem;">
+                    <textarea formControlName="postContent" rows="4"
+                        style="width: 100%; border-radius: 5px; border-width: 3px;"></textarea>
                 </div>
                 <div class="col-md-2" style="margin-bottom: 1rem;">
                     <div>
                         <img [src]="postPhotoUrl" height="40">
-                        <button type="button" class="btn btn-primary" accept="image/gif, image/jpeg, image/png"
-                            (click)="fileInput.click()">
+                        <button style="width: 50%;" type="button" class="btn btn-primary"
+                            accept="image/gif, image/jpeg, image/png" (click)="fileInput.click()">
                             <span>
                                 <i class="fa fa-image fa-lg"></i>
                             </span>
-                            <input #fileInput type="file" (change)="onFileSelected($event)" style="display:none;" accept="image/gif, image/jpeg, image/png, image/jpg">
+                            <input #fileInput type="file" (change)="onFileSelected($event)" style="display:none;"
+                                accept="image/gif, image/jpeg, image/png, image/jpg">
                         </button>
                     </div>
-                    <button type="button" (click)="postNewPost(postGroup)" class="btn btn-primary postButton" >Post</button>
+                    <button type="button" (click)="postNewPost(postGroup)"
+                        class="btn btn-primary postButton">Post</button>
                 </div>
             </div>
         </form>
@@ -72,7 +81,7 @@
                 <div class="content">
                     <h4>{{post.postContent}}</h4>
                     <div *ngIf="post.postPhoto" style="display: flex; justify-content: center; ">
-                        <img [src]="post.postPhoto" style="width: 70%;"/>
+                        <img [src]="post.postPhoto" style="width: 70%;" />
                     </div>
                 </div>
             </div>
@@ -98,7 +107,7 @@
                             <div class="content">
                                 <h4>{{post.postContent}}</h4>
                                 <div *ngIf="post.postPhoto">
-                                    <img [src]="post.postPhoto" style="width: 100%;"/>
+                                    <img [src]="post.postPhoto" style="width: 100%;" />
                                 </div>
                             </div>
                         </div>
@@ -110,5 +119,5 @@
             </tabset>
         </div>
     </div>
-    
+
 </div>
