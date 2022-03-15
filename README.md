@@ -19,7 +19,19 @@ The social media app is a web application for connecting and communicating with 
 - [License](#license)
 
 # Features
-N/A
+- Register
+- Login
+- Update Profile Information
+- Upload/Update Profile Picture
+- Post New Post(Text, Image, Text & Image)
+- Delete Your Post
+- See Your Posts
+- See List of Friends(Friends, Requested Friends, Friend Requests, Recommened)
+- Accept/Remove/Cancel/Add Friend
+- See Your Friend Profile
+- See Your Friend Posts
+- See New Feeds(Friends's Posts)
+- Realtime chat With your Friend
 
 # Technologies
 ## Backend
@@ -58,7 +70,7 @@ N/A
 - [Moqups](https://moqups.com)
 
 # Getting started
-N/A
+
 
 # Changelog
 N/A
