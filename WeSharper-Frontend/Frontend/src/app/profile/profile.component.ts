@@ -120,7 +120,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     const formData = new FormData();
     formData.append('file', fileToUpload, fileToUpload.name);
 
-    this.http.post<any>(this.ApiURL + 'User/ProfilePicture', formData)
+    this.http.post<any>(this.ApiURL + 'UserPost/UserPosts/UploadImage', formData)
     .subscribe(data => {
       this.postPhotoUrl = data.fileURL;
     })
