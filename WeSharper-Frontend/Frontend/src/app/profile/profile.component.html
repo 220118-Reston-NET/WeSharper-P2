@@ -41,6 +41,16 @@
                     <textarea formControlName="postContent" rows="4" style="width: 100%; border-radius: 5px; border-width: 3px;"></textarea>
                 </div>
                 <div class="col-md-2" style="margin-bottom: 1rem;">
+                    <div>
+                        <img [src]="postPhotoUrl" height="40">
+                        <button type="button" class="btn btn-primary" accept="image/gif, image/jpeg, image/png"
+                            (click)="fileInput.click()">
+                            <span>
+                                <i class="fa fa-image fa-lg"></i>
+                            </span>
+                            <input #fileInput type="file" (change)="onFileSelected($event)" style="display:none;" accept="image/gif, image/jpeg, image/png, image/jpg">
+                        </button>
+                    </div>
                     <button type="button" (click)="postNewPost(postGroup)" class="btn btn-primary" style="width: 90%;">Post</button>
                 </div>
             </div>
@@ -53,7 +63,7 @@
             <div class="text-box" style="margin-bottom: 1rem;">
                 <div class="row">
                     <div class="col-md-10">
-                        <span style="margin-left: 12px;">Posted at: {{post.createdAt}}</span>
+                        <span style="font-weight: 100;">Posted at: {{post.createdAt}}</span>
                     </div>
                     <div class="col-md-2">
                         <button type="button" (click)="deletePost(post.postId)" class="btn btn-primary">Delete</button>
@@ -61,8 +71,8 @@
                 </div>
                 <div class="content">
                     <h4>{{post.postContent}}</h4>
-                    <div *ngIf="post.postPhoto">
-                        <img [src]="post.postPhoto" style="width: 100%;"/>
+                    <div *ngIf="post.postPhoto" style="display: flex; justify-content: center;">
+                        <img [src]="post.postPhoto"/>
                     </div>
                 </div>
             </div>
