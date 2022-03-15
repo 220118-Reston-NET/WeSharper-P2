@@ -2,11 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using WeSharper.APIPortal.BlobService.Interfaces;
 using WeSharper.APIPortal.Consts;
 using WeSharper.APIPortal.DataTransferObjects;
 using WeSharper.BusinessesManagement.Interfaces;
@@ -21,11 +23,13 @@ namespace APIPortal.Controllers
     {
         private readonly IUserPostManagementBL _userPBL;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IBlobService blobService;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly string? given_name;
         public UserPostController(IUserPostManagementBL userPBL,
                                     IHttpContextAccessor httpContextAccessor,
-                                    UserManager<ApplicationUser> userManager)
+                                    UserManager<ApplicationUser> userManager,
+                                    IBlobService blobService)
         {
             _userPBL = userPBL;
             _httpContextAccessor = httpContextAccessor;
@@ -34,6 +38,7 @@ namespace APIPortal.Controllers
             var token = _httpContextAccessor.HttpContext.Request.Headers["authorization"].Single().Split(" ").Last();
             var tokenHandler = new JwtSecurityTokenHandler();
             given_name = tokenHandler.ReadJwtToken(token).Payload["unique_name"].ToString();
+            this.blobService = blobService;
         }
 
         /*
@@ -141,6 +146,34 @@ namespace APIPortal.Controllers
                 Log.Warning("Route: " + RouteConfigs.UserPost);
                 Log.Warning(e.Message);
 
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        // POST: api/UserPost/UserPosts/UploadImage
+        [Authorize(Roles = "User")]
+        [HttpPost(RouteConfigs.UserPostImage), DisableRequestSizeLimit]
+        public async Task<IActionResult> UploadImagePost()
+        {
+            try
+            {
+                var formCollection = await Request.ReadFormAsync();
+                var file = formCollection.Files.First();
+                if (file.Length > 0)
+                {
+                    var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+                    string fileURL = await blobService.UploadAsync(file.OpenReadStream(), fileName, file.ContentType);
+
+                    Log.Information("Upload Image successfully!" + fileURL);
+                    return Ok(new { fileURL });
+                }
+                else
+                {
+                    return BadRequest("Failed to upload image! Please try again!");
+                }
+            }
+            catch (System.Exception e)
+            {
                 return StatusCode(500, e.Message);
             }
         }
