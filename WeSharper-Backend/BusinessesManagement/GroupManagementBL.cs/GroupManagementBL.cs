@@ -70,28 +70,16 @@ namespace WeSharper.BusinessesManagement.Implements
         }
         public async Task<Group> UpdateGroupInformation(Group g_group, string userId)
         {
-            try
-            {
-                CheckGroupId(g_group.GroupId);
-                CheckGroupManager(g_group.GroupId, userId);
-                return await _repo.UpdateGroup(g_group, userId);
-            }
-            catch (System.Exception exe)
-            {
-                throw new Exception(exe.Message);
-            }
+
+            CheckGroupId(g_group.GroupId);
+            CheckGroupManager(g_group.GroupId, userId);
+
+            return await _repo.UpdateGroup(g_group, userId);
         }
 
         public async Task<Group> DeleteGroup(string groupId, string managerId)
         {
-            try
-            {
-                return await _repo.DeleteGroup(groupId, managerId);
-            }
-            catch (System.Exception exe)
-            {
-                throw new Exception(exe.Message);
-            }
+            return await _repo.DeleteGroup(groupId, managerId);
         }
 
         // GroupUser
@@ -127,16 +115,10 @@ namespace WeSharper.BusinessesManagement.Implements
         }
         public async Task<List<GroupUser>> GetGroupUnapprovedJoinRequests(string groupId)
         {
-            try
-            {
-                List<GroupUser> _result = await GetAllGroupUsers();
-                List<GroupUser> joinRequests = _result.Where(g => (g.GroupId == groupId) && (!g.IsApproved)).ToList();
-                return joinRequests;
-            }
-            catch (System.Exception exe)
-            {
-                throw new Exception(exe.Message);
-            }
+            List<GroupUser> _result = await GetAllGroupUsers();
+            List<GroupUser> joinRequests = _result.Where(g => (g.GroupId == groupId) && (!g.IsApproved)).ToList();
+
+            return joinRequests;
         }
         /*        public GroupUser UpdateGroupUser(GroupUser g_groupUser)
                 {
