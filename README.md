@@ -38,8 +38,8 @@ WeSharper is a web based social media application for connecting and communicati
 - See Your Friend Profile
 - See Your Friend Posts
 - See New Feeds(Friends's Posts)
-- Realtime message chat With your friends
-- Receive notification when you receive a new message
+- Realtime Message Chat With Your Friends
+- Receive nNotification When You Receive A New Message
 
 # Technologies
 ## Backend
@@ -88,15 +88,15 @@ WeSharper is a web based social media application for connecting and communicati
 ![screenshot](assests/LoginPage.png) 
 
 ## Edit Profile
-> Go to "Settings" to edit your profile and add a profile photo.
+> Go to "Settings" to edit your profile and add/update a profile photo.
 ![screenshot](assests/EditProfile.png)
 
 ## Create a Post
-> Go to "Profile" to create a new post with text and image.
+> Go to "Profile" to create a new post(you can do text only, image only or combination of both).
 ![screenshot](assests/CreatePost.png)
 
 ## Add friend
-> Go to "Friends" to add/accept/delete your friendslist as well as view your friend's profile.
+> Go to "Friends" to add/accept/remove/cancel your friendslist as well as view your friend's profile.
 ![screenshot](assests/AddFriend.png)
 
 ## RealTime Chat with friends
@@ -123,6 +123,6 @@ We made this project for the course, so if you would like to suggest more featur
 We appreciate every contributions or ideas to make the app better.
 
 # License
-N/A
+This project is licensed under the [MIT License](LICENSE).
 
 [Back To Top](#weerwesharper---project-2---revature)

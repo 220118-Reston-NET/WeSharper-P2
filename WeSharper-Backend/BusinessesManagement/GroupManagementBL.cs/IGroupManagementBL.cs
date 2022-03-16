@@ -50,6 +50,6 @@ namespace WeSharper.BusinessesManagement.Interfaces
                 GroupUser BanGroupUser(GroupUser g_groupUser);
                 GroupUser UnbanGroupUser(GroupUser g_groupUser);
                 GroupUser DeleteGroupUser(GroupUser g_groupUser); */
-        Task<bool> CheckValidGroupUser(string groupId, string userId);
+        // Task<bool> CheckValidGroupUser(string groupId, string userId);
     }
 }
