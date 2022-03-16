@@ -93,7 +93,7 @@ WeSharper is a web based social media application for connecting and communicati
 
 ## Create a Post
 > Go to "Profile" to create a new post(you can do text only, image only or combination of both).
-![screenshot](assests/EditProfile.png)
+![screenshot](assests/CreatePost.png)
 
 ## Add friend
 > Go to "Friends" to add/accept/remove/cancel your friendslist as well as view your friend's profile.
