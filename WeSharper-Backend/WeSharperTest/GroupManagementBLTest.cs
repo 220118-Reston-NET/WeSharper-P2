@@ -212,34 +212,6 @@ public class GroupManagementBLTest
         Assert.Same(_expectedGroup, actualGroup);
     }
 
-    // [Fact]
-    // public async Task Should_Not_Update_A_Group()
-    // {
-
-    //     Group _expectedGroup = new Group()
-    //     {
-    //         GroupId = Guid.NewGuid().ToString(),
-    //         GroupManagerId = Guid.NewGuid().ToString(),
-    //         GroupName = "TestGroup",
-    //         GroupPicture = "https://i.kym-cdn.com/entries/icons/facebook/000/027/475/Screen_Shot_2018-10-25_at_11.02.15_AM.jpg",
-    //         Description = "TestDescription",
-    //         IsActivated = true,
-    //         CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"))
-    //     };
-
-    //     List<Group> _expectedListOfGroups = new List<Group>();
-    //     _expectedListOfGroups.Add(_expectedGroup);
-
-
-    //     Mock<IGroupManagementDL> _mockRepo = new Mock<IGroupManagementDL>();
-    //     _mockRepo.Setup(repo => repo.UpdateGroup(_expectedGroup, _expectedGroup.GroupManagerId)).ReturnsAsync(_expectedGroup);
-    //     IGroupManagementBL groupBL = new GroupManagementBL(_mockRepo.Object);
-
-
-    //     Assert.ThrowsAsync<Exception>(
-    //         () => await groupBL.UpdateGroupInformation(_expectedGroup, "1561"));
-    // }
-
     [Fact]
     public async Task Should_Delete_Group()
     {
@@ -270,32 +242,7 @@ public class GroupManagementBLTest
         //Assert
         Assert.Same(_expectedGroup, actualGroup);
     }
-/*
-    [Fact]
-    public async Task Cannot_Delete_Group()
-    {
-        Group _expectedGroup = new Group()
-        {
-            GroupId = Guid.NewGuid().ToString(),
-            GroupManagerId = Guid.NewGuid().ToString(),
-            GroupName = "TestGroup",
-            GroupPicture = "https://i.kym-cdn.com/entries/icons/facebook/000/027/475/Screen_Shot_2018-10-25_at_11.02.15_AM.jpg",
-            Description = "TestDescription",
-            IsActivated = true,
-            CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"))
-        };
 
-        List<Group> _expectedListOfGroups = new List<Group>();
-
-        Mock<IGroupManagementDL> _mockRepo = new Mock<IGroupManagementDL>();
-        _mockRepo.Setup(repo => repo.DeleteGroup(_expectedGroup.GroupId, _expectedGroup.GroupManagerId)).ReturnsAsync(_expectedGroup);
-        IGroupManagementBL _groupBL = new GroupManagementBL(_mockRepo.Object);
-
-        //act
-        //Assert
-        await Assert.ThrowsAsync<Exception>(() => _groupBL.DeleteGroup(_expectedGroup.GroupId, _expectedGroup.GroupManagerId));
-    }
-*/
     [Fact]
     public async Task Should_Get_All_GroupUsers()
     {
@@ -306,6 +253,8 @@ public class GroupManagementBLTest
             UserId = Guid.NewGuid().ToString(),
             IsBanned = false,
             IsApproved = true,
+            Group = new Group(),
+            User = new ApplicationUser(),
             CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"))
         };
 
@@ -314,7 +263,6 @@ public class GroupManagementBLTest
 
         Mock<IGroupManagementDL> _mockRepo = new Mock<IGroupManagementDL>();
         _mockRepo.Setup(repo => repo.GetAllGroupUsers()).ReturnsAsync(_expectedListOfGroupUsers);
-        //_mockRepo.Setup(repo => repo.AddGroupUser(_expectedGroupUser)).ReturnsAsync(_expectedGroupUser);
         IGroupManagementBL _groupBL = new GroupManagementBL(_mockRepo.Object);
 
         //Act
@@ -378,7 +326,6 @@ public class GroupManagementBLTest
         };
 
         List<GroupUser> _expectedListOfGroupUsers = new List<GroupUser>();
-        //_expectedListOfGroupUsers.Add(_expectedGroupUser);
 
         Mock<IGroupManagementDL> _mockRepo = new Mock<IGroupManagementDL>();
         _mockRepo.Setup(repo => repo.GetGroupApprovedUsersInGroup(_expectedGroupUser.GroupId)).ReturnsAsync(_expectedListOfGroupUsers);
@@ -387,10 +334,6 @@ public class GroupManagementBLTest
         //Act & Assert
         await Assert.ThrowsAsync<Exception>(() => _groupBL.GetApprovedUsersInGroup(_expectedGroupUser.GroupId));
     }
-
-
-
-
 
     [Fact]
     public async Task Get_Unapproved_Group_User_Join_Requests_For_A_Group()
@@ -434,7 +377,6 @@ public class GroupManagementBLTest
         };
 
         List<GroupUser> _expectedListOfGroupUsers = new List<GroupUser>();
-        //_expectedListOfGroupUsers.Add(_expectedGroupUser);
 
         Mock<IGroupManagementDL> _mockRepo = new Mock<IGroupManagementDL>();
         _mockRepo.Setup(repo => repo.GetGroupApprovedUsersInGroup(_expectedGroupUser.GroupId)).ReturnsAsync(_expectedListOfGroupUsers);
@@ -443,37 +385,4 @@ public class GroupManagementBLTest
         //Act & Assert
         await Assert.ThrowsAsync<Exception>(() => _groupBL.GetApprovedUsersInGroup(_expectedGroupUser.GroupId));
     }
-
-    
-
-    /*
-    // GroupUsers
-    [Fact]
-    public async Task Should_Add_A_Group_User_Request()
-    {
-        //Arrange
-        GroupUser _expectedGroupUser = new GroupUser(){
-                    GroupId = Guid.NewGuid().ToString(),
-                    UserId = Guid.NewGuid().ToString(),
-                    IsBanned = false,
-                    IsApproved = true,
-                    CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"))
-                };
-
-        Mock<IGroupManagementDL> _mockRepo = new Mock<IGroupManagementDL>();
-        _mockRepo.Setup(repo => repo.SendNewGroupUserRequest(_expectedGroupUser)).ReturnsAsync(_expectedGroupUser);
-        IGroupManagementBL groupBL = new GroupManagementBL(_mockRepo.Object);
-
-        //act
-        GroupUser actualGroup = groupBL.SendNewGroupUserRequest(_expectedGroupUser);
-
-        //Assert
-        Assert.Same(_expectedGroupUser, actualGroup);
-    }
-    
-    
-    */
-
-
-
 }
