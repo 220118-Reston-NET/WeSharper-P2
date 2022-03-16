@@ -190,7 +190,7 @@ namespace WeSharper.BusinessesManagement.Implements
                         throw new Exception(exe.Message);
                     }
                 } */
-        public async Task<bool> CheckValidGroupUser(string groupId, string userId)
+        /* public async Task<bool> CheckValidGroupUser(string groupId, string userId)
         {
             List<GroupUser> _result = await GetAllGroupUsers();
             GroupUser tempGroupUser = _result.FirstOrDefault(g => (g.UserId == userId) && (g.GroupId == groupId));
@@ -199,7 +199,7 @@ namespace WeSharper.BusinessesManagement.Implements
                 throw new Exception("Invalid user in group");
             }
             return true;
-        }
+        } */
 
     }
 }
